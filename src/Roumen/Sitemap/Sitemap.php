@@ -56,7 +56,7 @@ class Sitemap
             'link' => $this->link
         );
 
-       \View::addNamespace('sitemap', '../workbench/roumen/sitemap/src/views');
+       \View::addNamespace('sitemap', '../vendor/roumen/sitemap/src/views');
 
         switch ($format)
         {

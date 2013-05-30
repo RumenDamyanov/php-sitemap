@@ -1,6 +1,6 @@
 # [laravel4-sitemap](http://roumen.me/projects/laravel4-sitemap)
 
-A simple sitemap generator for Laravel.
+A simple sitemap generator for Laravel 4.
 
 
 ## Installation
@@ -8,7 +8,7 @@ A simple sitemap generator for Laravel.
 Add the following to your `composer.json` file :
 
 ```json
-"roumen/laravel4-sitemap": "dev-master"
+"roumen/sitemap": "dev-master"
 ```
 
 Then register this service provider with Laravel :

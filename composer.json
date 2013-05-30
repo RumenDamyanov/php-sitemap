@@ -4,12 +4,12 @@
     "keywords": ["laravel", "sitemap"],
     "license": "MIT",
     "authors": [
-        {
+    {
             "name": "Roumen Damianoff",
             "email": "roumen@dawebs.com",
             "role": "Developer",
             "homepage": "http://roumen.me/projects/laravel4-sitemap"
-        }
+    }
     ],
     "require": {
         "php": ">=5.3.0",
