@@ -3,10 +3,15 @@
  * Sitemap class for laravel4-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.0.2
+ * @version 2.0.3
  * @link http://roumen.me/projects/laravel4-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Config;
+use Response;
+use View;
+use File;
 
 class Sitemap
 {
@@ -48,7 +53,7 @@ class Sitemap
      */
     public function render($format = 'xml')
     {
-        if (empty($this->link)) $this->link = \Config::get('application.url');
+        if (empty($this->link)) $this->link = Config::get('application.url');
         if (empty($this->title)) $this->title = 'Sitemap for ' . $this->link;
 
         $channel = array(
@@ -56,24 +61,22 @@ class Sitemap
             'link' => $this->link
         );
 
-       \View::addNamespace('sitemap', '../vendor/roumen/sitemap/src/views');
-
         switch ($format)
         {
             case 'ror-rss':
-                return \Response::make(\View::make('sitemap::ror-rss', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rss+xml; charset=utf-8'));
+                return Response::make(View::make('sitemap::ror-rss', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rss+xml; charset=utf-8'));
                 break;
             case 'ror-rdf':
-                return \Response::make(\View::make('sitemap::ror-rdf', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rdf+xml; charset=utf-8'));
+                return Response::make(View::make('sitemap::ror-rdf', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rdf+xml; charset=utf-8'));
                 break;
             case 'html':
-                return \Response::make(\View::make('sitemap::html', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/html'));
+                return Response::make(View::make('sitemap::html', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/html'));
                 break;
             case 'txt':
-                return \Response::make(\View::make('sitemap::txt', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/plain'));
+                return Response::make(View::make('sitemap::txt', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/plain'));
                 break;
             default:
-               return \Response::make(\View::make('sitemap::xml', array('items' => $this->items)), 200, array('Content-type' => 'text/xml; charset=utf-8'));
+               return Response::make(View::make('sitemap::xml', array('items' => $this->items)), 200, array('Content-type' => 'text/xml; charset=utf-8'));
         }
     }
 
@@ -93,7 +96,7 @@ class Sitemap
 
         $file = path('public') . $filename . '.' .$format;
 
-        \File::put($file, $content);
+        File::put($file, $content);
     }
 
 }
