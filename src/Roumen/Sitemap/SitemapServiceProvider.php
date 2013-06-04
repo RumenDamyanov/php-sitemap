@@ -28,7 +28,6 @@ class SitemapServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $this->package('roumen/sitemap');
 
         $this->app['sitemap'] = $this->app->share(function($app)
         {
