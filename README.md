@@ -1,4 +1,6 @@
-# [laravel4-sitemap](http://roumen.me/projects/laravel4-sitemap)
+# [laravel4-sitemap](http://roumen.me/projects/laravel4-sitemap) package
+
+[![Latest Stable Version](https://poser.pugx.org/roumen/sitemap/version.png)](https://packagist.org/packages/roumen/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/roumen/sitemap)
 
 A simple sitemap generator for Laravel 4.
 

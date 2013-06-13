@@ -3,7 +3,7 @@
  * Sitemap class for laravel4-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.0.3
+ * @version 2.1
  * @link http://roumen.me/projects/laravel4-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
