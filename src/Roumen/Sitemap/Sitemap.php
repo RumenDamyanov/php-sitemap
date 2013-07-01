@@ -3,7 +3,7 @@
  * Sitemap class for laravel4-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.1
+ * @version 2.2
  * @link http://roumen.me/projects/laravel4-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -66,7 +66,7 @@ class Sitemap
      */
     public function generate($format = 'xml')
     {
-        if (empty($this->link)) $this->link = Config::get('application.url');
+        if (empty($this->link)) $this->link = Config::get('app.url');
         if (empty($this->title)) $this->title = 'Sitemap for ' . $this->link;
 
         $channel = array(
