@@ -93,8 +93,8 @@ class Sitemap
         $content = $this->render($format);
 
         if ($format == 'ror-rss' || $format == 'ror-rdf') $format = 'xml';
+        $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' .$format;
 
-        $file = path('public') . $filename . '.' .$format;
 
         File::put($file, $content);
     }
