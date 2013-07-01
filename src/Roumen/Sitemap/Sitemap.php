@@ -53,6 +53,19 @@ class Sitemap
      */
     public function render($format = 'xml')
     {
+        $data = $this->generate($format);
+        return Response::make($data['content'], 200, $data['headers']);
+    }
+
+    /**
+     * Generates document with all sitemap items from $items array
+     *
+     * @param string $format (options: xml, html, txt, ror-rss, ror-rdf)
+     *
+     * @return array
+     */
+    public function generate($format = 'xml')
+    {
         if (empty($this->link)) $this->link = Config::get('application.url');
         if (empty($this->title)) $this->title = 'Sitemap for ' . $this->link;
 
@@ -64,19 +77,19 @@ class Sitemap
         switch ($format)
         {
             case 'ror-rss':
-                return Response::make(View::make('sitemap::ror-rss', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rss+xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::ror-rss', array('items' => $this->items, 'channel' => $channel)), 'headers' => array('Content-type' => 'text/rss+xml; charset=utf-8') );
                 break;
             case 'ror-rdf':
-                return Response::make(View::make('sitemap::ror-rdf', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/rdf+xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::ror-rdf', array('items' => $this->items, 'channel' => $channel)), 'headers' => array('Content-type' => 'text/rdf+xml; charset=utf-8') );
                 break;
             case 'html':
-                return Response::make(View::make('sitemap::html', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/html'));
+                return array('content' => View::make('sitemap::html', array('items' => $this->items, 'channel' => $channel)), 'headers' => array('Content-type' => 'text/html') );
                 break;
             case 'txt':
-                return Response::make(View::make('sitemap::txt', array('items' => $this->items, 'channel' => $channel)), 200, array('Content-type' => 'text/plain'));
+                return array('content' => View::make('sitemap::txt', array('items' => $this->items, 'channel' => $channel)), 'headers' => array('Content-type' => 'text/plain') );
                 break;
             default:
-               return Response::make(View::make('sitemap::xml', array('items' => $this->items)), 200, array('Content-type' => 'text/xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::xml', array('items' => $this->items, 'channel' => $channel)), 'headers' => array('Content-type' => 'text/xml; charset=utf-8') );
         }
     }
 
@@ -90,13 +103,17 @@ class Sitemap
      */
     public function store($format = 'xml', $filename = 'sitemap')
     {
-        $content = $this->render($format);
+        $data = $this->generate($format);
 
-        if ($format == 'ror-rss' || $format == 'ror-rdf') $format = 'xml';
+        if ($format == 'ror-rss' || $format == 'ror-rdf')
+        {
+            $format = 'xml';
+        }
+
         $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' .$format;
 
+        File::put($file, $data['content']);
 
-        File::put($file, $content);
     }
 
 }
