@@ -3,7 +3,7 @@
  * Sitemap class for laravel4-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.3
+ * @version 2.3.1
  * @link http://roumen.it/projects/laravel4-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -28,17 +28,19 @@ class Sitemap
      * @param string $lastmod
      * @param string $priority
      * @param string $freq
+     * @param array  $image
      * @param string $title
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = '0.50', $freq = 'monthly', $title = null)
+    public function add($loc, $lastmod = null, $priority = '0.50', $freq = 'monthly', $image = array(), $title = null)
     {
         $this->items[] = array(
             'loc' => $loc,
             'lastmod' => $lastmod,
             'priority' => $priority,
             'freq' => $freq,
+            'image' => $image,
             'title'=> $title
         );
     }
