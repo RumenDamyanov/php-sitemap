@@ -9,7 +9,7 @@
     <url>
         <loc>{{ $item['loc'] }}</loc>
         <priority>{{ $item['priority'] }}</priority>
-        <lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>
+        @if($item['lastmod'] !== null)<lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>@endif
         <changefreq>{{ $item['freq'] }}</changefreq>
         @if(!empty($item['image']))
         <image:image>
