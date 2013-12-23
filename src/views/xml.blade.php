@@ -8,9 +8,9 @@
 @foreach($items as $item)
     <url>
         <loc>{{ $item['loc'] }}</loc>
-        <priority>{{ $item['priority'] }}</priority>
+        @if($item['priority'] !== null)<priority>{{ $item['priority'] }}</priority>@endif
         @if($item['lastmod'] !== null)<lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>@endif
-        <changefreq>{{ $item['freq'] }}</changefreq>
+        @if($item['freq'] !== null)<changefreq>{{ $item['freq'] }}</changefreq>@endif
         @if(!empty($item['image']))
         <image:image>
           @foreach($item['image'] as $image)
