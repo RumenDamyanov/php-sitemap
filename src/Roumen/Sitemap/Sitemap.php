@@ -1,10 +1,10 @@
 <?php namespace Roumen\Sitemap;
 /**
- * Sitemap class for laravel4-sitemap package.
+ * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
  * @version 2.3.4
- * @link http://roumen.it/projects/laravel4-sitemap
+ * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
 
