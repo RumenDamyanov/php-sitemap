@@ -3,7 +3,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.3.5
+ * @version 2.3.6
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -16,9 +16,9 @@ use File;
 class Sitemap
 {
 
-    public $items = array();
-    public $title;
-    public $link;
+    protected $items = array();
+    protected $title;
+    protected $link;
 
 
     /**
@@ -116,6 +116,7 @@ class Sitemap
 
         File::put($file, $data['content']);
 
+        $this->items = array();
     }
 
 }
