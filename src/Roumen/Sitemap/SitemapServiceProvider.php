@@ -31,7 +31,8 @@ class SitemapServiceProvider extends ServiceProvider {
 
         $this->app['sitemap'] = $this->app->share(function($app)
         {
-            return new Sitemap();
+            $config = $app['config']->get('sitemap::config');
+            return new Sitemap($config);
         });
     }
 
