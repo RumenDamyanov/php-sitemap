@@ -115,7 +115,7 @@ class Sitemap
 
         if ($this->model->getUseCache()) {
             if (Cache::has($this->model->getCacheKey())) {
-                $this->model->setItems(Cache::get($this->model->getCacheKey()));
+                $this->model->items = Cache::get($this->model->getCacheKey());
             } else {
                 Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
             }
