@@ -7,7 +7,7 @@ use Carbon\Carbon as Carbon;
 class Model
 {
 
-    private $items = array();
+    public $items = array();
     private $title = null;
     private $link = null;
     private $useCache = false;
@@ -53,7 +53,7 @@ class Model
 
     public function setItems($items)
     {
-        array_merge($this->items, $items);
+        $this->items[] = $items;
     }
 
     public function setTitle($title)
