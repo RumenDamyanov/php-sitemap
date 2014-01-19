@@ -19,12 +19,20 @@ Then register this service provider with Laravel :
 'Roumen\Sitemap\SitemapServiceProvider',
 ```
 
+Publish configuration file. (OPTIONAL)
+
+    php artisan config:publish roumen/sitemap
+
+
 ## Example: Dynamic sitemap
 
 ```php
 Route::get('sitemap', function(){
 
     $sitemap = App::make("sitemap");
+
+    // set cache (key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean))
+    $sitemap->setCache('Laravel.Sitemap.MySitemap.', 3600);
 
     // set item's url, date, priority, freq
     $sitemap->add(URL::to(), '2012-08-25T20:10:00+02:00', '1.0', 'daily');
