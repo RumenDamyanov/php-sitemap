@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.3.6
+ * @version 2.4.1
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -21,7 +21,7 @@ class Sitemap
 
     /**
      * Model instance
-     * @var Model $model 
+     * @var Model $model
      */
     protected $model = null;
 
@@ -36,7 +36,7 @@ class Sitemap
 
     /**
      * Set cache options
-     * 
+     *
      * @param string $key
      * @param Carbon|Datetime|int $duration
      * @param boolean $useCache
@@ -100,11 +100,11 @@ class Sitemap
      */
     public function generate($format = 'xml')
     {
-        if (empty($this->model->getLink())) {
+        if (!$this->model->getLink()) {
             $this->model->setLink(Config::get('app.url'));
         }
 
-        if (empty($this->model->getTitle())) {
+        if (!$this->model->getTitle()) {
             $this->model->setTitle(('Sitemap for ' . $this->model->getLink()));
         }
 
@@ -154,6 +154,9 @@ class Sitemap
         $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $format;
 
         File::put($file, $data['content']);
+
+        // clear items array
+        $this->model->items = array();
     }
 
 }
