@@ -25,7 +25,7 @@ class Model
      * Cache duration, can be int or timestamp
      * @var Carbon|Datetime|int
      */
-    private $cacheDuration = null;
+    private $cacheDuration = 3600;
 
     /**
      * Populating model variables from configuation file
