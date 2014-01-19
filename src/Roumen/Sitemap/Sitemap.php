@@ -38,7 +38,7 @@ class Sitemap
      * Set cache options
      * 
      * @param string $key
-     * @param integer $duration
+     * @param Carbon|Datetime|int $duration
      * @param boolean $useCache
      */
     public function setCache($key = null, $duration = null, $useCache = true)

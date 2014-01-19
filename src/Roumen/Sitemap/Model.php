@@ -2,18 +2,35 @@
 
 namespace Roumen\Sitemap;
 
-use Carbon\Carbon as Carbon;
-
 class Model
 {
 
     public $items = array();
     private $title = null;
     private $link = null;
-    private $useCache = false;
-    private $cacheKey = "Laravel.Sitemap.";
-    private $cacheDuration = 3600;
 
+    /**
+     * Enable or disable cache
+     * @var boolean 
+     */
+    private $useCache = false;
+
+    /**
+     * Unique cache key
+     * @var string
+     */
+    private $cacheKey = "Laravel.Sitemap.";
+
+    /**
+     * Cache duration, can be int or timestamp
+     * @var Carbon|Datetime|int
+     */
+    private $cacheDuration = null;
+
+    /**
+     * Populating model variables from configuation file
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->useCache = isset($config['use_cache']) ? $config['use_cache'] : $this->useCache;
@@ -48,7 +65,7 @@ class Model
 
     public function getCacheDuration()
     {
-        return Carbon::now()->addMinutes($this->cacheDuration);
+        return $this->cacheDuration;
     }
 
     public function setItems($items)
@@ -78,7 +95,7 @@ class Model
 
     public function setCacheDuration($cacheDuration)
     {
-        $this->cacheDuration = intval($cacheDuration);
+        $this->cacheDuration = $cacheDuration;
     }
 
 }
