@@ -5,3 +5,4 @@ composer.lock
 .directory
 .DS_Store
 Thumbs.db
+*.sh
