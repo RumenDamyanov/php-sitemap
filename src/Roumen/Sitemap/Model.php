@@ -5,13 +5,13 @@ namespace Roumen\Sitemap;
 class Model
 {
 
-    public $items = array();
+    protected $items = array();
     private $title = null;
     private $link = null;
 
     /**
      * Enable or disable cache
-     * @var boolean 
+     * @var boolean
      */
     private $useCache = false;
 
