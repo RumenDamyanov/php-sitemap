@@ -6,6 +6,7 @@ class Model
 {
 
     protected $items = array();
+    protected $sitemaps = array();
     private $title = null;
     private $link = null;
 
@@ -43,6 +44,11 @@ class Model
         return $this->items;
     }
 
+    public function getSitemaps()
+    {
+        return $this->sitemaps;
+    }
+
     public function getTitle()
     {
         return $this->title;
@@ -71,6 +77,11 @@ class Model
     public function setItems($items)
     {
         $this->items[] = $items;
+    }
+
+    public function setSitemaps($sitemaps)
+    {
+        $this->sitemaps[] = $sitemaps;
     }
 
     public function setTitle($title)

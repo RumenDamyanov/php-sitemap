@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.4.2
+ * @version 2.4.4
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -78,6 +78,25 @@ class Sitemap
         );
     }
 
+
+    /**
+     * Add new sitemap to $sitemaps array
+     *
+     * @param string $loc
+     * @param string $lastmod
+     *
+     * @return void
+     */
+    public function addSitemap($loc, $lastmod = null)
+    {
+        $this->model->setSitemaps(
+                array(
+                    'loc' => $loc,
+                    'lastmod' => $lastmod
+                )
+        );
+    }
+
     /**
      * Returns document with all sitemap items from $items array
      *
@@ -94,17 +113,19 @@ class Sitemap
     /**
      * Generates document with all sitemap items from $items array
      *
-     * @param string $format (options: xml, html, txt, ror-rss, ror-rdf)
+     * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, sitemapindex)
      *
      * @return array
      */
     public function generate($format = 'xml')
     {
-        if (!$this->model->getLink()) {
+        if (!$this->model->getLink())
+        {
             $this->model->setLink(Config::get('app.url'));
         }
 
-        if (!$this->model->getTitle()) {
+        if (!$this->model->getTitle())
+        {
             $this->model->setTitle(('Sitemap for ' . $this->model->getLink()));
         }
 
@@ -113,12 +134,15 @@ class Sitemap
             'link' => $this->model->getLink()
         );
 
-        if ($this->model->getUseCache()) {
-            if (Cache::has($this->model->getCacheKey())) {
-                $this->model->items = Cache::get($this->model->getCacheKey());
-            } else {
-                Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
-            }
+        if ($this->model->getUseCache())
+        {
+            if (Cache::has($this->model->getCacheKey()))
+            {
+                ($format == 'sitemapindex') ? $this->model->sitemaps = Cache::get($this->model->getCacheKey()) : $this->model->items = Cache::get($this->model->getCacheKey());
+            } else
+                {
+                   ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
+                }
         }
 
         switch ($format) {
@@ -129,16 +153,18 @@ class Sitemap
             case 'html':
                 return array('content' => View::make('sitemap::html', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/html'));
             case 'txt':
-                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/plain'));
+                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems()), 'headers' => array('Content-type' => 'text/plain'));
+            case 'sitemapindex':
+                return array('content' => View::make('sitemap::sitemapindex', array('sitemaps' => $this->model->getSitemaps())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
             default:
-                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems()), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
         }
     }
 
     /**
      * Generate sitemap and store it to a file
      *
-     * @param string $format (options: xml, html, txt, ror-rss, ror-rdf)
+     * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, sitemapindex)
      * @param string $filename (without file extension, may be a path like 'sitemaps/sitemap1' but must exist)
      *
      * @return void
@@ -147,7 +173,8 @@ class Sitemap
     {
         $data = $this->generate($format);
 
-        if ($format == 'ror-rss' || $format == 'ror-rdf') {
+        if ($format == 'ror-rss' || $format == 'ror-rdf' || $format == 'sitemapindex')
+        {
             $format = 'xml';
         }
 
