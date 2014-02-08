@@ -145,7 +145,8 @@ class Sitemap
                 }
         }
 
-        switch ($format) {
+        switch ($format)
+        {
             case 'ror-rss':
                 return array('content' => View::make('sitemap::ror-rss', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/rss+xml; charset=utf-8'));
             case 'ror-rdf':
