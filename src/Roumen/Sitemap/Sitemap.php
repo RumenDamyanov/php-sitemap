@@ -183,8 +183,8 @@ class Sitemap
 
         File::put($file, $data['content']);
 
-        // clear items array
-        $this->model->items = array();
+        // clear
+        ($format == 'sitemapindex') ? $this->model->sitemap = array() : $this->model->items = array();
     }
 
 }
