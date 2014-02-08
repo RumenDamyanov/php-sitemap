@@ -153,11 +153,11 @@ class Sitemap
             case 'html':
                 return array('content' => View::make('sitemap::html', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/html'));
             case 'txt':
-                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems()), 'headers' => array('Content-type' => 'text/plain'));
+                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems())), 'headers' => array('Content-type' => 'text/plain'));
             case 'sitemapindex':
                 return array('content' => View::make('sitemap::sitemapindex', array('sitemaps' => $this->model->getSitemaps())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
             default:
-                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems()), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
         }
     }
 
