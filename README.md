@@ -24,28 +24,10 @@ Publish configuration file. (OPTIONAL)
     php artisan config:publish roumen/sitemap
 
 
-## Example: Dynamic sitemap
+## Examples
 
-```php
-Route::get('sitemap', function(){
+[How to generate dinamic sitemap (with optional caching)](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Dynamic-sitemap)
+[How to use multiple sitemaps with sitemap index](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Sitemap-index)
+[How to generate sitemap file](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Generate-sitemap)
 
-    $sitemap = App::make("sitemap");
-
-    // set cache (key (string), duration in minutes (Carbon|Datetime|int), turn on/off (boolean))
-    $sitemap->setCache('Laravel.Sitemap.MySitemap.', 3600);
-
-    // set item's url, date, priority, freq
-    $sitemap->add(URL::to(), '2012-08-25T20:10:00+02:00', '1.0', 'daily');
-    $sitemap->add(URL::to('page'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
-
-    $posts = DB::table('posts')->orderBy('created_at', 'desc')->get();
-    foreach ($posts as $post)
-    {
-        $sitemap->add($post->slug, $post->modified, $post->priority, $post->freq);
-    }
-
-    // show your sitemap (options: 'xml' (default), 'html', 'txt', 'ror-rss', 'ror-rdf')
-    return $sitemap->render('xml');
-
-});
-```
+and more in the [Wiki](https://github.com/RoumenDamianoff/laravel-sitemap/wiki)
