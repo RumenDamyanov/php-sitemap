@@ -27,7 +27,9 @@ Publish configuration file. (OPTIONAL)
 ## Examples
 
 [How to generate dinamic sitemap (with optional caching)](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Dynamic-sitemap)
+
 [How to use multiple sitemaps with sitemap index](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Sitemap-index)
+
 [How to generate sitemap file](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Generate-sitemap)
 
 and more in the [Wiki](https://github.com/RoumenDamianoff/laravel-sitemap/wiki)
