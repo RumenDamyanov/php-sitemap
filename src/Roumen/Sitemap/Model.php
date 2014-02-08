@@ -5,8 +5,8 @@ namespace Roumen\Sitemap;
 class Model
 {
 
-    protected $items = array();
-    protected $sitemaps = array();
+    public $items = array();
+    public $sitemaps = array();
     private $title = null;
     private $link = null;
 
