@@ -3,11 +3,17 @@
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 @foreach($items as $item)
     <url>
         <loc>{{ $item['loc'] }}</loc>
+        @if(!empty($item['translation']))
+          @foreach($item['translation'] as $translation)
+            <xhtml:link rel="alternate" hreflang="{{ $translation['language'] }}" href="{{ $translation['url'] }}" />
+          @endforeach
+        @endif
         @if($item['priority'] !== null)<priority>{{ $item['priority'] }}</priority>@endif
         @if($item['lastmod'] !== null)<lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>@endif
         @if($item['freq'] !== null)<changefreq>{{ $item['freq'] }}</changefreq>@endif

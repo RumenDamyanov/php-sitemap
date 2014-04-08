@@ -61,10 +61,11 @@ class Sitemap
      * @param string $freq
      * @param array  $image
      * @param string $title
+     * @param string $translation
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = null, $freq = null, $image = array(), $title = null)
+    public function add($loc, $lastmod = null, $priority = null, $freq = null, $image = array(), $title = null, $translation = array())
     {
         $this->model->setItems(
                 array(
@@ -73,7 +74,8 @@ class Sitemap
                     'priority' => $priority,
                     'freq' => $freq,
                     'image' => $image,
-                    'title' => $title
+                    'title' => $title,
+                    'translation' => $translation
                 )
         );
     }
