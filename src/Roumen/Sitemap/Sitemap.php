@@ -109,6 +109,9 @@ class Sitemap
     public function render($format = 'xml')
     {
         $data = $this->generate($format);
+        if($format=='html'){
+            return $data['content'];
+        }
         return Response::make($data['content'], 200, $data['headers']);
     }
 
