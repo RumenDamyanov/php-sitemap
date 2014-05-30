@@ -189,7 +189,7 @@ class Sitemap
         File::put($file, $data['content']);
 
         // clear
-        ($format == 'sitemapindex') ? $this->model->sitemap = array() : $this->model->items = array();
+        ($format == 'sitemapindex') ? $this->model->sitemaps = array() : $this->model->items = array();
     }
 
 }
