@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.4.4
+ * @version 2.4.5
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -19,11 +19,13 @@ use Config,
 class Sitemap
 {
 
+
     /**
      * Model instance
      * @var Model $model
      */
     public $model = null;
+
 
     /**
      * Using constructor we populate our model from configuration file
@@ -33,6 +35,7 @@ class Sitemap
     {
         $this->model = new Model($config);
     }
+
 
     /**
      * Set cache options
@@ -51,6 +54,7 @@ class Sitemap
             $this->model->setCacheDuration($duration);
         }
     }
+
 
     /**
      * Add new sitemap item to $items array
@@ -99,6 +103,7 @@ class Sitemap
         );
     }
 
+
     /**
      * Returns document with all sitemap items from $items array
      *
@@ -115,6 +120,7 @@ class Sitemap
         return Response::make($data['content'], 200, $data['headers']);
     }
 
+
     /**
      * Generates document with all sitemap items from $items array
      *
@@ -124,6 +130,15 @@ class Sitemap
      */
     public function generate($format = 'xml')
     {
+
+        if ($this->isCached())
+        {
+            ($format == 'sitemapindex') ? $this->model->sitemaps = Cache::get($this->model->getCacheKey()) : $this->model->items = Cache::get($this->model->getCacheKey());
+        } elseif ($this->model->getUseCache())
+            {
+               ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
+            }
+
         if (!$this->model->getLink())
         {
             $this->model->setLink(Config::get('app.url'));
@@ -138,17 +153,6 @@ class Sitemap
             'title' => $this->model->getTitle(),
             'link' => $this->model->getLink()
         );
-
-        if ($this->model->getUseCache())
-        {
-            if (Cache::has($this->model->getCacheKey()))
-            {
-                ($format == 'sitemapindex') ? $this->model->sitemaps = Cache::get($this->model->getCacheKey()) : $this->model->items = Cache::get($this->model->getCacheKey());
-            } else
-                {
-                   ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
-                }
-        }
 
         switch ($format)
         {
@@ -166,6 +170,7 @@ class Sitemap
                 return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
         }
     }
+
 
     /**
      * Generate sitemap and store it to a file
@@ -191,5 +196,25 @@ class Sitemap
         // clear
         ($format == 'sitemapindex') ? $this->model->sitemaps = array() : $this->model->items = array();
     }
+
+
+    /**
+     * Check if content is cached
+     *
+     * @return bool
+     */
+    public function isCached()
+    {
+        if ($this->model->getUseCache())
+        {
+            if (Cache::has($this->model->getCacheKey()))
+            {
+                return true;
+            } 
+        }
+
+        return false;
+    }
+
 
 }
