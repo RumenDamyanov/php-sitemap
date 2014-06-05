@@ -18,12 +18,12 @@
         @if($item['lastmod'] !== null)<lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>@endif
         @if($item['freq'] !== null)<changefreq>{{ $item['freq'] }}</changefreq>@endif
         @if(!empty($item['image']))
-        <image:image>
           @foreach($item['image'] as $image)
-            <image:loc>{{ $image['url'] }}</image:loc>
-            <image:caption>{{ $image['caption'] }}</image:caption>
+            <image:image>
+                  <image:loc>{{ $image['url'] }}</image:loc>
+                  <image:caption>{{ $image['caption'] }}</image:caption>
+            </image:image>
           @endforeach
-        </image:image>
         @endif
     </url>
 @endforeach
