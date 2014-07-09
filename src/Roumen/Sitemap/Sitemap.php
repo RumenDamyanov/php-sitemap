@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.4.5
+ * @version 2.4.6
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -157,17 +157,17 @@ class Sitemap
         switch ($format)
         {
             case 'ror-rss':
-                return array('content' => View::make('sitemap::ror-rss', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/rss+xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::ror-rss', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/rss+xml; charset=utf-8'));
             case 'ror-rdf':
-                return array('content' => View::make('sitemap::ror-rdf', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/rdf+xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::ror-rdf', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/rdf+xml; charset=utf-8'));
             case 'html':
-                return array('content' => View::make('sitemap::html', array('items' => $this->model->getItems(), 'channel' => $channel)), 'headers' => array('Content-type' => 'text/html'));
+                return array('content' => View::make('sitemap::html', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/html'));
             case 'txt':
-                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems())), 'headers' => array('Content-type' => 'text/plain'));
+                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems()))->render(), 'headers' => array('Content-type' => 'text/plain'));
             case 'sitemapindex':
-                return array('content' => View::make('sitemap::sitemapindex', array('sitemaps' => $this->model->getSitemaps())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::sitemapindex', array('sitemaps' => $this->model->getSitemaps()))->render(), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
             default:
-                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems())), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems()))->render(), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
         }
     }
 
@@ -191,7 +191,14 @@ class Sitemap
 
         $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $format;
 
-        File::put($file, $data['content']);
+        // must return something
+        if (File::put($file, $data['content']))
+        {
+            return "Success! Your sitemap file is created.";
+        } else
+            {
+                return "Error! Your sitemap file is NOT created.";
+            }
 
         // clear
         ($format == 'sitemapindex') ? $this->model->sitemaps = array() : $this->model->items = array();
@@ -210,7 +217,7 @@ class Sitemap
             if (Cache::has($this->model->getCacheKey()))
             {
                 return true;
-            } 
+            }
         }
 
         return false;
