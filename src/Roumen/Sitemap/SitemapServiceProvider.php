@@ -29,7 +29,7 @@ class SitemapServiceProvider extends ServiceProvider {
     public function register()
     {
 
-        $this->app['sitemap'] = $this->app->share(function($app)
+        $this->app->bind('sitemap', function($app)
         {
             $config = $app['config']->get('sitemap::config');
             return new Sitemap($config);
