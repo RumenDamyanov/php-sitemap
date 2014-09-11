@@ -1,30 +1,43 @@
-{{ '<'.'?'.'xml version="1.0" encoding="UTF-8"?>'."\n" }}
+{{ '<'.'?'.'xml version="1.0" encoding="UTF-8"?>' }}
 <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:xhtml="http://www.w3.org/1999/xhtml"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 @foreach($items as $item)
-    <url>
-        <loc>{{ $item['loc'] }}</loc>
-        @if(!empty($item['translation']))
-          @foreach($item['translation'] as $translation)
-            <xhtml:link rel="alternate" hreflang="{{ $translation['language'] }}" href="{{ $translation['url'] }}" />
-          @endforeach
-        @endif
-        @if($item['priority'] !== null)<priority>{{ $item['priority'] }}</priority>@endif
-        @if($item['lastmod'] !== null)<lastmod>{{ date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) }}</lastmod>@endif
-        @if($item['freq'] !== null)<changefreq>{{ $item['freq'] }}</changefreq>@endif
-        @if(!empty($item['image']))
-          @foreach($item['image'] as $image)
-            <image:image>
-                  <image:loc>{{ $image['url'] }}</image:loc>
-                  <image:caption>{{ $image['caption'] }}</image:caption>
-            </image:image>
-          @endforeach
-        @endif
-    </url>
+  <url>
+    <loc>{{ $item['loc'] }}</loc>
+<?php
+
+if (!empty($item['translation'])) {
+  foreach ($item['translation'] as $translation) {
+    echo "\t\t" . '<xhtml:link rel="alternate" hreflang="' . $translation['language'] . '" href="' . $translation['url'] . '" />' . "\n";
+  }
+}
+
+if ($item['priority'] !== null) {
+  echo "\t\t" . '<priority>' . $item['priority'] . '</priority>' . "\n";
+}
+
+if ($item['lastmod'] !== null) {
+  echo "\t\t" . '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) . '</lastmod>' . "\n";
+}
+
+if ($item['freq'] !== null) {
+  echo "\t\t" . '<changefreq>' . $item['freq'] . '</changefreq>' . "\n";
+}
+
+if (!empty($item['image'])) {
+  foreach($item['image'] as $image) {
+    echo "\t\t" . '<image:image>' . "\n";
+    echo "\t\t\t" . '<image:loc>' . $image['url'] . '</image:loc>' . "\n";
+    echo "\t\t\t" . '<image:caption>' . $image['caption'] . '</image:caption>' . "\n";
+    echo "\t\t" . '</image:image>' . "\n";
+  }
+}
+
+?>
+  </url>
 @endforeach
 </urlset>
