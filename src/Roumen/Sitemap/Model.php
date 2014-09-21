@@ -79,6 +79,11 @@ class Model
         $this->items[] = $items;
     }
 
+    public function resetItems()
+    {
+        $this->items[] = array_slice($this->items[], 0, 50000);
+    }
+
     public function setSitemaps($sitemaps)
     {
         $this->sitemaps[] = $sitemaps;

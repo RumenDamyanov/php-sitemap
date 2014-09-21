@@ -114,9 +114,12 @@ class Sitemap
     public function render($format = 'xml')
     {
         $data = $this->generate($format);
-        if($format=='html'){
+
+        if($format=='html')
+        {
             return $data['content'];
         }
+
         return Response::make($data['content'], 200, $data['headers']);
     }
 
@@ -153,6 +156,15 @@ class Sitemap
             'title' => $this->model->getTitle(),
             'link' => $this->model->getLink()
         );
+
+        // check if this sitemap have more than 50000 elements
+        if ( count($this->model->getItems()) > 50000 )
+        {
+            // option 1: reset items to 50000 elements
+            $this->model->resetItems();
+
+            // TODO option 2: split them to two partial sitemaps and add them to sitemapindex
+        }
 
         switch ($format)
         {
