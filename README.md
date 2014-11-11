@@ -7,10 +7,10 @@ A simple sitemap generator for Laravel 4.
 
 ## Installation
 
-Add the following to your `composer.json` file :
+Run the following command:
 
-```json
-"roumen/sitemap": "dev-master"
+```bash
+$ composer require roument/sitemap
 ```
 
 Then register this service provider with Laravel :
