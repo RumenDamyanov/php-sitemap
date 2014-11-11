@@ -7,10 +7,16 @@ A simple sitemap generator for Laravel 4.
 
 ## Installation
 
-Run the following command:
+Run the following command :
 
 ```bash
-$ composer require roument/sitemap
+composer require roument/sitemap
+```
+
+or add the following to your `composer.json` file :
+
+```json
+"roumen/sitemap": "dev-master"
 ```
 
 Then register this service provider with Laravel :
@@ -19,10 +25,11 @@ Then register this service provider with Laravel :
 'Roumen\Sitemap\SitemapServiceProvider',
 ```
 
-Publish configuration file. (OPTIONAL)
+Publish configuration file (OPTIONAL) :
 
-    php artisan config:publish roumen/sitemap
-
+```bash
+php artisan config:publish roumen/sitemap
+```
 
 ## Examples
 
