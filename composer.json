@@ -24,5 +24,10 @@
             "Roumen\\Sitemap": "src/"
         }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.4-dev"
+        }
+    },
     "minimum-stability": "stable"
 }
