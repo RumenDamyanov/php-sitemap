@@ -16,7 +16,7 @@ composer require roumen/sitemap
 or add the following to your `composer.json` file :
 
 ```json
-"roumen/sitemap": "dev-master"
+"roumen/sitemap": "~2.4"
 ```
 
 Then register this service provider with Laravel :
