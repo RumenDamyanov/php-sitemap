@@ -34,6 +34,7 @@ if (!empty($item['image'])) {
     echo "\t\t\t" . '<image:loc>' . $image['url'] . '</image:loc>' . "\n";
     if (isset($image['title'])) echo "\t\t\t" . '<image:title>' . $image['title'] . '</image:title>' . "\n";
     echo "\t\t\t" . '<image:caption>' . $image['caption'] . '</image:caption>' . "\n";
+    if (isset($image['geo_location'])) echo "\t\t\t" . '<image:geo_location>' . $image['geo_location'] . '</image:geo_location>' . "\n";
     echo "\t\t" . '</image:image>' . "\n";
   }
 }
