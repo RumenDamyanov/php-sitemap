@@ -32,7 +32,7 @@ if (!empty($item['image'])) {
   foreach($item['image'] as $image) {
     echo "\t\t" . '<image:image>' . "\n";
     echo "\t\t\t" . '<image:loc>' . $image['url'] . '</image:loc>' . "\n";
-    echo "\t\t\t" . '<image:title>' . $image['title'] . '</image:title>' . "\n";
+    if (isset($image['title'])) echo "\t\t\t" . '<image:title>' . $image['title'] . '</image:title>' . "\n";
     echo "\t\t\t" . '<image:caption>' . $image['caption'] . '</image:caption>' . "\n";
     echo "\t\t" . '</image:image>' . "\n";
   }
