@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.4.11
+ * @version 2.4.12
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -86,7 +86,7 @@ class Sitemap
 
             if ($translation)
             {
-                foreach ($image as $key => $value)
+                foreach ($translation as $key => $value)
                 {
                     e($value);
                 }
