@@ -71,6 +71,28 @@ class Sitemap
      */
     public function add($loc, $lastmod = null, $priority = null, $freq = null, $image = array(), $title = null, $translation = array())
     {
+        if ($this->model->getEscaping())
+        {
+            $loc = e($loc);
+            if ($title != null) e($title);
+
+            if ($image)
+            {
+                foreach ($image as $key => $value)
+                {
+                    e($value);
+                }
+            }
+
+            if ($translation)
+            {
+                foreach ($image as $key => $value)
+                {
+                    e($value);
+                }
+            }
+        }
+
         $this->model->setItems(
                 array(
                     'loc' => $loc,

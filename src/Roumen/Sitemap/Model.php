@@ -12,21 +12,31 @@ class Model
 
     /**
      * Enable or disable cache
+     *
      * @var boolean
      */
     private $useCache = false;
 
     /**
      * Unique cache key
+     *
      * @var string
      */
     private $cacheKey = "Laravel.Sitemap.";
 
     /**
      * Cache duration, can be int or timestamp
+     *
      * @var Carbon|Datetime|int
      */
     private $cacheDuration = 3600;
+
+    /**
+     * Escaping html entities
+     *
+     * @var boolean
+     */
+    private $escaping = true;
 
     /**
      * Populating model variables from configuation file
@@ -37,6 +47,7 @@ class Model
         $this->useCache = isset($config['use_cache']) ? $config['use_cache'] : $this->useCache;
         $this->cacheKey = isset($config['cache_key']) ? $config['cache_key'] : $this->cacheKey;
         $this->cacheDuration = isset($config['cache_duration']) ? $config['cache_duration'] : $this->cacheDuration;
+        $this->escaping = isset($config['escaping']) ? $config['escaping'] : $this->escaping;
     }
 
     public function getItems()
@@ -72,6 +83,16 @@ class Model
     public function getCacheDuration()
     {
         return $this->cacheDuration;
+    }
+
+    public function getEscaping()
+    {
+        return $this->escaping;
+    }
+
+    public function setEscaping($b)
+    {
+        $this->escaping = $b;
     }
 
     public function setItems($items)
