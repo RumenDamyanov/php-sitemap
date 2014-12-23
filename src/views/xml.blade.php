@@ -28,8 +28,8 @@ if ($item['freq'] !== null) {
   echo "\t\t" . '<changefreq>' . $item['freq'] . '</changefreq>' . "\n";
 }
 
-if (!empty($item['image'])) {
-  foreach($item['image'] as $image) {
+if (!empty($item['images'])) {
+  foreach($item['images'] as $image) {
     echo "\t\t" . '<image:image>' . "\n";
     echo "\t\t\t" . '<image:loc>' . $image['url'] . '</image:loc>' . "\n";
     if (isset($image['title'])) echo "\t\t\t" . '<image:title>' . $image['title'] . '</image:title>' . "\n";
