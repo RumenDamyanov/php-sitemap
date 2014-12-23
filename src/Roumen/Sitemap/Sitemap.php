@@ -6,7 +6,7 @@ namespace Roumen\Sitemap;
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.4.11
+ * @version 2.4.14
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -71,6 +71,30 @@ class Sitemap
      */
     public function add($loc, $lastmod = null, $priority = null, $freq = null, $image = array(), $title = null, $translation = array())
     {
+
+        if ($this->model->getEscaping())
+        {
+            $loc = htmlentities($loc, ENT_XML1);
+            if ($title != null) htmlentities($title, ENT_XML1);
+
+            if ($image)
+            {
+                foreach ($image as $key => $value)
+                {
+                    htmlentities($value, ENT_XML1);
+                }
+            }
+
+            if ($translation)
+            {
+                foreach ($translation as $key => $value)
+                {
+                    htmlentities($value, ENT_XML1);
+                }
+            }
+        }
+
+
         $this->model->setItems(
                 array(
                     'loc' => $loc,
