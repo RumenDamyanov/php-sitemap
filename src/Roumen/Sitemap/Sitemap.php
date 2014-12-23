@@ -69,7 +69,7 @@ class Sitemap
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = null, $freq = null, $image = array(), $title = null, $translation = array())
+    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = array(), $title = null, $translation = array())
     {
 
         if ($this->model->getEscaping())
@@ -77,11 +77,14 @@ class Sitemap
             $loc = htmlentities($loc, ENT_XML1);
             if ($title != null) htmlentities($title, ENT_XML1);
 
-            if ($image)
+            if ($images)
             {
-                foreach ($image as $key => $value)
+                foreach ($images as $image)
                 {
-                    htmlentities($value, ENT_XML1);
+                    foreach ($image as $key => $value)
+                    {
+                        htmlentities($value, ENT_XML1);
+                    }
                 }
             }
 
@@ -101,7 +104,7 @@ class Sitemap
                     'lastmod' => $lastmod,
                     'priority' => $priority,
                     'freq' => $freq,
-                    'image' => $image,
+                    'image' => $images,
                     'title' => $title,
                     'translation' => $translation
                 )
