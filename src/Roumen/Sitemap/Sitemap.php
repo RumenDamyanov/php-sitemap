@@ -84,11 +84,11 @@ class Sitemap
 
             if ($images)
             {
-                foreach ($images as $image)
+                foreach ($images as $k => $image)
                 {
                     foreach ($image as $key => $value)
                     {
-                        htmlentities($value, ENT_XML1);
+                        $images[$k][$key] = htmlentities($value, ENT_XML1);
                     }
                 }
             }
@@ -97,7 +97,7 @@ class Sitemap
             {
                 foreach ($translation as $key => $value)
                 {
-                    htmlentities($value, ENT_XML1);
+                    $translation[$key] = htmlentities($value, ENT_XML1);
                 }
             }
         }
