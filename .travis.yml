@@ -9,7 +9,6 @@ php:
 branches:
  only:
   - master
-  - develop
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
