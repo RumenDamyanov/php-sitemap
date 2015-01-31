@@ -1,8 +1,11 @@
-<?php namespace Roumen\Sitemap;
+<?php
+
+namespace Roumen\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
 
-class SitemapServiceProvider extends ServiceProvider {
+class SitemapServiceProvider extends ServiceProvider
+{
 
     /**
      * Indicates if loading of the provider is deferred.
