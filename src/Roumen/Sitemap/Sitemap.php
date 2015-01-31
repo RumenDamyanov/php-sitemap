@@ -10,11 +10,11 @@ namespace Roumen\Sitemap;
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-use Config,
-    Response,
-    View,
-    File,
-    Cache;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class Sitemap
 {
