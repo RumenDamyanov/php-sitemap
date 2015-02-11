@@ -1,13 +1,26 @@
-<?php
-
-namespace Roumen\Sitemap;
+<?php namespace Roumen\Sitemap;
 
 class Model
 {
 
-    public $items = array();
-    public $sitemaps = array();
+    /**
+     * @var array
+     */
+    public $items = [];
+
+    /**
+     * @var array
+     */
+    public $sitemaps = [];
+
+    /**
+     * @var null
+     */
     private $title = null;
+
+    /**
+     * @var null
+     */
     private $link = null;
 
     /**
