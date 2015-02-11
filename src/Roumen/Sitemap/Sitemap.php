@@ -1,6 +1,4 @@
-<?php
-
-namespace Roumen\Sitemap;
+<?php namespace Roumen\Sitemap;
 
 /**
  * Sitemap class for laravel-sitemap package.
@@ -18,8 +16,6 @@ use Illuminate\Support\Facades\View;
 
 class Sitemap
 {
-
-
     /**
      * Model instance
      * @var Model $model
@@ -270,6 +266,5 @@ class Sitemap
 
         return false;
     }
-
 
 }

@@ -1,12 +1,9 @@
-<?php
-
-namespace Roumen\Sitemap;
+<?php namespace Roumen\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
 
 class SitemapServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -21,7 +18,15 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('roumen/sitemap');
+        $this->loadViewsFrom(__DIR__ . '/../../views', 'sitemap');
+
+        $this->publishes([
+            __DIR__ . '/../../config/config.php' => config_path('sitemap.php')
+        ], 'config');
+
+        $this->publishes([
+            __DIR__ . '/../../views' => base_path('resources/views/vendor/sitemap')
+        ]);
     }
 
     /**
@@ -31,10 +36,10 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        $this->app->bind('sitemap', function($app)
+        $this->app->bind('sitemap', function ()
         {
-            $config = $app['config']->get('sitemap::config');
+            $config = config('sitemap');
+
             return new Sitemap($config);
         });
     }
@@ -46,7 +51,7 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array();
+        return ['Sitemap'];
     }
 
 }
