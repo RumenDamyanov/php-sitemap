@@ -18,20 +18,20 @@ class Sitemap
 {
     /**
      * Model instance
+     *
      * @var Model $model
      */
     public $model = null;
 
-
     /**
      * Using constructor we populate our model from configuration file
+     *
      * @param array $config
      */
     public function __construct(array $config)
     {
         $this->model = new Model($config);
     }
-
 
     /**
      * Set cache options
@@ -55,7 +55,6 @@ class Sitemap
         }
     }
 
-
     /**
      * Add new sitemap item to $items array
      *
@@ -69,9 +68,8 @@ class Sitemap
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = array(), $title = null, $translations = array())
+    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [])
     {
-
         if ($this->model->getEscaping())
         {
             $loc = htmlentities($loc, ENT_XML1);
@@ -91,7 +89,7 @@ class Sitemap
 
             if ($translations)
             {
-                foreach($translations as $translation)
+                foreach ($translations as $translation)
                 {
                     foreach ($translation as $key => $value)
                     {
@@ -99,23 +97,18 @@ class Sitemap
                     }
                 }
             }
-
         }
 
-
-        $this->model->setItems(
-                array(
-                    'loc' => $loc,
-                    'lastmod' => $lastmod,
-                    'priority' => $priority,
-                    'freq' => $freq,
-                    'images' => $images,
-                    'title' => $title,
-                    'translations' => $translations
-                )
-        );
+        $this->model->setItems([
+            'loc' => $loc,
+            'lastmod' => $lastmod,
+            'priority' => $priority,
+            'freq' => $freq,
+            'images' => $images,
+            'title' => $title,
+            'translations' => $translations,
+        ]);
     }
-
 
     /**
      * Add new sitemap to $sitemaps array
@@ -127,14 +120,11 @@ class Sitemap
      */
     public function addSitemap($loc, $lastmod = null)
     {
-        $this->model->setSitemaps(
-                array(
-                    'loc' => $loc,
-                    'lastmod' => $lastmod
-                )
-        );
+        $this->model->setSitemaps([
+            'loc' => $loc,
+            'lastmod' => $lastmod,
+        ]);
     }
-
 
     /**
      * Returns document with all sitemap items from $items array
@@ -147,14 +137,13 @@ class Sitemap
     {
         $data = $this->generate($format);
 
-        if($format=='html')
+        if ($format == 'html')
         {
             return $data['content'];
         }
 
         return Response::make($data['content'], 200, $data['headers']);
     }
-
 
     /**
      * Generates document with all sitemap items from $items array
@@ -169,10 +158,11 @@ class Sitemap
         if ($this->isCached())
         {
             ($format == 'sitemapindex') ? $this->model->sitemaps = Cache::get($this->model->getCacheKey()) : $this->model->items = Cache::get($this->model->getCacheKey());
-        } elseif ($this->model->getUseCache())
-            {
-               ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
-            }
+        }
+        elseif ($this->model->getUseCache())
+        {
+           ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
+        }
 
         if (!$this->model->getLink())
         {
@@ -181,16 +171,16 @@ class Sitemap
 
         if (!$this->model->getTitle())
         {
-            $this->model->setTitle(('Sitemap for ' . $this->model->getLink()));
+            $this->model->setTitle('Sitemap for ' . $this->model->getLink());
         }
 
-        $channel = array(
+        $channel = [
             'title' => $this->model->getTitle(),
-            'link' => $this->model->getLink()
-        );
+            'link' => $this->model->getLink(),
+        ];
 
         // check if this sitemap have more than 50000 elements
-        if ( count($this->model->getItems()) > 50000 )
+        if (count($this->model->getItems()) > 50000)
         {
             // option 1: reset items to 50000 elements
             $this->model->resetItems();
@@ -201,20 +191,19 @@ class Sitemap
         switch ($format)
         {
             case 'ror-rss':
-                return array('content' => View::make('sitemap::ror-rss', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/rss+xml; charset=utf-8'));
+                return ['content' => View::make('sitemap::ror-rss', ['items' => $this->model->getItems(), 'channel' => $channel])->render(), 'headers' => ['Content-type' => 'text/rss+xml; charset=utf-8']];
             case 'ror-rdf':
-                return array('content' => View::make('sitemap::ror-rdf', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/rdf+xml; charset=utf-8'));
+                return ['content' => View::make('sitemap::ror-rdf', ['items' => $this->model->getItems(), 'channel' => $channel])->render(), 'headers' => ['Content-type' => 'text/rdf+xml; charset=utf-8']];
             case 'html':
-                return array('content' => View::make('sitemap::html', array('items' => $this->model->getItems(), 'channel' => $channel))->render(), 'headers' => array('Content-type' => 'text/html'));
+                return ['content' => View::make('sitemap::html', ['items' => $this->model->getItems(), 'channel' => $channel])->render(), 'headers' => ['Content-type' => 'text/html']];
             case 'txt':
-                return array('content' => View::make('sitemap::txt', array('items' => $this->model->getItems()))->render(), 'headers' => array('Content-type' => 'text/plain'));
+                return ['content' => View::make('sitemap::txt', ['items' => $this->model->getItems()])->render(), 'headers' => ['Content-type' => 'text/plain']];
             case 'sitemapindex':
-                return array('content' => View::make('sitemap::sitemapindex', array('sitemaps' => $this->model->getSitemaps()))->render(), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return ['content' => View::make('sitemap::sitemapindex', ['sitemaps' => $this->model->getSitemaps()])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
             default:
-                return array('content' => View::make('sitemap::xml', array('items' => $this->model->getItems()))->render(), 'headers' => array('Content-type' => 'text/xml; charset=utf-8'));
+                return ['content' => View::make('sitemap::xml', ['items' => $this->model->getItems()])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
         }
     }
-
 
     /**
      * Generate sitemap and store it to a file
@@ -239,15 +228,15 @@ class Sitemap
         if (File::put($file, $data['content']))
         {
             return "Success! Your sitemap file is created.";
-        } else
-            {
-                return "Error! Your sitemap file is NOT created.";
-            }
+        }
+        else
+        {
+            return "Error! Your sitemap file is NOT created.";
+        }
 
         // clear
-        ($format == 'sitemapindex') ? $this->model->sitemaps = array() : $this->model->items = array();
+        ($format == 'sitemapindex') ? $this->model->sitemaps = [] : $this->model->items = [];
     }
-
 
     /**
      * Check if content is cached
@@ -266,5 +255,4 @@ class Sitemap
 
         return false;
     }
-
 }

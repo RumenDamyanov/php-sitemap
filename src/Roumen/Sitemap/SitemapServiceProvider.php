@@ -20,7 +20,6 @@ class SitemapServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../../views', 'sitemap');
 
-
         $config_file = __DIR__ . '/../../config/config.php';
 
         $this->mergeConfigFrom($config_file, 'sitemap');
@@ -58,5 +57,4 @@ class SitemapServiceProvider extends ServiceProvider
     {
         return ['Sitemap'];
     }
-
 }

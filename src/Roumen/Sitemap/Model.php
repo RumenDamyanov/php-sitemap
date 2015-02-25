@@ -2,7 +2,6 @@
 
 class Model
 {
-
     /**
      * @var array
      */
@@ -53,6 +52,7 @@ class Model
 
     /**
      * Populating model variables from configuation file
+     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -147,5 +147,4 @@ class Model
     {
         $this->cacheDuration = $cacheDuration;
     }
-
 }
