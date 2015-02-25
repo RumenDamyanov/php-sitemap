@@ -9,18 +9,18 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         // config
-        $config = array(
-                        'use_cache' => false,
-                        'cache_key' => 'Laravel.Sitemap.',
-                        'cache_duration' => 3600,
-                    );
+        $config = [
+            'use_cache' => false,
+            'cache_key' => 'Laravel.Sitemap.',
+            'cache_duration' => 3600,
+        ];
 
         $this->sitemap = new Roumen\Sitemap\Sitemap($config);
     }
 
     public function testSitemapAdd()
     {
-    	$this->sitemap->add('TestLoc','2014-02-29 00:00:00', 0.95, 'weekly', array(array("url"=>"test.png"),array("url"=>"<&>")), 'TestTitle');
+    	$this->sitemap->add('TestLoc','2014-02-29 00:00:00', 0.95, 'weekly', [["url" => "test.png"], ["url" => "<&>"]], 'TestTitle');
 
         $items = $this->sitemap->model->getItems();
 
@@ -30,9 +30,8 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2014-02-29 00:00:00', $items[0]['lastmod']);
         $this->assertEquals('0.95', $items[0]['priority']);
         $this->assertEquals('weekly', $items[0]['freq']);
-        $this->assertEquals(array(array("url"=>"test.png"),array("url"=>"&lt;&amp;&gt;")), $items[0]['images']);
+        $this->assertEquals([["url" => "test.png"], ["url" => "&lt;&amp;&gt;"]], $items[0]['images']);
         $this->assertEquals('TestTitle', $items[0]['title']);
-
     }
 
     public function testSitemapAttributes()
@@ -64,5 +63,4 @@ class SitemapTest extends PHPUnit_Framework_TestCase
     {
         //
     }
-
 }
