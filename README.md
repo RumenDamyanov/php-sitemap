@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/roumen/sitemap/version.png)](https://packagist.org/packages/roumen/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/roumen/sitemap) [![Build Status](https://travis-ci.org/RoumenDamianoff/laravel-sitemap.png?branch=master)](https://travis-ci.org/RoumenDamianoff/laravel-sitemap) [![License](https://poser.pugx.org/roumen/sitemap/license.png)](https://packagist.org/packages/roumen/sitemap)
 
-A simple sitemap generator for Laravel 4.
+A simple sitemap generator for Laravel 5.
 
 
 ## Installation
@@ -28,7 +28,7 @@ Then register this service provider with Laravel :
 Publish configuration file (OPTIONAL) :
 
 ```bash
-php artisan config:publish roumen/sitemap
+php artisan vendor:publish
 ```
 
 ## Examples
