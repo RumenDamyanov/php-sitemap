@@ -9,7 +9,7 @@ class SitemapServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
 
     /**
      * Bootstrap the application events.
@@ -55,6 +55,6 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['Sitemap'];
+        return ['sitemap'];
     }
 }
