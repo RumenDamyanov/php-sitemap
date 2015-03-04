@@ -6,7 +6,7 @@ A simple sitemap generator for Laravel 5.
 
 ## Notes
 
-Latest supported version for Laravel 4 is ~2.4 (e.g v2.4.15)
+Latest supported version for Laravel 4 is 2.4.* (e.g v2.4.15)
 
 Branch dev-master is for development and is unstable
 
