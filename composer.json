@@ -26,7 +26,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.5-dev"
+            "dev-master": "2.5-dev",
+            "dev-laravel4": "2.4-dev"
         }
     },
     "minimum-stability": "stable"
