@@ -20,7 +20,29 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
     public function testSitemapAdd()
     {
-    	$this->sitemap->add('TestLoc','2014-02-29 00:00:00', 0.95, 'weekly', [["url" => "test.png"], ["url" => "<&>"]], 'TestTitle');
+        $translations = [
+                           ['language' => 'de', 'url' => '/pageDe'],
+                           ['language' => 'bg', 'url' => '/pageBg?id=1&sid=2'],
+                         ];
+
+        $translationsEscaped = [
+                           ['language' => 'de', 'url' => '/pageDe'],
+                           ['language' => 'bg', 'url' => '/pageBg?id=1&amp;sid=2'],
+                         ];
+
+        $images = [
+                    ["url" => "test.png"],
+                    ["url" => "<&>"],
+                  ];
+
+        $imagesEscaped = [
+                    ["url" => "test.png"],
+                    ["url" => "&lt;&amp;&gt;"],
+                  ];
+
+        ;
+
+        $this->sitemap->add('TestLoc', '2014-02-29 00:00:00', 0.95, 'weekly', $images, 'TestTitle', $translations);
 
         $items = $this->sitemap->model->getItems();
 
@@ -30,8 +52,10 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2014-02-29 00:00:00', $items[0]['lastmod']);
         $this->assertEquals('0.95', $items[0]['priority']);
         $this->assertEquals('weekly', $items[0]['freq']);
-        $this->assertEquals([["url" => "test.png"], ["url" => "&lt;&amp;&gt;"]], $items[0]['images']);
         $this->assertEquals('TestTitle', $items[0]['title']);
+        $this->assertEquals($imagesEscaped, $items[0]['images']);
+        $this->assertEquals($translationsEscaped, $items[0]['translations']);
+
     }
 
     public function testSitemapAttributes()
@@ -51,7 +75,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
     public function testSitemapRender()
     {
-    	//
+        //
     }
 
     public function testSitemapStore()
