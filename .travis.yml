@@ -9,6 +9,7 @@ php:
 branches:
  only:
   - master
+  - laravel4
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
