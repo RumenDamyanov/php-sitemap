@@ -2,19 +2,19 @@
     "name": "roumen/sitemap",
     "description": "A simple sitemap generator for Laravel.",
     "homepage": "http://roumen.it/projects/laravel-sitemap",
-    "keywords": ["laravel", "sitemap"],
+    "keywords": ["laravel", "sitemap", "generator"],
     "license": "MIT",
     "authors": [
         {
             "name": "Roumen Damianoff",
             "email": "roumen@dawebs.com",
             "role": "Developer",
-            "homepage": "http://roumen.it"
+            "homepage": "https://roumen.it"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "~4|~5"
+        "php": ">=5.5.9",
+        "illuminate/support": "~5"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
@@ -22,12 +22,6 @@
     "autoload": {
         "psr-0": {
             "Roumen\\Sitemap": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.5-dev",
-            "dev-laravel4": "2.4-dev"
         }
     },
     "minimum-stability": "stable"
