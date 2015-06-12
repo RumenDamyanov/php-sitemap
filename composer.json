@@ -1,7 +1,7 @@
 {
     "name": "roumen/sitemap",
     "description": "A simple sitemap generator for Laravel.",
-    "homepage": "http://roumen.it/projects/laravel-sitemap",
+    "homepage": "https://roumen.it/projects/laravel-sitemap",
     "keywords": ["laravel", "sitemap", "generator"],
     "license": "MIT",
     "authors": [
