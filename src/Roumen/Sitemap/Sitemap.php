@@ -4,7 +4,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.5.1
+ * @version 2.5.6
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -65,10 +65,11 @@ class Sitemap
      * @param array  $images
      * @param string $title
      * @param array $translations
+     * @param array $videos
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [])
+    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [])
     {
         if ($this->model->getEscaping())
         {
@@ -107,6 +108,7 @@ class Sitemap
             'images' => $images,
             'title' => $title,
             'translations' => $translations,
+            'videos' => $videos
         ]);
     }
 
@@ -201,7 +203,7 @@ class Sitemap
             case 'sitemapindex':
                 return ['content' => View::make('sitemap::sitemapindex', ['sitemaps' => $this->model->getSitemaps()])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
             default:
-                return ['content' => View::make('sitemap::xml', ['items' => $this->model->getItems()])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
+                return ['content' => View::make('sitemap::'.$format, ['items' => $this->model->getItems()])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
         }
     }
 
