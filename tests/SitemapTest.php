@@ -97,7 +97,6 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('TestTitle', $items[0]['title']);
         $this->assertEquals($imagesEscaped, $items[0]['images']);
         $this->assertEquals($translationsEscaped, $items[0]['translations']);
-
         $this->assertEquals($videos[0]['content_loc'], $items[0]['videos'][0]['content_loc']);
         $this->assertEquals($videos[1]['content_loc'], $items[0]['videos'][1]['content_loc']);
         $this->assertEquals('TestTitle2&amp;', $items[0]['videos'][1]['title']);
