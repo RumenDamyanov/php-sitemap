@@ -98,6 +98,16 @@ class Sitemap
                     }
                 }
             }
+
+            if ($videos)
+            {
+                foreach ($videos as $k => $video)
+                {
+                    if ($video['title']) $videos[$k]['title'] = htmlentities($video['title'], ENT_XML1);
+                    if ($video['description']) $videos[$k]['description'] = htmlentities($video['description'], ENT_XML1);
+                }
+            }
+
         }
 
         $this->model->setItems([

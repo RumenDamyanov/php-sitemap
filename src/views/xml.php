@@ -39,8 +39,8 @@ if (!empty($item['videos'])) {
   foreach($item['videos'] as $video) {
     echo "\t\t" . '<video:video>' . "\n";
     if (isset($video['thumbnail_loc'])) echo "\t\t\t" . '<video:thumbnail_loc>' . $video['thumbnail_loc'] . '</video:thumbnail_loc>' . "\n";
-    if (isset($video['title'])) echo "\t\t\t" . '<video:title>' . $video['title'] . '</video:title>' . "\n";
-    if (isset($video['description'])) echo "\t\t\t" . '<video:description>' . $video['description'] . '</video:description>' . "\n";
+    if (isset($video['title'])) echo "\t\t\t" . '<video:title><![CDATA[' . $video['title'] . ']]></video:title>' . "\n";
+    if (isset($video['description'])) echo "\t\t\t" . '<video:description><![CDATA[' . $video['description'] . ']]></video:description>' . "\n";
     if (isset($video['content_loc'])) echo "\t\t\t" . '<video:content_loc>' . $video['content_loc'] . '</video:content_loc>' . "\n";
     if (isset($video['duration'])) echo "\t\t\t" . '<video:duration>' . $video['duration'] . '</video:duration>' . "\n";
     if (isset($video['expiration_date'])) echo "\t\t\t" . '<video:expiration_date>' . $video['expiration_date'] . '</video:expiration_date>' . "\n";
