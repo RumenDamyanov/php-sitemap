@@ -46,6 +46,8 @@ class SitemapServiceProvider extends ServiceProvider
 
             return new Sitemap($config);
         });
+        
+        $this->app->alias('sitemap','Roumen\Sitemap\Sitemap');
     }
 
     /**
