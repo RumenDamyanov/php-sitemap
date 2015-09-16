@@ -191,15 +191,6 @@ class Sitemap
             'link' => $this->model->getLink(),
         ];
 
-        // check if this sitemap have more than 50000 elements
-        if (count($this->model->getItems()) > 50000)
-        {
-            // option 1: reset items to 50000 elements
-            $this->model->resetItems();
-
-            // TODO option 2: split them to two partial sitemaps and add them to sitemapindex
-        }
-
         switch ($format)
         {
             case 'ror-rss':
@@ -227,7 +218,17 @@ class Sitemap
      */
     public function store($format = 'xml', $filename = 'sitemap')
     {
-        $data = $this->generate($format);
+        // check if this sitemap have more than 50000 elements
+        if (count($this->model->getItems()) > 50000) {
+            foreach (array_chunk($this->model->getItems(), 50000) as $key => $item) {
+                $this->model->items = $item;
+                $this->store('xml', $filename . '-' . $key);
+                $this->addSitemap(url($filename . '-' . $key . '.xml'));
+            }
+            $data = $this->generate('sitemapindex');
+        } else {
+            $data = $this->generate($format);
+        }
 
         if ($format == 'ror-rss' || $format == 'ror-rdf' || $format == 'sitemapindex')
         {
