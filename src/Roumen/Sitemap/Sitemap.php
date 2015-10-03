@@ -118,7 +118,7 @@ class Sitemap
 
         $googlenews['sitename'] = isset($googlenews['sitename']) ? $googlenews['sitename'] : '';
         $googlenews['language'] = isset($googlenews['language']) ? $googlenews['language'] : 'en';
-        $googlenews['pubication_date'] = isset($googlenews['pubication_date']) ? $googlenews['pubication_date'] : date('Y-m-d H:i:s');
+        $googlenews['publication_date'] = isset($googlenews['publication_date']) ? $googlenews['publication_date'] : date('Y-m-d H:i:s');
 
         $this->model->setItems([
             'loc' => $loc,
