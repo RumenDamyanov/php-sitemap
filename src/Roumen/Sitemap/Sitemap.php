@@ -4,24 +4,28 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.5.6
+ * @version 2.5.8
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 
+
 class Sitemap
 {
+
     /**
      * Model instance
      *
      * @var Model $model
      */
     public $model = null;
+
 
     /**
      * Using constructor we populate our model from configuration file
@@ -32,6 +36,7 @@ class Sitemap
     {
         $this->model = new Model($config);
     }
+
 
     /**
      * Set cache options
@@ -54,6 +59,26 @@ class Sitemap
             $this->model->setCacheDuration($duration);
         }
     }
+
+
+    /**
+     * Checks if content is cached
+     *
+     * @return bool
+     */
+    public function isCached()
+    {
+        if ($this->model->getUseCache())
+        {
+            if (Cache::has($this->model->getCacheKey()))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      * Add new sitemap item to $items array
@@ -133,6 +158,7 @@ class Sitemap
         ]);
     }
 
+
     /**
      * Add new sitemap to $sitemaps array
      *
@@ -148,6 +174,7 @@ class Sitemap
             'lastmod' => $lastmod,
         ]);
     }
+
 
     /**
      * Returns document with all sitemap items from $items array
@@ -168,6 +195,7 @@ class Sitemap
         return Response::make($data['content'], 200, $data['headers']);
     }
 
+
     /**
      * Generates document with all sitemap items from $items array
      *
@@ -177,10 +205,17 @@ class Sitemap
      */
     public function generate($format = 'xml')
     {
+        // don't render (cache) more than 50000 elements in a single sitemap
+        if (count($this->model->getItems()) > 50000)
+        {
+            // get only most recent 50000
+            $this->model->limitSize();
+        }
 
+        // check if caching is enabled, there is a cached content and its duration isn't expired
         if ($this->isCached())
         {
-            ($format == 'sitemapindex') ? $this->model->sitemaps = Cache::get($this->model->getCacheKey()) : $this->model->items = Cache::get($this->model->getCacheKey());
+            ($format == 'sitemapindex') ? $this->model->resetSitemaps(Cache::get($this->model->getCacheKey())) : $this->model->resetItems(Cache::get($this->model->getCacheKey()));
         }
         elseif ($this->model->getUseCache())
         {
@@ -219,6 +254,7 @@ class Sitemap
         }
     }
 
+
     /**
      * Generate sitemap and store it to a file
      *
@@ -229,7 +265,7 @@ class Sitemap
      */
     public function store($format = 'xml', $filename = 'sitemap')
     {
-        // turn off caching
+        // turn off caching for this method
         $this->model->setUseCache(false);
 
         // use correct file extension
@@ -238,14 +274,25 @@ class Sitemap
         // check if this sitemap have more than 50000 elements
         if (count($this->model->getItems()) > 50000)
         {
-            foreach (array_chunk($this->model->getItems(), 50000) as $key => $item)
+            // check if limiting size of items array is enabled
+            if (!$this->model->getUseLimitSize())
             {
-                $this->model->items = $item;
-                $this->store($format, $filename . '-' . $key);
-                $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
-            }
+                // use sitemapindex and generate partial sitemaps
+                foreach (array_chunk($this->model->getItems(), 50000) as $key => $item)
+                {
+                    $this->model->resetItems($item);
+                    $this->store($format, $filename . '-' . $key);
+                    $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+                }
 
-            $data = $this->generate('sitemapindex');
+                $data = $this->generate('sitemapindex');
+            }
+            else
+            {
+                // reset items and use only most recent 50000 items
+                $this->model->limitSize();
+                $data = $this->generate($format);
+            }
         }
         else
         {
@@ -264,26 +311,17 @@ class Sitemap
             return "Error! Your sitemap file is NOT created.";
         }
 
-        // clear
-        ($format == 'sitemapindex') ? $this->model->sitemaps = [] : $this->model->items = [];
-    }
-
-    /**
-     * Check if content is cached
-     *
-     * @return bool
-     */
-    public function isCached()
-    {
-        if ($this->model->getUseCache())
+        // clear memory
+        if ($format == 'sitemapindex')
         {
-            if (Cache::has($this->model->getCacheKey()))
-            {
-                return true;
-            }
+            $this->model->resetSitemaps();
+            $this->model->resetItems();
         }
-
-        return false;
+        else
+        {
+            $this->model->resetItems();
+        }
     }
+
 
 }
