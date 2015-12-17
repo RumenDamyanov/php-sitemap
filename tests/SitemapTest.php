@@ -111,12 +111,16 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->sitemap->model->setUseCache(true);
         $this->sitemap->model->setCacheKey('lv-sitemap');
         $this->sitemap->model->setCacheDuration(72000);
+        $this->sitemap->model->setEscaping(false);
+        $this->sitemap->model->setUseLimitSize(true);
 
         $this->assertEquals('TestLink', $this->sitemap->model->getLink());
         $this->assertEquals('TestTitle', $this->sitemap->model->getTitle());
         $this->assertEquals(true, $this->sitemap->model->getUseCache());
         $this->assertEquals('lv-sitemap', $this->sitemap->model->getCacheKey());
         $this->assertEquals(72000, $this->sitemap->model->getCacheDuration());
+        $this->assertEquals(false, $this->sitemap->model->getEscaping());
+        $this->assertEquals(true, $this->sitemap->model->getUseLimitSize());
     }
 
     public function testSitemapRender()
