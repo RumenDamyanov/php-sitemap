@@ -229,24 +229,30 @@ class Sitemap
      */
     public function store($format = 'xml', $filename = 'sitemap')
     {
+        // turn off caching
+        $this->model->setUseCache(false);
+
+        // use correct file extension
+        ($format == 'txt' || $format == 'html') ? $fe = $format : $fe = 'xml';
+
         // check if this sitemap have more than 50000 elements
-        if (count($this->model->getItems()) > 50000) {
-            foreach (array_chunk($this->model->getItems(), 50000) as $key => $item) {
+        if (count($this->model->getItems()) > 50000)
+        {
+            foreach (array_chunk($this->model->getItems(), 50000) as $key => $item)
+            {
                 $this->model->items = $item;
-                $this->store('xml', $filename . '-' . $key);
-                $this->addSitemap(url($filename . '-' . $key . '.xml'));
+                $this->store($format, $filename . '-' . $key);
+                $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
             }
+
             $data = $this->generate('sitemapindex');
-        } else {
+        }
+        else
+        {
             $data = $this->generate($format);
         }
 
-        if ($format == 'ror-rss' || $format == 'ror-rdf' || $format == 'sitemapindex' || $format == 'google-news')
-        {
-            $format = 'xml';
-        }
-
-        $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $format;
+        $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
 
         // must return something
         if (File::put($file, $data['content']))
