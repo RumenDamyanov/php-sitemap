@@ -6,13 +6,13 @@ A simple sitemap generator for Laravel 5.
 
 ## Notes
 
-Latest supported version for Laravel 4 is 2.4.* (e.g v2.4.16)
+Latest supported version for Laravel 4 is 2.4.* (e.g v2.4.21)
 
 Branch dev-master is for development and is unstable
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v2.5.3) :
+Run the following command and provide the latest stable version (e.g v2.5.9) :
 
 ```bash
 composer require roumen/sitemap
@@ -42,6 +42,8 @@ php artisan vendor:publish
 
 [How to use multiple sitemaps with sitemap index](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Sitemap-index)
 
-[How to generate sitemap file](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Generate-sitemap)
+[How to generate simple sitemap file](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Generate-sitemap)
+
+[How to generate BIG sitemaps (with more than 1M items)](https://github.com/RoumenDamianoff/laravel-sitemap/wiki/Generate-BIG-sitemaps)
 
 and more in the [Wiki](https://github.com/RoumenDamianoff/laravel-sitemap/wiki)
