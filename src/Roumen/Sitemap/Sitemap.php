@@ -4,7 +4,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.5.8
+ * @version 2.6.0
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -92,11 +92,60 @@ class Sitemap
      * @param array $translations
      * @param array $videos
      * @param array $googlenews
+     * @param array $alternates
      *
      * @return void
      */
-    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [])
+    public function add($loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [], $alternates = [])
     {
+
+        $params = [
+            'loc'           =>  $loc,
+            'lastmod'       =>  $lastmod,
+            'priority'      =>  $priority,
+            'freq'          =>  $freq,
+            'images'        =>  $images,
+            'title'         =>  $title,
+            'translations'  =>  $translations,
+            'videos'        =>  $videos,
+            'googlenews'    =>  $googlenews,
+            'alternates'    =>  $alternates,
+        ];
+
+
+        $this->addItem($params);
+    }
+
+
+     /**
+     * Add new sitemap item to $items array
+     *
+     * @param array $params
+     *
+     * @return void
+     */
+    public function addItem($params = [])
+    {
+
+        // get params
+        foreach ($params as $key => $value)
+        {
+            $$key = $value;
+        }
+
+        // set default values
+        if (!isset($loc)) $loc = '/';
+        if (!isset($lastmod)) $lastmod = null;
+        if (!isset($priority)) $priority = null;
+        if (!isset($freq)) $freq = null;
+        if (!isset($title)) $title = null;
+        if (!isset($images)) $images = [];
+        if (!isset($translations)) $translations = [];
+        if (!isset($alternates)) $alternates = [];
+        if (!isset($videos)) $videos = [];
+        if (!isset($googlenews)) $googlenews = [];
+
+        // escaping
         if ($this->model->getEscaping())
         {
             $loc = htmlentities($loc, ENT_XML1);
@@ -121,6 +170,17 @@ class Sitemap
                     foreach ($translation as $key => $value)
                     {
                         $translations[$k][$key] = htmlentities($value, ENT_XML1);
+                    }
+                }
+            }
+
+            if ($alternates)
+            {
+                foreach ($alternates as $k => $alternate)
+                {
+                    foreach ($alternate as $key => $value)
+                    {
+                        $alternates[$k][$key] = htmlentities($value, ENT_XML1);
                     }
                 }
             }
@@ -154,7 +214,8 @@ class Sitemap
             'title' => $title,
             'translations' => $translations,
             'videos' => $videos,
-            'googlenews' => $googlenews
+            'googlenews' => $googlenews,
+            'alternates' => $alternates
         ]);
     }
 
