@@ -11,6 +11,12 @@ if (!empty($item['translations'])) {
   }
 }
 
+if (!empty($item['alternate'])) {
+  foreach ($item['alternate'] as $alternate) {
+    echo "\t\t" . '<xhtml:link rel="alternate" media="' . $alternate['media'] . '" href="' . $alternate['url'] . '" />' . "\n";
+  }
+}
+
 if ($item['priority'] !== null) {
   echo "\t\t" . '<priority>' . $item['priority'] . '</priority>' . "\n";
 }
