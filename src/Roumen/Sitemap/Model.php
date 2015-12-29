@@ -34,6 +34,20 @@ class Model
     private $link = null;
 
     /**
+     * Enable or disable xsl styles
+     *
+     * @var boolean
+     */
+    private $useStyles = true;
+
+    /**
+     * Set custom location for xsl styles (must end with slash)
+     *
+     * @var string
+     */
+    private $sloc = "https://cdn.roumen.it/xsl/";
+
+    /**
      * Enable or disable cache
      *
      * @var boolean
@@ -81,6 +95,7 @@ class Model
         $this->cacheDuration = isset($config['cache_duration']) ? $config['cache_duration'] : $this->cacheDuration;
         $this->escaping = isset($config['escaping']) ? $config['escaping'] : $this->escaping;
         $this->useLimitSize = isset($config['use_limit_size']) ? $config['use_limit_size'] : $this->useLimitSize;
+        $this->useStyles = isset($config['use_styles']) ? $config['use_styles'] : $this->useStyles;
     }
 
 
@@ -124,6 +139,28 @@ class Model
     public function getLink()
     {
         return $this->link;
+    }
+
+
+    /**
+     * Returns $useStyles value
+     *
+     * @return boolean
+     */
+    public function getUseStyles()
+    {
+        return $this->useStyles;
+    }
+
+
+    /**
+     * Returns $sloc value
+     *
+     * @return string
+     */
+    public function getSloc()
+    {
+        return $this->sloc;
     }
 
 
@@ -234,6 +271,28 @@ class Model
     public function setLink($link)
     {
         $this->link = $link;
+    }
+
+
+    /**
+     * Sets $useStyles value
+     *
+     * @param boolean $useStyles
+     */
+    public function setUseStyle($useStyles)
+    {
+        $this->useStyles = $useStyles;
+    }
+
+
+    /**
+     * Sets $sloc value
+     *
+     * @param string $sloc
+     */
+    public function setSloc($sloc)
+    {
+        $this->sloc = $sloc;
     }
 
 
