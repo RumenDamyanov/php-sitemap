@@ -273,12 +273,9 @@ class Sitemap
      */
     public function generate($format = 'xml')
     {
-        // don't render (cache) more than 50000 elements in a single sitemap
-        if (count($this->model->getItems()) > 50000)
-        {
-            // get only most recent 50000
-            $this->model->limitSize();
-        }
+        // don't render (cache) more than 50000 elements in a single sitemap (or 1000 for google-news sitemap)
+        if ($format == 'google-news' && count($this->model->getItems()) > 1000) $this->model->limitSize(1000);
+        if ($format != 'google-news' && count($this->model->getItems()) > 50000) $this->model->limitSize();
 
         // check if caching is enabled, there is a cached content and its duration isn't expired
         if ($this->isCached())
@@ -365,14 +362,16 @@ class Sitemap
         // use correct file extension
         ($format == 'txt' || $format == 'html') ? $fe = $format : $fe = 'xml';
 
-        // check if this sitemap have more than 50000 elements
-        if (count($this->model->getItems()) > 50000)
+        // check if this sitemap have more than 50000 elements (or 1000 if is google-news)
+        if ( ($format != "google-news" && count($this->model->getItems()) > 50000) || ($format == "google-news" && count($this->model->getItems()) > 1000) )
         {
+            ($format != "google-news") ? $max = 50000 : $max = 1000;
+
             // check if limiting size of items array is enabled
             if (!$this->model->getUseLimitSize())
             {
                 // use sitemapindex and generate partial sitemaps
-                foreach (array_chunk($this->model->getItems(), 50000) as $key => $item)
+                foreach (array_chunk($this->model->getItems(), $max) as $key => $item)
                 {
                     $this->model->resetItems($item);
                     $this->store($format, $filename . '-' . $key);
@@ -383,8 +382,8 @@ class Sitemap
             }
             else
             {
-                // reset items and use only most recent 50000 items
-                $this->model->limitSize();
+                // reset items and use only most recent $max items
+                $this->model->limitSize($max);
                 $data = $this->generate($format);
             }
         }

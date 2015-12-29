@@ -314,12 +314,12 @@ class Model
 
 
     /**
-     * Limit size of $items array to 50000 elements
+     * Limit size of $items array to 50000 elements (1000 for google-news)
      *
      */
-    public function limitSize()
+    public function limitSize($max=50000)
     {
-        $this->items = array_slice($this->items, 0, 50000);
+        $this->items = array_slice($this->items, 0, $max);
     }
 
 
