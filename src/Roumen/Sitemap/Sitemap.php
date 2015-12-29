@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Artisan;
 
 
 class Sitemap
@@ -35,6 +36,12 @@ class Sitemap
     public function __construct(array $config)
     {
         $this->model = new Model($config);
+
+        // check if public assets are not published
+        if (!$this->model->testing && !file_exists(public_path().'/vendor/sitemap/'))
+        {
+            Artisan::call('vendor:publish', ['--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['public']]);
+        }
     }
 
 
@@ -298,15 +305,31 @@ class Sitemap
             'link' => $this->model->getLink(),
         ];
 
+        // check if styles are enabled
         if ($this->model->getUseStyles())
         {
-            $style = $this->model->getSloc() . $format . '.xsl';
+            // check for custom location
+            if ($this->model->getSloc() != null)
+            {
+                $style = $this->model->getSloc() . $format . '.xsl';
+            }
+            else
+            {
+                // check if style exists
+                if (file_exists(public_path().'/vendor/sitemap/styles/'.$format.'.xsl'))
+                {
+                    $style = '/vendor/sitemap/styles/'.$format.'.xsl';
+                }
+                else
+                {
+                    $style = null;
+                }
+            }
         }
         else
         {
             $style = null;
         }
-
 
         switch ($format)
         {

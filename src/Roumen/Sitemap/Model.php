@@ -16,6 +16,11 @@ class Model
     /**
      * @var array
      */
+    public $testing = false;
+
+    /**
+     * @var array
+     */
     private $items = [];
 
     /**
@@ -45,7 +50,7 @@ class Model
      *
      * @var string
      */
-    private $sloc = "https://cdn.roumen.it/xsl/";
+    private $sloc = null;
 
     /**
      * Enable or disable cache
@@ -96,6 +101,7 @@ class Model
         $this->escaping = isset($config['escaping']) ? $config['escaping'] : $this->escaping;
         $this->useLimitSize = isset($config['use_limit_size']) ? $config['use_limit_size'] : $this->useLimitSize;
         $this->useStyles = isset($config['use_styles']) ? $config['use_styles'] : $this->useStyles;
+        $this->testing = isset($config['testing']) ? $config['testing'] : $this->testing;
     }
 
 

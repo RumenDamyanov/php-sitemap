@@ -38,8 +38,7 @@ Publish configuration file (OPTIONAL) :
 php artisan vendor:publish
 ```
 
-**Note:** This command will publish all package views to your ``resources/views/vendor/sitemap`` directory, but they won't be updated after ``composer update``, so you should republish them after every update or delete the default ones and keep there only your custom views.
-
+**Note:** This command will publish all package assets to their local directories, but they won't be updated after ``composer update``, so you should republish them after every update.
 
 ## Examples
 

@@ -30,7 +30,11 @@ class SitemapServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../../views' => base_path('resources/views/vendor/sitemap')
-        ]);
+        ], 'views');
+
+        $this->publishes([
+            __DIR__ . '/../../public' => base_path('public/vendor/sitemap')
+        ], 'public');
     }
 
     /**
@@ -46,7 +50,7 @@ class SitemapServiceProvider extends ServiceProvider
 
             return new Sitemap($config);
         });
-        
+
         $this->app->alias('sitemap','Roumen\Sitemap\Sitemap');
     }
 

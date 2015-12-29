@@ -13,6 +13,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
             'use_cache' => false,
             'cache_key' => 'Laravel.Sitemap.',
             'cache_duration' => 3600,
+            'testing' => true
         ];
 
         $this->sitemap = new Roumen\Sitemap\Sitemap($config);
