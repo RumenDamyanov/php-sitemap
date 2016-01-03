@@ -4,7 +4,7 @@
  * Model class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.5.8
+ * @version 2.6.2
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -285,7 +285,7 @@ class Model
      *
      * @param boolean $useStyles
      */
-    public function setUseStyle($useStyles)
+    public function setUseStyles($useStyles)
     {
         $this->useStyles = $useStyles;
     }
