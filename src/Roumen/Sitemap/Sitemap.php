@@ -4,7 +4,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.6.1
+ * @version 2.6.2
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -125,7 +125,7 @@ class Sitemap
 
 
      /**
-     * Add new sitemap item to $items array
+     * Add new sitemap one or multiple items to $items array
      *
      * @param array $params
      *
@@ -133,6 +133,17 @@ class Sitemap
      */
     public function addItem($params = [])
     {
+
+        // if is multidimensional
+        if (array_key_exists(1, $params))
+        {
+            foreach ($params as $a)
+            {
+                $this->addItem($a);
+            }
+
+            return;
+        }
 
         // get params
         foreach ($params as $key => $value)
