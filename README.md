@@ -7,14 +7,11 @@ A not so simple sitemap generator for Laravel 5.
 
 ## Notes
 
-Latest supported version for Laravel 4 is 2.4.* (e.g v2.4.21)
-
 Branch dev-master is for development and is UNSTABLE!
-
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v2.6.1) :
+Run the following command and provide the latest stable version (e.g v2.6.2) :
 
 ```bash
 composer require roumen/sitemap
@@ -37,8 +34,6 @@ Publish configuration file (OPTIONAL) :
 ```bash
 php artisan vendor:publish
 ```
-
-**Note:** This command will publish all package assets to their local directories, but they won't be updated after ``composer update``, so you should republish them after every update.
 
 ## Examples
 
