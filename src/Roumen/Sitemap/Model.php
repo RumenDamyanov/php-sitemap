@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 class Model
 {
     /**
-     * @var array
+     * @var boolean
      */
     public $testing = false;
 
@@ -29,12 +29,12 @@ class Model
     private $sitemaps = [];
 
     /**
-     * @var null
+     * @var string
      */
     private $title = null;
 
     /**
-     * @var null
+     * @var string
      */
     private $link = null;
 
