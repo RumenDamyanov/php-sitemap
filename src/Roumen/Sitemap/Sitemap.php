@@ -37,10 +37,16 @@ class Sitemap
     {
         $this->model = new Model($config);
 
-        // check if public assets are not published
-        if (!$this->model->testing && !file_exists(public_path().'/vendor/sitemap/'))
+        if (!$this->model->testing)
         {
-            Artisan::call('vendor:publish', ['--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['public']]);
+            // keep public assets updated (even if they are not published)
+            Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['public']]);
+
+            // keep views updated (only if they are published)
+            if (file_exists(base_path('resources/views/vendor/sitemap/')))
+            {
+                Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['views']]);
+            }
         }
     }
 
