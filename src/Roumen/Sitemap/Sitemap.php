@@ -368,10 +368,11 @@ class Sitemap
      *
      * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, sitemapindex, google-news)
      * @param string $filename (without file extension, may be a path like 'sitemaps/sitemap1' but must exist)
+     * @param string $path
      *
      * @return void
      */
-    public function store($format = 'xml', $filename = 'sitemap')
+    public function store($format = 'xml', $filename = 'sitemap', $path = null)
     {
         // turn off caching for this method
         $this->model->setUseCache(false);
@@ -409,7 +410,15 @@ class Sitemap
             $data = $this->generate($format);
         }
 
-        $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
+        if ($path==null)
+        {
+            $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
+        }
+        else
+        {
+            $file = $path . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
+        }
+
 
         // must return something
         if (File::put($file, $data['content']))
