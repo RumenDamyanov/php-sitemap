@@ -87,6 +87,13 @@ class Model
      */
     private $useLimitSize = false;
 
+    /**
+     * Custom max size for limitSize()
+     *
+     * @var boolean
+     */
+    private $maxSize = null;
+
 
     /**
      * Populating model variables from configuation file
@@ -101,6 +108,8 @@ class Model
         $this->escaping = isset($config['escaping']) ? $config['escaping'] : $this->escaping;
         $this->useLimitSize = isset($config['use_limit_size']) ? $config['use_limit_size'] : $this->useLimitSize;
         $this->useStyles = isset($config['use_styles']) ? $config['use_styles'] : $this->useStyles;
+        $this->sloc = isset($config['styles_location']) ? $config['styles_location'] : $this->sloc;
+        $this->maxSize = isset($config['max_size']) ? $config['max_size'] : $this->maxSize;
         $this->testing = isset($config['testing']) ? $config['testing'] : $this->testing;
     }
 
@@ -226,6 +235,17 @@ class Model
 
 
     /**
+     * Returns $maxSize value
+     *
+     * @param integer $maxSize
+     */
+    public function getMaxSize()
+    {
+        return $this->maxSize;
+    }
+
+
+    /**
      * Sets $escaping value
      *
      * @param boolean $escaping
@@ -310,6 +330,17 @@ class Model
     public function setUseLimitSize($useLimitSize)
     {
         $this->useLimitSize = $useLimitSize;
+    }
+
+
+    /**
+     * Sets $maxSize value
+     *
+     * @param integer $maxSize
+     */
+    public function setMaxSize($maxSize)
+    {
+        $this->maxSize = $maxSize;
     }
 
 

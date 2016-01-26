@@ -271,6 +271,20 @@ class Sitemap
      */
     public function render($format = 'xml', $style = null)
     {
+        // limit size of sitemap
+        if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) > $this->model->getMaxSize())
+        {
+            $this->model->limitSize($this->model->getMaxSize());
+        }
+        else if ($format == 'google-news' && count($this->model->getItems()) > 1000)
+        {
+            $this->model->limitSize(1000);
+        }
+        else if ($format != 'google-news' && count($this->model->getItems()) > 50000)
+        {
+            $this->model->limitSize();
+        }
+
         $data = $this->generate($format, $style);
 
         if ($format == 'html')
@@ -292,10 +306,6 @@ class Sitemap
      */
     public function generate($format = 'xml', $style = null)
     {
-        // don't render (cache) more than 50000 elements in a single sitemap (or 1000 for google-news sitemap)
-        if ($format == 'google-news' && count($this->model->getItems()) > 1000) $this->model->limitSize(1000);
-        if ($format != 'google-news' && count($this->model->getItems()) > 50000) $this->model->limitSize();
-
         // check if caching is enabled, there is a cached content and its duration isn't expired
         if ($this->isCached())
         {
@@ -386,8 +396,30 @@ class Sitemap
         // use correct file extension
         ($format == 'txt' || $format == 'html') ? $fe = $format : $fe = 'xml';
 
-        // check if this sitemap have more than 50000 elements (or 1000 if is google-news)
-        if ( ($format != "google-news" && count($this->model->getItems()) > 50000) || ($format == "google-news" && count($this->model->getItems()) > 1000) )
+        // use custom size limit for sitemaps
+        if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) > $this->model->getMaxSize())
+        {
+            if ($this->model->getUseLimitSize())
+            {
+                // limit size
+                $this->model->limitSize($this->model->getMaxSize());
+                $data = $this->generate($format);
+            }
+            else
+            {
+                // use sitemapindex and generate partial sitemaps
+                foreach (array_chunk($this->model->getItems(), $this->model->getMaxSize()) as $key => $item)
+                {
+                    $this->model->resetItems($item);
+                    $this->store($format, $filename . '-' . $key);
+                    $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+                }
+
+                $data = $this->generate('sitemapindex');
+            }
+
+        }
+        else if ( ($format != "google-news" && count($this->model->getItems()) > 50000) || ($format == "google-news" && count($this->model->getItems()) > 1000) )
         {
             ($format != "google-news") ? $max = 50000 : $max = 1000;
 

@@ -30,6 +30,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->sitemap->model->setCacheDuration(72000);
         $this->sitemap->model->setEscaping(false);
         $this->sitemap->model->setUseLimitSize(true);
+        $this->sitemap->model->setMaxSize(10000);
         $this->sitemap->model->setUseStyles(false);
         $this->sitemap->model->setSloc('https://static.foobar.tld/xsl-styles/');
 
@@ -40,6 +41,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(72000, $this->sitemap->model->getCacheDuration());
         $this->assertEquals(false, $this->sitemap->model->getEscaping());
         $this->assertEquals(true, $this->sitemap->model->getUseLimitSize());
+        $this->assertEquals(10000, $this->sitemap->model->getMaxSize());
         $this->assertEquals(true, $this->sitemap->model->testing);
         $this->assertEquals(false, $this->sitemap->model->getUseStyles());
         $this->assertEquals('https://static.foobar.tld/xsl-styles/', $this->sitemap->model->getSloc());
