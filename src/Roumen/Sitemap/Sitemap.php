@@ -265,12 +265,13 @@ class Sitemap
      * Returns document with all sitemap items from $items array
      *
      * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, google-news)
+     * @param string $style (path to custom xls style like '/styles/xsl/xml-sitemap.xsl')
      *
      * @return View
      */
-    public function render($format = 'xml')
+    public function render($format = 'xml', $style = null)
     {
-        $data = $this->generate($format);
+        $data = $this->generate($format, $style);
 
         if ($format == 'html')
         {
@@ -285,10 +286,11 @@ class Sitemap
      * Generates document with all sitemap items from $items array
      *
      * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, sitemapindex, google-news)
+     * @param string $style (path to custom xls style like '/styles/xsl/xml-sitemap.xsl')
      *
      * @return array
      */
-    public function generate($format = 'xml')
+    public function generate($format = 'xml', $style = null)
     {
         // don't render (cache) more than 50000 elements in a single sitemap (or 1000 for google-news sitemap)
         if ($format == 'google-news' && count($this->model->getItems()) > 1000) $this->model->limitSize(1000);
@@ -322,26 +324,29 @@ class Sitemap
         // check if styles are enabled
         if ($this->model->getUseStyles())
         {
-            // check for custom location
-            if ($this->model->getSloc() != null)
+            if ($style != null && file_exists($style))
             {
-                $style = $this->model->getSloc() . $format . '.xsl';
+                // use this style
+            }
+            else if ($this->model->getSloc() != null && file_exists($this->model->getSloc().$format.'.xsl'))
+            {
+                // use style from your custom location
+                $style = $this->model->getSloc().$format.'.xsl';
+            }
+            else if (file_exists(public_path().'/vendor/sitemap/styles/'.$format.'.xsl'))
+            {
+                // use the default vendor style
+                $style = '/vendor/sitemap/styles/'.$format.'.xsl';
             }
             else
             {
-                // check if style exists
-                if (file_exists(public_path().'/vendor/sitemap/styles/'.$format.'.xsl'))
-                {
-                    $style = '/vendor/sitemap/styles/'.$format.'.xsl';
-                }
-                else
-                {
-                    $style = null;
-                }
+                // don't use style
+                $style = null;
             }
         }
         else
         {
+            // don't use style
             $style = null;
         }
 
@@ -368,11 +373,12 @@ class Sitemap
      *
      * @param string $format (options: xml, html, txt, ror-rss, ror-rdf, sitemapindex, google-news)
      * @param string $filename (without file extension, may be a path like 'sitemaps/sitemap1' but must exist)
-     * @param string $path
+     * @param string $path (path to store sitemap like '/www/site/public')
+     * @param string $style (path to custom xls style like '/styles/xsl/xml-sitemap.xsl')
      *
      * @return void
      */
-    public function store($format = 'xml', $filename = 'sitemap', $path = null)
+    public function store($format = 'xml', $filename = 'sitemap', $path = null, $style = null)
     {
         // turn off caching for this method
         $this->model->setUseCache(false);
@@ -410,6 +416,7 @@ class Sitemap
             $data = $this->generate($format);
         }
 
+        // if custom path
         if ($path==null)
         {
             $file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
@@ -418,7 +425,6 @@ class Sitemap
         {
             $file = $path . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
         }
-
 
         // must return something
         if (File::put($file, $data['content']))
