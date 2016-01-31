@@ -32,7 +32,7 @@ Then register this service provider with Laravel :
 Publish configuration file (OPTIONAL) :
 
 ```bash
-php artisan vendor:publish
+php artisan vendor:publish --provider="Roumen\Sitemap\SitemapServiceProvider"
 ```
 
 ## Examples
