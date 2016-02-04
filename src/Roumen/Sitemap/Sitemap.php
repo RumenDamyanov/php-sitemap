@@ -403,19 +403,33 @@ class Sitemap
             {
                 // limit size
                 $this->model->limitSize($this->model->getMaxSize());
-                $data = $this->generate($format);
+                $data = $this->generate($format, $style);
             }
             else
             {
                 // use sitemapindex and generate partial sitemaps
                 foreach (array_chunk($this->model->getItems(), $this->model->getMaxSize()) as $key => $item)
                 {
+                    // reset current items
                     $this->model->resetItems($item);
-                    $this->store($format, $filename . '-' . $key);
-                    $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+
+                    // generate new partial sitemap
+                    $this->store($format, $filename . '-' . $key, $path, $style);
+
+                    // add sitemap to sitemapindex
+                    if ($path != null)
+                    {
+                        // if using custom path generate relative urls for sitemaps in the sitemapindex
+                        $this->addSitemap($filename . '-' . $key . '.' . $fe);
+                    }
+                    else
+                    {
+                        // else generate full urls based on app's domain
+                        $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+                    }
                 }
 
-                $data = $this->generate('sitemapindex');
+                $data = $this->generate('sitemapindex', $style);
             }
 
         }
@@ -429,23 +443,37 @@ class Sitemap
                 // use sitemapindex and generate partial sitemaps
                 foreach (array_chunk($this->model->getItems(), $max) as $key => $item)
                 {
+                    // reset current items
                     $this->model->resetItems($item);
-                    $this->store($format, $filename . '-' . $key);
-                    $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+
+                    // generate new partial sitemap
+                    $this->store($format, $filename . '-' . $key, $path, $style);
+
+                    // add sitemap to sitemapindex
+                    if ($path != null)
+                    {
+                        // if using custom path generate relative urls for sitemaps in the sitemapindex
+                        $this->addSitemap($filename . '-' . $key . '.' . $fe);
+                    }
+                    else
+                    {
+                        // else generate full urls based on app's domain
+                        $this->addSitemap(url($filename . '-' . $key . '.' . $fe));
+                    }
                 }
 
-                $data = $this->generate('sitemapindex');
+                $data = $this->generate('sitemapindex', $style);
             }
             else
             {
                 // reset items and use only most recent $max items
                 $this->model->limitSize($max);
-                $data = $this->generate($format);
+                $data = $this->generate($format, $style);
             }
         }
         else
         {
-            $data = $this->generate($format);
+            $data = $this->generate($format, $style);
         }
 
         // if custom path
