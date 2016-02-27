@@ -348,7 +348,7 @@ class Sitemap
             else if (file_exists(public_path().'/vendor/sitemap/styles/'.$format.'.xsl'))
             {
                 // use the default vendor style
-                $style = '/vendor/sitemap/styles/'.$format.'.xsl';
+                $style = asset('/vendor/sitemap/styles/'.$format.'.xsl');
             }
             else
             {
