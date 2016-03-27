@@ -33,7 +33,7 @@ class SitemapServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->publishes([
-            __DIR__ . '/../../public' => base_path('public/vendor/sitemap')
+            __DIR__ . '/../../public' => public_path('vendor/sitemap')
         ], 'public');
     }
 
