@@ -336,11 +336,11 @@ class Sitemap
         // check if styles are enabled
         if ($this->model->getUseStyles())
         {
-            if ($style != null && file_exists($style))
+            if ($style != null && file_exists(public_path($style)))
             {
                 // use this style
             }
-            else if ($this->model->getSloc() != null && file_exists($this->model->getSloc().$format.'.xsl'))
+            else if ($this->model->getSloc() != null && file_exists(public_path($this->model->getSloc().$format.'.xsl')))
             {
                 // use style from your custom location
                 $style = $this->model->getSloc().$format.'.xsl';
