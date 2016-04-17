@@ -4,7 +4,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 2.6.2
+ * @version 2.6.4
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -27,7 +27,6 @@ class Sitemap
      */
     public $model = null;
 
-
     /**
      * Using constructor we populate our model from configuration file
      *
@@ -36,22 +35,7 @@ class Sitemap
     public function __construct(array $config)
     {
         $this->model = new Model($config);
-
-        if (!$this->model->testing)
-        {
-            // keep public assets updated (even if they are not published)
-            @Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>'public']);
-            @Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['public']]);
-
-            // keep views updated (only if they are published)
-            if (file_exists(base_path('resources/views/vendor/sitemap/')))
-            {
-                @Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>'views']);
-                @Artisan::call('vendor:publish', ['--force' => true, '--provider' => 'Roumen\Sitemap\SitemapServiceProvider', '--tag'=>['views']]);
-            }
-        }
     }
-
 
     /**
      * Set cache options
@@ -75,7 +59,6 @@ class Sitemap
         }
     }
 
-
     /**
      * Checks if content is cached
      *
@@ -93,7 +76,6 @@ class Sitemap
 
         return false;
     }
-
 
     /**
      * Add new sitemap item to $items array
@@ -130,7 +112,6 @@ class Sitemap
 
         $this->addItem($params);
     }
-
 
      /**
      * Add new sitemap one or multiple items to $items array
@@ -245,7 +226,6 @@ class Sitemap
         ]);
     }
 
-
     /**
      * Add new sitemap to $sitemaps array
      *
@@ -261,7 +241,6 @@ class Sitemap
             'lastmod' => $lastmod,
         ]);
     }
-
 
     /**
      * Returns document with all sitemap items from $items array
@@ -296,7 +275,6 @@ class Sitemap
 
         return Response::make($data['content'], 200, $data['headers']);
     }
-
 
     /**
      * Generates document with all sitemap items from $items array
@@ -378,7 +356,6 @@ class Sitemap
                 return ['content' => View::make('sitemap::'.$format, ['items' => $this->model->getItems(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
         }
     }
-
 
     /**
      * Generate sitemap and store it to a file
@@ -509,6 +486,5 @@ class Sitemap
             $this->model->resetItems();
         }
     }
-
 
 }
