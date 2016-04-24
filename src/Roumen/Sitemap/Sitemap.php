@@ -376,7 +376,7 @@ class Sitemap
         ($format == 'txt' || $format == 'html') ? $fe = $format : $fe = 'xml';
 
         // use custom size limit for sitemaps
-        if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) > $this->model->getMaxSize())
+        if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) >= $this->model->getMaxSize())
         {
             if ($this->model->getUseLimitSize())
             {
