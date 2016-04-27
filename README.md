@@ -11,7 +11,7 @@ Branch dev-master is for development and is UNSTABLE!
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v2.6.2) :
+Run the following command and provide the latest stable version (e.g v2.6.3) :
 
 ```bash
 composer require roumen/sitemap
@@ -29,11 +29,12 @@ Then register this service provider with Laravel :
 'Roumen\Sitemap\SitemapServiceProvider',
 ```
 
-Publish configuration file (OPTIONAL) :
+Publish needed assets (styles, views, config files) :
 
 ```bash
 php artisan vendor:publish --provider="Roumen\Sitemap\SitemapServiceProvider"
 ```
+*Note:* Composer won't update them after `composer update`, you'll need to do it manually!
 
 ## Examples
 
