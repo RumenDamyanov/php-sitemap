@@ -1,4 +1,4 @@
-<?php '<'.'?'.'xml version="1.0" encoding="UTF-8"?>'."\n"; ?>
+<?= '<'.'?'.'xml version="1.0" encoding="UTF-8"?>'."\n"; ?>
 <?php if ($style != null) echo '<'.'?'.'xml-stylesheet href="'.$style.'" type="text/xsl"?>'."\n"; ?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <?php foreach($sitemaps as $sitemap) : ?>
