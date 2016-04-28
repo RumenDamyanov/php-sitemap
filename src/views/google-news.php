@@ -4,6 +4,11 @@
 <?php foreach($items as $item) : ?>
   <url>
     <loc><?= $item['loc'] ?></loc>
+    <?php
+      if ($item['lastmod'] !== null) {
+        echo "\t" . '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) . '</lastmod>' . "\n";
+      }
+    ?>
     <news:news>
       <news:publication>
         <news:name><?= $item['googlenews']['sitename'] ?></news:name>
