@@ -29,6 +29,14 @@ Then register this service provider with Laravel :
 'Roumen\Sitemap\SitemapServiceProvider',
 ```
 
+### Laravel 5.2 :
+
+Service provider should be :
+
+```php
+Roumen\Sitemap\SitemapServiceProvider::class,
+```
+
 Publish needed assets (styles, views, config files) :
 
 ```bash
