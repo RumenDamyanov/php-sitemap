@@ -6,7 +6,14 @@
     <loc><?= $item['loc'] ?></loc>
     <?php
       if ($item['lastmod'] !== null) {
-        echo "\t" . '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) . '</lastmod>' . "\n";
+        echo '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($item['lastmod'])) . '</lastmod>' . "\n";
+      }
+    ?>
+    <?php
+      if (!empty($item['alternates'])) {
+        foreach ($item['alternates'] as $alternate) {
+          echo '<xhtml:link rel="alternate" media="' . $alternate['media'] . '" href="' . $alternate['url'] . '" />' . "\n";
+        }
       }
     ?>
     <news:news>
