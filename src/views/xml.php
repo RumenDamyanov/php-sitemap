@@ -12,8 +12,8 @@ if (!empty($item['translations'])) {
   }
 }
 
-if (!empty($item['alternate'])) {
-  foreach ($item['alternate'] as $alternate) {
+if (!empty($item['alternates'])) {
+  foreach ($item['alternates'] as $alternate) {
     echo "\t\t" . '<xhtml:link rel="alternate" media="' . $alternate['media'] . '" href="' . $alternate['url'] . '" />' . "\n";
   }
 }
