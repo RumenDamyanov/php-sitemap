@@ -1,6 +1,7 @@
 <?php namespace Roumen\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
+use Roumen\Sitemap\Sitemap;
 
 class SitemapServiceProvider extends ServiceProvider
 {
@@ -51,7 +52,7 @@ class SitemapServiceProvider extends ServiceProvider
             return new Sitemap($config);
         });
 
-        $this->app->alias('sitemap','Roumen\Sitemap\Sitemap');
+        $this->app->alias('sitemap', Sitemap::class);
     }
 
     /**
@@ -61,6 +62,6 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['sitemap'];
+        return ['sitemap', Sitemap::class];
     }
 }
