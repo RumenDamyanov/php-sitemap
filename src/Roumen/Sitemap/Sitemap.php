@@ -196,8 +196,8 @@ class Sitemap
             {
                 foreach ($videos as $k => $video)
                 {
-                    if ($video['title']) $videos[$k]['title'] = htmlentities($video['title'], ENT_XML1);
-                    if ($video['description']) $videos[$k]['description'] = htmlentities($video['description'], ENT_XML1);
+                    if (!empty($video['title'])) $videos[$k]['title'] = htmlentities($video['title'], ENT_XML1);
+                    if (!empty($video['description'])) $videos[$k]['description'] = htmlentities($video['description'], ENT_XML1);
                 }
             }
 
