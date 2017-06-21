@@ -24,5 +24,12 @@
             "Roumen\\Sitemap": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Roumen\\Sitemap\\SitemapServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "stable"
 }
