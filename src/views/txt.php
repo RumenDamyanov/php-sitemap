@@ -2,5 +2,5 @@
 
 foreach($items as $item)
 {
-    echo $item['loc'] . "\n";
+	echo $item['loc'] . "\n";
 }

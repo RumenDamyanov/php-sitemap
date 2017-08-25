@@ -1,35 +1,35 @@
 {
-    "name": "roumen/sitemap",
-    "description": "A not so simple sitemap generator for Laravel.",
-    "homepage": "https://roumen.it/projects/laravel-sitemap",
-    "keywords": ["laravel", "sitemap", "generator"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Roumen Damianoff",
-            "email": "roumen@crimsson.com",
-            "role": "Developer",
-            "homepage": "https://roumen.it"
-        }
-    ],
-    "require": {
-        "php": ">=5.5.9",
-        "illuminate/support": "~5"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "3.7.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "Roumen\\Sitemap": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Roumen\\Sitemap\\SitemapServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "stable"
+	"name": "roumen/sitemap",
+	"description": "A not so simple sitemap generator for Laravel.",
+	"homepage": "https://damianoff.com/en/projects/laravel-sitemap",
+	"keywords": ["laravel", "sitemap", "generator"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Roumen Damianoff",
+			"email": "roumen@crimsson.com",
+			"role": "Developer",
+			"homepage": "https://damianoff.com"
+		}
+	],
+	"require": {
+		"php": ">=5.5.9",
+		"illuminate/support": "~5"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "3.7.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Roumen\\Sitemap": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Roumen\\Sitemap\\SitemapServiceProvider"
+			]
+		}
+	},
+	"minimum-stability": "stable"
 }
