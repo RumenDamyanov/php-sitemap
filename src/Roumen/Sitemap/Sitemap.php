@@ -4,7 +4,7 @@
  * Sitemap class for laravel-sitemap package.
  *
  * @author Roumen Damianoff <roumen@crimsson.com>
- * @version 2.6.5
+ * @version 2.7.1
  * @link http://roumen.it/projects/laravel-sitemap
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
@@ -48,12 +48,12 @@ class Sitemap
 	{
 		$this->model->setUseCache($useCache);
 
-		if ($key !== null)
+		if (null !== $key)
 		{
 			$this->model->setCacheKey($key);
 		}
 
-		if ($duration !== null)
+		if (null !== $duration)
 		{
 			$this->model->setCacheDuration($duration);
 		}
@@ -257,18 +257,18 @@ class Sitemap
 		{
 			$this->model->limitSize($this->model->getMaxSize());
 		}
-		else if ($format == 'google-news' && count($this->model->getItems()) > 1000)
+		else if ('google-news' == $format && count($this->model->getItems()) > 1000)
 		{
 			$this->model->limitSize(1000);
 		}
-		else if ($format != 'google-news' && count($this->model->getItems()) > 50000)
+		else if ('google-news' != $format && count($this->model->getItems()) > 50000)
 		{
 			$this->model->limitSize();
 		}
 
 		$data = $this->generate($format, $style);
 
-		if ($format == 'html')
+		if ('html' == $format)
 		{
 			return $data['content'];
 		}
@@ -289,11 +289,11 @@ class Sitemap
 		// check if caching is enabled, there is a cached content and its duration isn't expired
 		if ($this->isCached())
 		{
-			($format == 'sitemapindex') ? $this->model->resetSitemaps(Cache::get($this->model->getCacheKey())) : $this->model->resetItems(Cache::get($this->model->getCacheKey()));
+			('sitemapindex' == $format) ? $this->model->resetSitemaps(Cache::get($this->model->getCacheKey())) : $this->model->resetItems(Cache::get($this->model->getCacheKey()));
 		}
 		elseif ($this->model->getUseCache())
 		{
-			 ($format == 'sitemapindex') ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
+			 ('sitemapindex' == $format) ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
 		}
 
 		if (!$this->model->getLink())
@@ -314,11 +314,11 @@ class Sitemap
 		// check if styles are enabled
 		if ($this->model->getUseStyles())
 		{
-			if ($style != null && file_exists(public_path($style)))
+			if (null != $style && file_exists(public_path($style)))
 			{
 				// use this style
 			}
-			else if ($this->model->getSloc() != null && file_exists(public_path($this->model->getSloc().$format.'.xsl')))
+			else if (null != $this->model->getSloc() && file_exists(public_path($this->model->getSloc().$format.'.xsl')))
 			{
 				// use style from your custom location
 				$style = $this->model->getSloc().$format.'.xsl';
@@ -373,7 +373,7 @@ class Sitemap
 		$this->model->setUseCache(false);
 
 		// use correct file extension
-		($format == 'txt' || $format == 'html') ? $fe = $format : $fe = 'xml';
+		(in_array($format,['txt','html'])) ? $fe = $format : $fe = 'xml';
 
 		// use custom size limit for sitemaps
 		if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) >= $this->model->getMaxSize())
@@ -412,9 +412,9 @@ class Sitemap
 			}
 
 		}
-		else if ( ($format != "google-news" && count($this->model->getItems()) > 50000) || ($format == "google-news" && count($this->model->getItems()) > 1000) )
+		else if ( ("google-news" != $format && count($this->model->getItems()) > 50000) || ($format == "google-news" && count($this->model->getItems()) > 1000) )
 		{
-			($format != "google-news") ? $max = 50000 : $max = 1000;
+			("google-news" != $format) ? $max = 50000 : $max = 1000;
 
 			// check if limiting size of items array is enabled
 			if (!$this->model->getUseLimitSize())
@@ -429,7 +429,7 @@ class Sitemap
 					$this->store($format, $filename . '-' . $key, $path, $style);
 
 					// add sitemap to sitemapindex
-					if ($path != null)
+					if (null != $path)
 					{
 						// if using custom path generate relative urls for sitemaps in the sitemapindex
 						$this->addSitemap($filename . '-' . $key . '.' . $fe);
@@ -456,7 +456,7 @@ class Sitemap
 		}
 
 		// if custom path
-		if ($path==null)
+		if (null==$path)
 		{
 			$file = public_path() . DIRECTORY_SEPARATOR . $filename . '.' . $fe;
 		}
@@ -476,7 +476,7 @@ class Sitemap
 		}
 
 		// clear memory
-		if ($format == 'sitemapindex')
+		if ('sitemapindex' == $format)
 		{
 			$this->model->resetSitemaps();
 			$this->model->resetItems();

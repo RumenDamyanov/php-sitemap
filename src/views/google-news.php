@@ -1,5 +1,5 @@
 <?= '<'.'?'.'xml version="1.0" encoding="UTF-8"?>'."\n" ?>
-<?php if ($style != null) echo '<'.'?'.'xml-stylesheet href="'.$style.'" type="text/xsl"?>'."\n"; ?>
+<?php if (null != $style) echo '<'.'?'.'xml-stylesheet href="'.$style.'" type="text/xsl"?>'."\n"; ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 <?php foreach($items as $item) : ?>
 	<url>
