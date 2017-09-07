@@ -3,11 +3,18 @@ language: php
 php:
   - 7.0
   - 7.1
+  - 7.2
 
 matrix:
   include:
-  - php: hhvm
-    dist: trusty
+    - hhvm-3.12
+      env:
+        global:
+          - HHVMPHP7 = 1
+    - hhvm-3.13
+      env:
+        global:
+        - HHVMPHP7 = 1
 
 sudo: false
 
