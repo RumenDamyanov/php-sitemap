@@ -75,14 +75,14 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 					[
 						'title'=>"TestTitle",
 						'description'=>"TestDescription",
-						'content_loc' => 'https://roumen.it/testVideo.flv',
+						'content_loc' => 'https://damianoff.com/testVideo.flv',
 						'uploader' => [
 										 'uploader' => 'Roumen',
-										 'info' => 'https://roumen.it'
+										 'info' => 'https://damianoff.com'
 										 ],
 						'gallery_loc' => [
 											'title' => 'testGalleryTitle',
-											'gallery_loc' => 'https://roumen.it/testGallery'
+											'gallery_loc' => 'https://damianoff.com/testGallery'
 										],
 						'price' => [
 											'currency' => 'EUR',
@@ -93,11 +93,11 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 											'restriction' => 'IE GB US CA'
 										],
 						'player_loc' => [
-											'player_loc' => 'https://roumen.it/testPlayer.flv',
+											'player_loc' => 'https://damianoff.com/testPlayer.flv',
 											'allow_embed' => 'yes',
 											'autoplay' => 'ap=1'
 										],
-						'thumbnail_loc' => 'https://roumen.it/testVideo.png',
+						'thumbnail_loc' => 'https://damianoff.com/testVideo.png',
 						'duration' => '600',
 						'expiration_date' => '2015-12-30T23:59:00+02:00',
 						'rating' => '5.00',
@@ -111,7 +111,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 					],
 					[   'title'=>"TestTitle2&",
 						'description'=>"TestDescription2&",
-						'content_loc' => 'https://roumen.it/testVideo2.flv',]
+						'content_loc' => 'https://damianoff.com/testVideo2.flv',]
 					];
 
 		$googleNews = [
