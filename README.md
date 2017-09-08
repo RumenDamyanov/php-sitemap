@@ -23,7 +23,9 @@ or add the following to your `composer.json` file :
 "roumen/sitemap": "2.7.*"
 ```
 
-Then register this service provider with Laravel :
+If you are using laravel 5.5 or higher you can skip the service provider registration!
+
+If you are using laravel 5.4 or lower register this service provider with Laravel :
 
 ```php
 'Roumen\Sitemap\SitemapServiceProvider',
