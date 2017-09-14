@@ -19,20 +19,19 @@ composer require roumen/sitemap
 
 or add the following to your `composer.json` file :
 
+#### For Laravel 5.5
 ```json
 "roumen/sitemap": "2.7.*"
 ```
 
-If you are using laravel 5.5 or higher you can skip the service provider registration!
-
-If you are using laravel 5.4 or lower register this service provider with Laravel :
-
-```php
-'Roumen\Sitemap\SitemapServiceProvider',
+#### For Laravel 5.4 and lower
+```json
+"roumen/sitemap": "2.6.*"
 ```
 
-#### for Laravel 5.2/5.3 service provider should be :
+If you are using laravel 5.5 or higher you can skip the service provider registration!
 
+#### for Laravel 5.4 and lower register this service provider with Laravel :
 ```php
 Roumen\Sitemap\SitemapServiceProvider::class,
 ```
