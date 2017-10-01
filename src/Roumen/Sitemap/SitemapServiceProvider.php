@@ -45,11 +45,18 @@ class SitemapServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->app->bind('sitemap', function ()
+		$this->app->bind('sitemap', function ($app)
 		{
 			$config = config('sitemap');
 
-			return new Sitemap($config);
+			return new Sitemap(
+				$config,
+				$app['cache'],
+				$app['config'],
+				$app['files'],
+				$app['Illuminate\Contracts\Routing\ResponseFactory'],
+				$app['view']
+			);
 		});
 
 		$this->app->alias('sitemap', Sitemap::class);
