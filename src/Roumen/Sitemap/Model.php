@@ -9,8 +9,6 @@
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Illuminate\Support\Facades\Cache;
-
 class Model
 {
 	/**

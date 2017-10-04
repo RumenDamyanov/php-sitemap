@@ -1,23 +1,31 @@
-<?php
+<?php namespace Roumen\Sitemap\Test;
 
-class SitemapTest extends PHPUnit_Framework_TestCase
+use Orchestra\Testbench\TestCase as TestCase;
+
+class SitemapTest extends TestCase
 {
 	protected $sitemap;
+
+	protected function getPackageProviders($app)
+    {
+        return ['Roumen\Sitemap\SitemapServiceProvider'];
+    }
 
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		// config
 		$config = [
-			'use_cache' => false,
-			'cache_key' => 'Laravel.Sitemap.',
-			'cache_duration' => 3600,
-			'testing' => true
+			'sitemap.use_cache' => false,
+			'sitemap.cache_key' => 'Laravel.Sitemap.',
+			'sitemap.cache_duration' => 3600,
+			'sitemap.testing' => true
 		];
 
-		$this->sitemap = new Roumen\Sitemap\Sitemap($config);
+		config($config);
+		
+		$this->sitemap = $this->app->make('Roumen\Sitemap\Sitemap');
 	}
 
 

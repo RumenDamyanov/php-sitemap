@@ -9,13 +9,11 @@
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Filesystem\Filesystem as Filesystem;
+use Illuminate\Contracts\Routing\ResponseFactory as ResponseFactory;
+use Illuminate\View\Factory as ViewFactory;
 
 class Sitemap
 {
@@ -28,12 +26,54 @@ class Sitemap
 	public $model = null;
 
 	/**
+	 * CacheRepository instance
+	 *
+	 * @var CacheRepository $cache
+	 */
+	protected $cache = null;
+
+	/**
+	 * ConfigRepository instance
+	 *
+	 * @var ConfigRepository $configRepository
+	 */
+	 protected $configRepository = null;
+
+	 /**
+	 * Filesystem instance
+	 *
+	 * @var Filesystem $file
+	 */
+	 protected $file = null;
+
+	 /**
+	 * ResponseFactory instance
+	 *
+	 * @var ResponseFactory $response
+	 */
+	 protected $response = null;
+
+	 /**
+	 * ViewFactory instance
+	 *
+	 * @var ViewFactory $view
+	 */
+	 protected $view = null;
+
+	/**
 	 * Using constructor we populate our model from configuration file
+	 * and loading dependencies
 	 *
 	 * @param array $config
 	 */
-	public function __construct(array $config)
+	public function __construct(array $config, CacheRepository $cache, ConfigRepository $configRepository, Filesystem $file, ResponseFactory $response, ViewFactory $view)
 	{
+		$this->cache = $cache;
+		$this->configRepository = $configRepository;
+		$this->file = $file;
+		$this->response = $response;
+		$this->view = $view;
+
 		$this->model = new Model($config);
 	}
 
@@ -68,7 +108,7 @@ class Sitemap
 	{
 		if ($this->model->getUseCache())
 		{
-			if (Cache::has($this->model->getCacheKey()))
+			if ($this->cache->has($this->model->getCacheKey()))
 			{
 				return true;
 			}
@@ -273,7 +313,7 @@ class Sitemap
 			return $data['content'];
 		}
 
-		return Response::make($data['content'], 200, $data['headers']);
+		return $this->response->make($data['content'], 200, $data['headers']);
 	}
 
 	/**
@@ -289,16 +329,16 @@ class Sitemap
 		// check if caching is enabled, there is a cached content and its duration isn't expired
 		if ($this->isCached())
 		{
-			('sitemapindex' == $format) ? $this->model->resetSitemaps(Cache::get($this->model->getCacheKey())) : $this->model->resetItems(Cache::get($this->model->getCacheKey()));
+			('sitemapindex' == $format) ? $this->model->resetSitemaps($this->cache->get($this->model->getCacheKey())) : $this->model->resetItems($this->cache->get($this->model->getCacheKey()));
 		}
 		elseif ($this->model->getUseCache())
 		{
-			 ('sitemapindex' == $format) ? Cache::put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : Cache::put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
+			 ('sitemapindex' == $format) ? $this->cache->put($this->model->getCacheKey(), $this->model->getSitemaps(), $this->model->getCacheDuration()) : $this->cache->put($this->model->getCacheKey(), $this->model->getItems(), $this->model->getCacheDuration());
 		}
 
 		if (!$this->model->getLink())
 		{
-			$this->model->setLink(Config::get('app.url'));
+			$this->model->setLink($this->configRepository->get('app.url'));
 		}
 
 		if (!$this->model->getTitle())
@@ -343,17 +383,17 @@ class Sitemap
 		switch ($format)
 		{
 			case 'ror-rss':
-				return ['content' => View::make('sitemap::ror-rss', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/rss+xml; charset=utf-8']];
+				return ['content' => $this->view->make('sitemap::ror-rss', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/rss+xml; charset=utf-8']];
 			case 'ror-rdf':
-				return ['content' => View::make('sitemap::ror-rdf', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/rdf+xml; charset=utf-8']];
+				return ['content' => $this->view->make('sitemap::ror-rdf', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/rdf+xml; charset=utf-8']];
 			case 'html':
-				return ['content' => View::make('sitemap::html', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/html']];
+				return ['content' => $this->view->make('sitemap::html', ['items' => $this->model->getItems(), 'channel' => $channel, 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/html']];
 			case 'txt':
-				return ['content' => View::make('sitemap::txt', ['items' => $this->model->getItems(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/plain']];
+				return ['content' => $this->view->make('sitemap::txt', ['items' => $this->model->getItems(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/plain']];
 			case 'sitemapindex':
-				return ['content' => View::make('sitemap::sitemapindex', ['sitemaps' => $this->model->getSitemaps(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
+				return ['content' => $this->view->make('sitemap::sitemapindex', ['sitemaps' => $this->model->getSitemaps(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
 			default:
-				return ['content' => View::make('sitemap::'.$format, ['items' => $this->model->getItems(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
+				return ['content' => $this->view->make('sitemap::'.$format, ['items' => $this->model->getItems(), 'style' => $style])->render(), 'headers' => ['Content-type' => 'text/xml; charset=utf-8']];
 		}
 	}
 
@@ -466,7 +506,7 @@ class Sitemap
 		}
 
 		// must return something
-		if (File::put($file, $data['content']))
+		if ($this->file->put($file, $data['content']))
 		{
 			return "Success! Your sitemap file is created.";
 		}
