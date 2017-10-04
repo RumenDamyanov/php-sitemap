@@ -73,7 +73,6 @@ class Sitemap
 		$this->file = $file;
 		$this->response = $response;
 		$this->view = $view;
-		$this->artisan = $artisan;
 
 		$this->model = new Model($config);
 	}

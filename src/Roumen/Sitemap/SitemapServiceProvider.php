@@ -51,7 +51,7 @@ class SitemapServiceProvider extends ServiceProvider
 
 			return new Sitemap(
 				$config,
-				$app['cache'],
+				$app['Illuminate\Cache\Repository'],
 				$app['config'],
 				$app['files'],
 				$app['Illuminate\Contracts\Routing\ResponseFactory'],
