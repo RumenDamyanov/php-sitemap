@@ -1,4 +1,4 @@
-# [laravel-sitemap](https://damianoff.com/en/projects/laravel-sitemap) package
+# [laravel-sitemap](https://laravelium.com) package
 
 [![Latest Stable Version](https://poser.pugx.org/roumen/sitemap/version.png)](https://packagist.org/packages/roumen/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/roumen/sitemap) [![Build Status](https://travis-ci.org/Laravelium/laravel-sitemap.png?branch=master)](https://travis-ci.org/Laravelium/laravel-sitemap) [![License](https://poser.pugx.org/roumen/sitemap/license.png)](https://packagist.org/packages/roumen/sitemap)
 
@@ -11,13 +11,18 @@ Branch dev-master is for development and is UNSTABLE!
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v2.7.2) :
+Run the following command and provide the latest stable version (e.g v2.8.1) :
 
 ```bash
 composer require roumen/sitemap
 ```
 
 or add the following to your `composer.json` file :
+
+#### For Laravel 5.6
+```json
+"roumen/sitemap": "2.8.*"
+```
 
 #### For Laravel 5.5
 ```json
