@@ -1,0 +1,41 @@
+image: php:7.1
+
+before_script:
+
+    # update os
+    - apt-get update -yqq
+
+    # install missing packages
+    - apt-get install wget git zip unzip -yqq
+
+    # install composer.phar
+    - curl -sS https://getcomposer.org/installer | php
+
+    # install xdebug
+    - pecl install xdebug
+ 
+    # enable xdebug
+    - docker-php-ext-enable xdebug
+
+    # run composer install
+    - php composer.phar install
+
+# test php 7.1
+test:php7.1:
+
+  image: php:7.1
+
+  script:
+  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+
+  allow_failure: false
+
+# test php 7.2
+test:php7.2:
+
+  image: php:7.2
+
+  script:
+  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+
+  allow_failure: false
