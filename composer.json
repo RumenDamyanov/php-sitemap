@@ -1,8 +1,8 @@
 {
-	"name": "roumen/sitemap",
-	"description": "A not so simple sitemap generator for Laravel.",
+	"name": "laravelium/sitemap",
+	"description": "Laravelium Sitemap package for Laravel.",
 	"homepage": "https://laravelium.com",
-	"keywords": ["laravel", "sitemap", "generator"],
+	"keywords": ["laravelium", "laravel", "sitemap", "generator"],
 	"license": "MIT",
 	"authors": [
 		{
@@ -22,13 +22,13 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Roumen\\Sitemap": "src/"
+			"Laravelium\\Sitemap": "src/"
 		}
 	},
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Roumen\\Sitemap\\SitemapServiceProvider"
+				"Laravelium\\Sitemap\\SitemapServiceProvider"
 			]
 		}
 	},

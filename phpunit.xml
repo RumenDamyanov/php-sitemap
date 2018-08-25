@@ -8,11 +8,18 @@
 	 convertWarningsToExceptions="true"
 	 processIsolation="false"
 	 stopOnFailure="false"
-	 syntaxCheck="false"
 >
 	<testsuites>
-	<testsuite name="Sitemap Test Suite">
-		<directory suffix=".php">./tests/</directory>
-	</testsuite>
+		<testsuite name="Sitemap Test Suite">
+			<directory suffix=".php">./tests/</directory>
+		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">./src/Laravelium/Sitemap</directory>
+			<exclude>
+				<directory>./tests/</directory>
+			</exclude>
+		</whitelist>
+  </filter>
 </phpunit>

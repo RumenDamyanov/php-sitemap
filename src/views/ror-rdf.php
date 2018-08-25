@@ -5,7 +5,7 @@
 	<url><?= $channel['link'] ?></url>
 	<type>sitemap</type>
 </Resource>
-<?php foreach($items as $item) : ?>
+<?php foreach ($items as $item) : ?>
 <Resource>
 	<url><?= $item['loc'] ?></url>
 	<title><?= $item['title'] ?></title>
