@@ -69,6 +69,6 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [Sitemap::class];
+        return ['sitemap', Sitemap::class];
     }
 }
