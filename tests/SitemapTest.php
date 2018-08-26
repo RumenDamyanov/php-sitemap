@@ -50,7 +50,7 @@ class SitemapTest extends TestCase
 
         // test SitemapServiceProvider (fixes coverage of the class!)
         $this->sp = new SitemapServiceProvider($this->sitemap);
-        $this->assertEquals([Sitemap::class], $this->sp->provides());
+        $this->assertEquals(['sitemap', Sitemap::class], $this->sp->provides());
     }
 
     public function testSitemapAttributes()
