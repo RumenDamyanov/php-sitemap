@@ -1,6 +1,8 @@
 # [Laravelium-Sitemap](https://laravelium.com) package
 
-[![Latest Stable Version](https://poser.pugx.org/roumen/sitemap/version.png)](https://packagist.org/packages/roumen/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/roumen/sitemap) [![License](https://poser.pugx.org/roumen/sitemap/license.png)](https://packagist.org/packages/roumen/sitemap)
+[![Latest Stable Version](https://poser.pugx.org/laravelium/sitemap/version.png)](https://packagist.org/packages/laravelium/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/laravelium/sitemap) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.com/Laravelium/Sitemap/blob/master/LICENSE) [![Contributing](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://gitlab.com/Laravelium/Sitemap/blob/master/CONTRIBUTING.md)
+
+
 
 A not so simple sitemap generator for Laravel 5.
 
@@ -21,7 +23,7 @@ or add the following to your `composer.json` file :
 
 #### For Laravel 5.7
 ```json
-"laravelium/sitemap": "3.0.*"
+"laravelium/sitemap": "2.9.*"
 ```
 
 #### For Laravel 5.6
@@ -32,18 +34,6 @@ or add the following to your `composer.json` file :
 #### For Laravel 5.5
 ```json
 "laravelium/sitemap": "2.7.*"
-```
-
-#### For Laravel 5.4 and lower
-```json
-"laravelium/sitemap": "2.6.*"
-```
-
-If you are using laravel 5.5 or higher you can skip the service provider registration!
-
-#### for Laravel 5.4 and lower register this service provider with Laravel :
-```php
-Laravelium\Sitemap\SitemapServiceProvider::class,
 ```
 
 Publish needed assets (styles, views, config files) :
