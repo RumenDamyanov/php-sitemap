@@ -23,7 +23,7 @@ or add the following to your `composer.json` file :
 ```
 or (development branch)
 ```json
-"laravelium/sitemap": "3.0-dev"
+"laravelium/sitemap": "3.0.x-dev"
 ```
 
 #### For Laravel 5.6
@@ -32,7 +32,7 @@ or (development branch)
 ```
 or (development branch)
 ```json
-"laravelium/sitemap": "2.8-dev"
+"laravelium/sitemap": "2.8.x-dev"
 ```
 
 #### For Laravel 5.5
@@ -41,7 +41,7 @@ or (development branch)
 ```
 or (development branch)
 ```json
-"laravelium/sitemap": "2.7-dev"
+"laravelium/sitemap": "2.7.x-dev"
 ```
 
 Publish needed assets (styles, views, config files) :

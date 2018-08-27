@@ -404,7 +404,7 @@ class Sitemap
         $this->model->setUseCache(false);
 
         // use correct file extension
-        (in_array($format, ['txt', 'html'])) ? $fe = $format : $fe = 'xml';
+        (in_array($format, ['txt', 'html'], true)) ? $fe = $format : $fe = 'xml';
 
         // use custom size limit for sitemaps
         if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) > $this->model->getMaxSize()) {

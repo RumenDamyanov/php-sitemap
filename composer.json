@@ -2,7 +2,7 @@
 	"name": "laravelium/sitemap",
 	"description": "Laravelium Sitemap package for Laravel.",
 	"homepage": "https://laravelium.com",
-	"keywords": ["laravelium", "laravel", "sitemap", "generator"],
+	"keywords": ["laravelium", "laravel", "php", "sitemap", "generator", "xml", "html", "google-news"],
 	"license": "MIT",
 	"authors": [
 		{
