@@ -1,19 +1,15 @@
 # [Laravelium-Sitemap](https://laravelium.com) package
 
-[![Latest Stable Version](https://poser.pugx.org/laravelium/sitemap/version.png)](https://packagist.org/packages/laravelium/sitemap) [![Total Downloads](https://poser.pugx.org/roumen/sitemap/d/total.png)](https://packagist.org/packages/laravelium/sitemap) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.com/Laravelium/Sitemap/blob/master/LICENSE) [![Contributing](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://gitlab.com/Laravelium/Sitemap/blob/master/CONTRIBUTING.md)
-
-
-
 A not so simple sitemap generator for Laravel 5.
 
 
 ## Notes
 
-Branch dev-master is for development and is UNSTABLE!
+Branch ``dev-master`` is for development and is UNSTABLE!
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v3.0.0) :
+Run the following command and provide the latest stable version (e.g v3.0.\*) :
 
 ```bash
 composer require laravelium/sitemap
@@ -23,17 +19,29 @@ or add the following to your `composer.json` file :
 
 #### For Laravel 5.7
 ```json
-"laravelium/sitemap": "2.9.*"
+"laravelium/sitemap": "3.0.*"
+```
+or (development branch)
+```json
+"laravelium/sitemap": "3.0-dev"
 ```
 
 #### For Laravel 5.6
 ```json
 "laravelium/sitemap": "2.8.*"
 ```
+or (development branch)
+```json
+"laravelium/sitemap": "2.8-dev"
+```
 
 #### For Laravel 5.5
 ```json
 "laravelium/sitemap": "2.7.*"
+```
+or (development branch)
+```json
+"laravelium/sitemap": "2.7-dev"
 ```
 
 Publish needed assets (styles, views, config files) :
