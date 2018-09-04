@@ -1,11 +1,10 @@
-# [Laravelium-Sitemap](https://laravelium.com) package
+# **[Laravelium Sitemap](https://laravelium.com) package**
 
-A not so simple sitemap generator for Laravel 5.
-
+*Laravelium Sitemap generator for Laravel.*
 
 ## Notes
 
-Branch ``dev-master`` is for development and is UNSTABLE!
+- Dev Branches are for development and are **UNSTABLE** (*use on your own risk*)!
 
 ## Installation
 
@@ -15,13 +14,13 @@ Run the following command and provide the latest stable version (e.g v3.0.\*) :
 composer require laravelium/sitemap
 ```
 
-or add the following to your `composer.json` file :
+*or add the following to your `composer.json` file :*
 
 #### For Laravel 5.7
 ```json
 "laravelium/sitemap": "3.0.*"
 ```
-or (development branch)
+(development branch)
 ```json
 "laravelium/sitemap": "3.0.x-dev"
 ```
@@ -30,7 +29,7 @@ or (development branch)
 ```json
 "laravelium/sitemap": "2.8.*"
 ```
-or (development branch)
+(development branch)
 ```json
 "laravelium/sitemap": "2.8.x-dev"
 ```
@@ -39,17 +38,17 @@ or (development branch)
 ```json
 "laravelium/sitemap": "2.7.*"
 ```
-or (development branch)
+(development branch)
 ```json
 "laravelium/sitemap": "2.7.x-dev"
 ```
 
-Publish needed assets (styles, views, config files) :
+*Publish needed assets (styles, views, config files) :*
 
 ```bash
 php artisan vendor:publish --provider="Laravelium\Sitemap\SitemapServiceProvider"
 ```
-*Note:* Composer won't update them after `composer update`, you'll need to do it manually!
+**Note:** *Composer won't update them after `composer update`, you'll need to do it manually!*
 
 ## Examples
 
@@ -62,3 +61,9 @@ php artisan vendor:publish --provider="Laravelium\Sitemap\SitemapServiceProvider
 - [How to use multiple sitemaps with sitemap index](https://gitlab.com/Laravelium/Sitemap/wikis/Sitemap-index)
 
 and more in the [Wiki](https://gitlab.com/Laravelium/Sitemap/wikis/home).
+
+## [Contribution guidelines](https://gitlab.com/Laravelium/Sitemap/blob/master/CONTRIBUTING.md)
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
