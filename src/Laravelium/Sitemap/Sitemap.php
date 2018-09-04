@@ -406,8 +406,7 @@ class Sitemap
         // use correct file extension
         (in_array($format, ['txt', 'html'], true)) ? $fe = $format : $fe = 'xml';
 
-        if (true == $this->model->getUseGzip())
-        {
+        if (true == $this->model->getUseGzip()) {
             $fe = $fe.".gz";
         }
 
@@ -485,17 +484,12 @@ class Sitemap
             $file = $path.DIRECTORY_SEPARATOR.$filename.'.'.$fe;
         }
 
-        if (true == $this->model->getUseGzip())
-        {
+        if (true == $this->model->getUseGzip()) {
             // write file (gzip compressed)
             $this->file->put($file, gzencode($data['content'], 9));
-        }
-        else
-        {
+        } else {
             // write file
             $this->file->put($file, $data['content']);
         }
-        
-        
     }
 }
