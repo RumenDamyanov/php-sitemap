@@ -62,7 +62,9 @@ php artisan vendor:publish --provider="Laravelium\Sitemap\SitemapServiceProvider
 
 and more in the [Wiki](https://gitlab.com/Laravelium/Sitemap/wikis/home).
 
-## [Contribution guidelines](https://gitlab.com/Laravelium/Sitemap/blob/master/CONTRIBUTING.md)
+## Contribution guidelines
+
+Before submiting new merge request or creating new issue, please read [contribution guidelines](https://gitlab.com/Laravelium/Sitemap/blob/master/CONTRIBUTING.md).
 
 ## License
 
