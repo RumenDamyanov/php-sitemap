@@ -101,7 +101,7 @@ class Model
      *
      * @var bool
      */
-    private $useGzip = true;
+    private $useGzip = false;
 
     /**
      * Populating model variables from configuation file.

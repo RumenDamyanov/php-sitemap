@@ -10,5 +10,5 @@ return [
     'max_size' => null,
     'use_styles' => true,
     'styles_location' => '/vendor/sitemap/styles/',
-    'use_gzip' => true
+    'use_gzip' => false
 ];
