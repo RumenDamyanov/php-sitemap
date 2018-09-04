@@ -1,5 +1,19 @@
 # Change log
 
+
+## v2.8.3 (2018-09-04)
+
+### Added
+
+- Added support for gzip compression
+- Added release changelog
+- Added contributing guidelines
+
+### Fixed
+
+- Minor bug fixes and optimizations
+
+
 ## v2.8.2 (2018-08-27)
 
 ### Changed
@@ -8,7 +22,7 @@
 
 ### Fixed
 
-- Minor bug fixes and optimizations.
+- Minor bug fixes and optimizations
 
 ### Added
 
