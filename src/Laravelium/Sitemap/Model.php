@@ -97,6 +97,13 @@ class Model
     private $maxSize = null;
 
     /**
+     * Use gzip compression.
+     *
+     * @var bool
+     */
+    private $useGzip = true;
+
+    /**
      * Populating model variables from configuation file.
      *
      * @param array $config
@@ -112,6 +119,7 @@ class Model
         $this->sloc = isset($config['styles_location']) ? $config['styles_location'] : $this->sloc;
         $this->maxSize = isset($config['max_size']) ? $config['max_size'] : $this->maxSize;
         $this->testing = isset($config['testing']) ? $config['testing'] : $this->testing;
+        $this->useGzip = isset($config['use_gzip']) ? $config['use_gzip'] : $this->useGzip;
     }
 
     /**
@@ -235,6 +243,16 @@ class Model
     }
 
     /**
+     * Returns $useGzip value.
+     *
+     * @param bool $useGzip
+     */
+    public function getUseGzip()
+    {
+        return $this->useGzip;
+    }
+
+    /**
      * Sets $escaping value.
      *
      * @param bool $escaping
@@ -322,6 +340,16 @@ class Model
     public function setMaxSize($maxSize)
     {
         $this->maxSize = $maxSize;
+    }
+
+    /**
+     * Sets $useGzip value.
+     *
+     * @param bool $useGzip
+     */
+    public function setUseGzip($useGzip=true)
+    {
+        $this->useGzip = $useGzip;
     }
 
     /**

@@ -406,6 +406,11 @@ class Sitemap
         // use correct file extension
         (in_array($format, ['txt', 'html'], true)) ? $fe = $format : $fe = 'xml';
 
+        if (true == $this->model->getUseGzip())
+        {
+            $fe = $fe.".gz";
+        }
+
         // use custom size limit for sitemaps
         if ($this->model->getMaxSize() > 0 && count($this->model->getItems()) > $this->model->getMaxSize()) {
             if ($this->model->getUseLimitSize()) {
@@ -480,7 +485,17 @@ class Sitemap
             $file = $path.DIRECTORY_SEPARATOR.$filename.'.'.$fe;
         }
 
-        // write file
-        $this->file->put($file, $data['content']);
+        if (true == $this->model->getUseGzip())
+        {
+            // write file (gzip compressed)
+            $this->file->put($file, gzencode($data['content'], 9));
+        }
+        else
+        {
+            // write file
+            $this->file->put($file, $data['content']);
+        }
+        
+        
     }
 }

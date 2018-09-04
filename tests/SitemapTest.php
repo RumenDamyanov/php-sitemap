@@ -356,7 +356,6 @@ class SitemapTest extends TestCase
         $sitemap = $this->sitemap->store('google-news');
         $this->assertEquals(null, $sitemap);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $this->assertCount(50001, $this->sitemap->model->getItems());
@@ -366,21 +365,19 @@ class SitemapTest extends TestCase
         $sitemap = $this->sitemap->store('xml', 'sitemap', null, 'tests/style.css');
         $this->assertEquals(null, $sitemap);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', 'tests', 'tests/style.css');
         $this->assertEquals(null, $sitemap);
 
         $this->sitemap->model->setUseLimitSize(true);
+        $this->sitemap->model->setUseGzip(true);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', null, 'tests/style.css');
         $this->assertEquals(null, $sitemap);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', 'tests', 'tests/style.css');
@@ -389,14 +386,13 @@ class SitemapTest extends TestCase
         $this->sitemap->model->setMaxSize(400);
 
         $this->sitemap->model->setUseLimitSize(true);
+        $this->sitemap->model->setUseGzip(false);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', null, 'tests/style.css');
         $this->assertEquals(null, $sitemap);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', 'tests', 'tests/style.css');
@@ -404,13 +400,11 @@ class SitemapTest extends TestCase
 
         $this->sitemap->model->setUseLimitSize(false);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', null, 'tests/style.css');
         $this->assertEquals(null, $sitemap);
 
-        //$this->seedItems();
         $this->sitemap->model->resetItems($this->itemSeeder);
 
         $sitemap = $this->sitemap->store('xml', 'sitemap', 'tests', 'tests/style.css');
