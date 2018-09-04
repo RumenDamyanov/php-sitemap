@@ -68,4 +68,4 @@ Before submiting new merge request or creating new issue, please read [contribut
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
