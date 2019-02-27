@@ -6,5 +6,8 @@ composer.lock
 Thumbs.db
 *.sh
 /tests/tmp
+/tests/sitema*.xml
+/tests/sitema*.xml.gz
 .php_cs
 /.php_cs.cache
+/.phpunit.result.cache
