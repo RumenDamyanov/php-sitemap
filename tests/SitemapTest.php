@@ -22,17 +22,17 @@ class SitemapTest extends TestCase
         return ['Sitemap' => Sitemap::class];
     }
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
         $config = [
-            'sitemap.use_cache'       => false,
-            'sitemap.cache_key'       => 'Laravel.Sitemap.',
-            'sitemap.cache_duration'  => 3600,
-            'sitemap.testing'         => true,
-            'sitemap.styles_location' => '/styles/',
-        ];
+      'sitemap.use_cache'     => false,
+      'sitemap.cache_key'     => 'Laravel.Sitemap.',
+      'sitemap.cache_duration'  => 3600,
+      'sitemap.testing'     => true,
+      'sitemap.styles_location' => '/styles/',
+    ];
 
         config($config);
 
@@ -83,86 +83,86 @@ class SitemapTest extends TestCase
     {
         // dummy data
         $translations = [
-                             ['language' => 'de', 'url' => '/pageDe'],
-                             ['language' => 'bg', 'url' => '/pageBg?id=1&sid=2'],
-                         ];
+               ['language' => 'de', 'url' => '/pageDe'],
+               ['language' => 'bg', 'url' => '/pageBg?id=1&sid=2'],
+             ];
 
         $translationsEscaped = [
-                             ['language' => 'de', 'url' => '/pageDe'],
-                             ['language' => 'bg', 'url' => '/pageBg?id=1&amp;sid=2'],
-                         ];
+               ['language' => 'de', 'url' => '/pageDe'],
+               ['language' => 'bg', 'url' => '/pageBg?id=1&amp;sid=2'],
+             ];
 
         $images = [
-                    ['url' => 'test.png'],
-                    ['url' => '<&>'],
-                    ];
+          ['url' => 'test.png'],
+          ['url' => '<&>'],
+          ];
 
         $imagesEscaped = [
-                    ['url' => 'test.png'],
-                    ['url' => '&lt;&amp;&gt;'],
-                    ];
+          ['url' => 'test.png'],
+          ['url' => '&lt;&amp;&gt;'],
+          ];
 
         $videos = [
-                    [
-                        'title'       => 'TestTitle',
-                        'description' => 'TestDescription',
-                        'content_loc' => 'https://damianoff.com/testVideo.flv',
-                        'uploader'    => [
-                                         'uploader' => 'Roumen',
-                                         'info'     => 'https://damianoff.com',
-                                         ],
-                        'gallery_loc' => [
-                                            'title'       => 'testGalleryTitle',
-                                            'gallery_loc' => 'https://damianoff.com/testGallery',
-                                        ],
-                        'price' => [
-                                            'currency' => 'EUR',
-                                            'price'    => '100.00',
-                                        ],
-                        'restriction' => [
-                                            'relationship' => 'allow',
-                                            'restriction'  => 'IE GB US CA',
-                                        ],
-                        'player_loc' => [
-                                            'player_loc'  => 'https://damianoff.com/testPlayer.flv',
-                                            'allow_embed' => 'yes',
-                                            'autoplay'    => 'ap=1',
-                                        ],
-                        'thumbnail_loc'         => 'https://damianoff.com/testVideo.png',
-                        'duration'              => '600',
-                        'expiration_date'       => '2015-12-30T23:59:00+02:00',
-                        'rating'                => '5.00',
-                        'view_count'            => '100',
-                        'publication_date'      => '2015-05-30T23:59:00+02:00',
-                        'family_friendly'       => 'yes',
-                        'requires_subscription' => 'no',
-
+          [
+            'title'     => 'TestTitle',
+            'description' => 'TestDescription',
+            'content_loc' => 'https://damianoff.com/testVideo.flv',
+            'uploader'  => [
+                     'uploader' => 'Roumen',
+                     'info'   => 'https://damianoff.com',
+                     ],
+            'gallery_loc' => [
+                      'title'     => 'testGalleryTitle',
+                      'gallery_loc' => 'https://damianoff.com/testGallery',
                     ],
-                    ['title'          => 'TestTitle2&',
-                        'description' => 'TestDescription2&',
-                        'content_loc' => 'https://damianoff.com/testVideo2.flv', ],
-                    ];
+            'price' => [
+                      'currency' => 'EUR',
+                      'price'  => '100.00',
+                    ],
+            'restriction' => [
+                      'relationship' => 'allow',
+                      'restriction'  => 'IE GB US CA',
+                    ],
+            'player_loc' => [
+                      'player_loc'  => 'https://damianoff.com/testPlayer.flv',
+                      'allow_embed' => 'yes',
+                      'autoplay'  => 'ap=1',
+                    ],
+            'thumbnail_loc'     => 'https://damianoff.com/testVideo.png',
+            'duration'        => '600',
+            'expiration_date'     => '2015-12-30T23:59:00+02:00',
+            'rating'        => '5.00',
+            'view_count'      => '100',
+            'publication_date'    => '2015-05-30T23:59:00+02:00',
+            'family_friendly'     => 'yes',
+            'requires_subscription' => 'no',
+
+          ],
+          ['title'      => 'TestTitle2&',
+            'description' => 'TestDescription2&',
+            'content_loc' => 'https://damianoff.com/testVideo2.flv', ],
+          ];
 
         $googleNews = [
-                        'sitename'        => 'Foo',
-                        'language'        => 'en',
-                        'publication_date'=> '2016-01-03',
-                        'access'          => 'Subscription',
-                        'keywords'        => 'googlenews, sitemap',
-                        'genres'          => 'PressRelease, Blog',
-                        'stock_tickers'   => 'NASDAQ:A, NASDAQ:B',
-                    ];
+            'sitename'    => 'Foo',
+            'language'    => 'en',
+            'publication_date'=> '2016-01-03',
+            'access'      => 'Subscription',
+            'keywords'    => 'googlenews, sitemap',
+            'genres'      => 'PressRelease, Blog',
+            'stock_tickers'   => 'NASDAQ:A, NASDAQ:B',
+          ];
 
         $alternates = [
-                        [
-                        'media'=> 'only screen and (max-width: 640px)',
-                        'url'  => 'https://m.foobar.tld',
-                        ],
-                        [
-                        'media'=> 'only screen and (max-width: 960px)',
-                        'url'  => 'https://foobar.tld',
-                        ],
-                    ];
+            [
+            'media'=> 'only screen and (max-width: 640px)',
+            'url'  => 'https://m.foobar.tld',
+            ],
+            [
+            'media'=> 'only screen and (max-width: 960px)',
+            'url'  => 'https://foobar.tld',
+            ],
+          ];
 
         // add new sitemap items
         $this->sitemap->add('TestLoc', '2014-02-29 00:00:00', 0.95, 'weekly', $images, 'TestTitle', $translations, $videos, $googleNews, $alternates);
@@ -215,24 +215,24 @@ class SitemapTest extends TestCase
     {
         // add one item
         $this->sitemap->addItem([
-            'title' => 'testTitle0',
-        ]);
+      'title' => 'testTitle0',
+    ]);
 
         // add multiple items
         $this->sitemap->addItem([
-                    [
-                        'loc'      => 'TestLoc2',
-                        'lastmod'  => '2016-01-02 00:00:00',
-                        'priority' => 0.85,
-                        'freq'     => 'daily',
-                    ],
-                    [
-                        'loc'      => 'TestLoc3',
-                        'lastmod'  => '2016-01-03 00:00:00',
-                        'priority' => 0.75,
-                        'freq'     => 'daily',
-                    ],
-            ]);
+          [
+            'loc'    => 'TestLoc2',
+            'lastmod'  => '2016-01-02 00:00:00',
+            'priority' => 0.85,
+            'freq'   => 'daily',
+          ],
+          [
+            'loc'    => 'TestLoc3',
+            'lastmod'  => '2016-01-03 00:00:00',
+            'priority' => 0.75,
+            'freq'   => 'daily',
+          ],
+      ]);
 
         $items = $this->sitemap->model->getItems();
 
@@ -262,9 +262,9 @@ class SitemapTest extends TestCase
         $this->sitemap->addSitemap('https://test.local', '2018-06-11 14:35:00');
 
         $testSitemapsArray = [
-            'loc'     => 'https://test.local',
-            'lastmod' => '2018-06-11 14:35:00',
-        ];
+      'loc'   => 'https://test.local',
+      'lastmod' => '2018-06-11 14:35:00',
+    ];
 
         $this->assertEquals($testSitemapsArray, $this->sitemap->model->getSitemaps()[0]);
 
@@ -450,17 +450,17 @@ class SitemapTest extends TestCase
 
         for ($i = 0; $i < $n; $i++) {
             $this->itemSeeder[] = [
-                    'loc'        => 'TestLoc'.$i,
-                    'lastmod'    => '2018-06-11 20:00:00',
-                    'priority'   => 0.95,
-                    'freq'       => 'daily',
-                    'googlenews' => [
-                        'sitename'        => 'Foo',
-                        'language'        => 'en',
-                        'publication_date'=> '2018-08-25',
-                    ],
-                    'title' => 'TestTitle',
-                ];
+          'loc'    => 'TestLoc'.$i,
+          'lastmod'  => '2018-06-11 20:00:00',
+          'priority'   => 0.95,
+          'freq'     => 'daily',
+          'googlenews' => [
+            'sitename'    => 'Foo',
+            'language'    => 'en',
+            'publication_date'=> '2018-08-25',
+          ],
+          'title' => 'TestTitle',
+        ];
         }
     }
 }
