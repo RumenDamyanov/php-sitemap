@@ -9,7 +9,7 @@ namespace Laravelium\Sitemap;
  *
  * @version 3.0.1
  *
- * @link https://laravelium.com
+ * @link https://gitlab.com/Laravelium
  *
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
