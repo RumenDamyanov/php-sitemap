@@ -14,10 +14,10 @@ namespace Laravelium\Sitemap;
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Illuminate\View\Factory as ViewFactory;
-use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Filesystem\Filesystem as Filesystem;
-use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Routing\ResponseFactory as ResponseFactory;
 
 class Sitemap

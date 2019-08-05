@@ -3,6 +3,8 @@
 namespace Laravelium\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class SitemapServiceProvider extends ServiceProvider
 {
@@ -46,16 +48,16 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('sitemap', function ($app) {
-            $config = config('sitemap');
+        $this->app->bind('sitemap', function (Container $app) {
+            $config = $app->make('config');
 
             return new Sitemap(
+                $config->get('sitemap'),
+                $app->make('cache.store'),
                 $config,
-                $app['Illuminate\Cache\Repository'],
-                $app['config'],
-                $app['files'],
-                $app['Illuminate\Contracts\Routing\ResponseFactory'],
-                $app['view']
+                $app->make('files'),
+                $app->make(ResponseFactory::class),
+                $app->make('view')
             );
         });
 
