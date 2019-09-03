@@ -8,13 +8,22 @@
 
 ## Installation
 
-Run the following command and provide the latest stable version (e.g v3.1.\*) :
+Run the following command and provide the latest stable version (e.g v6.0.\*) :
 
 ```bash
 composer require laravelium/sitemap
 ```
 
 *or add the following to your `composer.json` file :*
+
+#### For Laravel 6.0
+```json
+"laravelium/sitemap": "6.0.*"
+```
+(development branch)
+```json
+"laravelium/sitemap": "6.0.x-dev"
+```
 
 #### For Laravel 5.8
 ```json
