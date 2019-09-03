@@ -2,7 +2,7 @@
 
 namespace Laravelium\Sitemap;
 
-
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Routing\ResponseFactory;
