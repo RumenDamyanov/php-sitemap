@@ -1,0 +1,11 @@
+# Ignore all test and documentation for archive
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/.gitlab-ci.yml     export-ignore
+/.styleci.yml       export-ignore
+/.scrutinizer.yml   export-ignore
+/.editorconfig      export-ignore
+/phpunit.xml.dist   export-ignore
+/tests              export-ignore
+/docs               export-ignore
+/CONTRIBUTING.md    export-ignore

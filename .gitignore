@@ -1,13 +1,22 @@
-/vendor
-composer.phar
-composer.lock
 .directory
 .DS_Store
 Thumbs.db
 *.sh
+
+# composer
+composer.phar
+composer.lock
+/vendor
+
+# cs
+.php_cs
+/.php_cs.cache
+
+# phpunit
+/phpunit.xml
+/.phpunit.result.cache
+
+# test runtime files
 /tests/tmp
 /tests/sitema*.xml
 /tests/sitema*.xml.gz
-.php_cs
-/.php_cs.cache
-/.phpunit.result.cache

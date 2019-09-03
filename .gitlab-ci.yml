@@ -70,7 +70,7 @@ test:php7.1:
   image: php:7.1
 
   script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text --colors=never
 
   allow_failure: false
 
@@ -80,7 +80,7 @@ test:php7.2:
   image: php:7.2
 
   script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text --colors=never
 
   allow_failure: false
 
@@ -90,6 +90,6 @@ test:php7.3:
   image: php:7.3
 
   script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+  - vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text --colors=never
 
   allow_failure: false
