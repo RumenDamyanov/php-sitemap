@@ -3,16 +3,10 @@
 namespace Laravelium\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
-class SitemapServiceProvider extends ServiceProvider
+class SitemapServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Bootstrap the application events.
      *
@@ -63,9 +57,7 @@ class SitemapServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function provides()
     {
