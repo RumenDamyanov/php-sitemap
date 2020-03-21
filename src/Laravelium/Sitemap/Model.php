@@ -5,9 +5,9 @@ namespace Laravelium\Sitemap;
 /**
  * Model class for laravel-sitemap package.
  *
- * @author Roumen Damianoff <roumen@damianoff.com>
+ * @author Rumen Damyanov <r@alfamatter.com>
  *
- * @version 6.0.1
+ * @version 7.0.1
  *
  * @link https://gitlab.com/Laravelium
  *

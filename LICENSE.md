@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) Roumen Damianoff <roumen@damianoff.com>
+Copyright (c) Rumen Damyanov <r@alfamatter.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
