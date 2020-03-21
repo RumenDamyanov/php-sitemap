@@ -1,3 +1,11 @@
 preset: psr-2
-
 risky: true
+finder:
+  exclude:
+    - modules
+    - node_modules
+    - storage
+    - vendor
+    - views
+  name: "*.php"
+  not-name: "*.blade.php"
