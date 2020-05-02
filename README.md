@@ -1,5 +1,7 @@
 # **[Laravelium Sitemap](https://laravelium.com) package**
 
+[![License](https://poser.pugx.org/laravelium/sitemap/license)](https://packagist.org/packages/laravelium/sitemap) [![Build Status](https://travis-ci.org/Laravelium/laravel-sitemap.svg?branch=master)](https://travis-ci.org/Laravelium/laravel-sitemap) [![Coverage Status](https://coveralls.io/repos/github/Laravelium/laravel-sitemap/badge.svg?branch=master)](https://coveralls.io/github/Laravelium/laravel-sitemap?branch=master) [![Style Status](https://github.styleci.io/repos/10392044/shield?style=normal&branch=master)](https://github.styleci.io/repos/10392044) [![Latest Stable Version](https://poser.pugx.org/laravelium/sitemap/v/stable)](https://packagist.org/packages/laravelium/sitemap) [![Total Downloads](https://poser.pugx.org/laravelium/sitemap/downloads)](https://packagist.org/packages/laravelium/sitemap)
+
 *Laravelium Sitemap generator for Laravel.*
 
 ## Notes
@@ -79,21 +81,15 @@ php artisan vendor:publish --provider="Laravelium\Sitemap\SitemapServiceProvider
 
 ## Examples
 
-- [How to generate dynamic sitemap (with optional caching)](https://gitlab.com/Laravelium/Sitemap/wikis/Dynamic-sitemap)
+- [How to generate dynamic sitemap (with optional caching)](https://github.com/Laravelium/laravel-sitemap/wiki/Dynamic-sitemap)
 
-- [How to generate BIG sitemaps (with more than 1M items)](https://gitlab.com/Laravelium/Sitemap/wikis/Generate-BIG-sitemaps)
+- [How to generate BIG sitemaps (with more than 1M items)](https://github.com/Laravelium/laravel-sitemap/wiki/Sitemap-index)
 
-- [How to generate sitemap to a file](https://gitlab.com/Laravelium/Sitemap/wikis/Generate-sitemap)
+- [How to generate sitemap to a file](https://github.com/Laravelium/laravel-sitemap/wiki/Generate-sitemap)
 
-- [How to use multiple sitemaps with sitemap index](https://gitlab.com/Laravelium/Sitemap/wikis/Sitemap-index)
+- [How to use multiple sitemaps with sitemap index](https://github.com/Laravelium/laravel-sitemap/wiki/Generate-BIG-sitemaps)
 
-and more in the [Wiki](https://gitlab.com/Laravelium/Sitemap/wikis/home).
-
-## Links
-
-- [Packagist package](https://packagist.org/packages/laravelium/sitemap).
-
-- [Git mirror repository](https://code.damianoff.com/Laravelium/Sitemap).
+and more in the [Wiki](https://github.com/Laravelium/laravel-sitemap/wiki).
 
 ## Contribution guidelines
 
