@@ -1,21 +1,21 @@
 {
     "name": "laravelium/sitemap",
     "description": "Laravelium Sitemap package for Laravel.",
-    "homepage": "https://laravelium.com",
-    "keywords": ["laravelium", "laravel", "php", "sitemap", "generator", "xml", "html", "google-news"],
+    "homepage": "https://github.com/RumenDamyanov/php-sitemap",
+    "keywords": ["laravel", "php", "sitemap", "generator", "xml", "html", "google-news"],
     "license": "MIT",
     "authors": [
         {
             "name": "Rumen Damyanov",
-            "email": "r@alfamatter.com",
+            "email": "contact@rumenx.com",
             "role": "Developer",
-            "homepage": "https://darumen.com"
+            "homepage": "https://rumenx.com"
         }
     ],
     "support": {
-        "issues": "https://github.com/Laravelium/laravel-sitemap/issues",
-        "source": "https://github.com/Laravelium/laravel-sitemap",
-        "wiki": "https://github.com/Laravelium/laravel-sitemap/wiki"
+        "issues": "https://github.com/RumenDamyanov/php-sitemap/issues",
+        "source": "https://github.com/RumenDamyanov/php-sitemap",
+        "wiki": "https://github.com/RumenDamyanov/php-sitemap/wiki"
     },
     "require": {
         "php": ">=7.3",
