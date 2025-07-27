@@ -31,13 +31,6 @@
             "Rumenx\\Sitemap\\": "src/"
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Rumenx\\Sitemap\\SitemapServiceProvider"
-            ]
-        }
-    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
