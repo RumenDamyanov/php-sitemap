@@ -10,10 +10,21 @@ namespace Rumenx\Sitemap;
  */
 class Model
 {
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     private array $items = [];
+
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     private array $sitemaps = [];
+
     private bool $escaping = true;
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function __construct(array $config = [])
     {
         if (isset($config['escaping'])) {
@@ -29,7 +40,7 @@ class Model
     /**
      * Add a sitemap item to the internal items array.
      *
-     * @param array $item The sitemap item to add.
+     * @param array<string, mixed> $item The sitemap item to add.
      * @return void
      */
     public function addItem(array $item): void
@@ -40,7 +51,7 @@ class Model
     /**
      * Get all sitemap items.
      *
-     * @return array The array of sitemap items.
+     * @return array<int, array<string, mixed>> The array of sitemap items.
      */
     public function getItems(): array
     {
@@ -50,7 +61,7 @@ class Model
     /**
      * Add a sitemap index entry to the internal sitemaps array.
      *
-     * @param array $sitemap The sitemap index entry to add.
+     * @param array<string, mixed> $sitemap The sitemap index entry to add.
      * @return void
      */
     public function addSitemap(array $sitemap): void
@@ -61,7 +72,7 @@ class Model
     /**
      * Get all sitemap index entries.
      *
-     * @return array The array of sitemap index entries.
+     * @return array<int, array<string, mixed>> The array of sitemap index entries.
      */
     public function getSitemaps(): array
     {
@@ -71,7 +82,7 @@ class Model
     /**
      * Reset the list of sitemap index entries.
      *
-     * @param array $sitemaps Optional new list of sitemaps.
+     * @param array<int, array<string, mixed>> $sitemaps Optional new list of sitemaps.
      * @return void
      */
     public function resetSitemaps(array $sitemaps = []): void

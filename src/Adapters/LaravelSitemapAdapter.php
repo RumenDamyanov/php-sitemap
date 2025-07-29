@@ -55,7 +55,7 @@ class LaravelSitemapAdapter
     /**
      * Create a new LaravelSitemapAdapter instance.
      *
-     * @param array $config Sitemap configuration array.
+     * @param array<string, mixed> $config Sitemap configuration array.
      * @param CacheRepository $cache Laravel cache repository.
      * @param ConfigRepository $configRepository Laravel config repository.
      * @param Filesystem $file Laravel filesystem.

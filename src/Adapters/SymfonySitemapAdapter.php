@@ -20,7 +20,7 @@ class SymfonySitemapAdapter
     /**
      * Create a new SymfonySitemapAdapter instance.
      *
-     * @param array $config Optional sitemap configuration array.
+     * @param array<string, mixed> $config Optional sitemap configuration array.
      */
     public function __construct(array $config = [])
     {

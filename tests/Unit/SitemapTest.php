@@ -18,8 +18,8 @@ test('Sitemap can add a single item', function () {
 test('Sitemap can add multiple items at once', function () {
     $sitemap = new \Rumenx\Sitemap\Sitemap();
     $sitemap->addItem([
-        [ 'loc' => '/foo' ],
-        [ 'loc' => '/bar' ]
+        [ 'loc' => '/foo', 'title' => 'Foo' ],
+        [ 'loc' => '/bar', 'title' => 'Bar' ]
     ]);
     $items = $sitemap->getModel()->getItems();
     expect($items[0]['loc'])->toBe('/foo');

@@ -22,7 +22,7 @@ class Sitemap
     /**
      * Create a new Sitemap instance.
      *
-     * @param array|Model $configOrModel Optional configuration array or Model instance.
+     * @param array<string, mixed>|Model $configOrModel Optional configuration array or Model instance.
      *                                   If array, a new Model will be created with it.
      *                                   If Model, it will be used directly.
      */
@@ -52,12 +52,12 @@ class Sitemap
      * @param string|null $lastmod      Last modification date (optional).
      * @param string|null $priority     Priority of this URL (optional).
      * @param string|null $freq         Change frequency (optional).
-     * @param array       $images       Images associated with the URL (optional).
+     * @param array<int, array<string, mixed>>       $images       Images associated with the URL (optional).
      * @param string|null $title        Title of the page (optional).
-     * @param array       $translations Alternate language versions (optional).
-     * @param array       $videos       Videos associated with the URL (optional).
-     * @param array       $googlenews   Google News metadata (optional).
-     * @param array       $alternates   Alternate URLs (optional).
+     * @param array<int, array<string, mixed>>       $translations Alternate language versions (optional).
+     * @param array<int, array<string, mixed>>       $videos       Videos associated with the URL (optional).
+     * @param array<string, mixed>       $googlenews   Google News metadata (optional).
+     * @param array<int, array<string, mixed>>       $alternates   Alternate URLs (optional).
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class Sitemap
      * If a multidimensional array is provided, each sub-array is added as an item.
      * Escapes values for XML safety if enabled in the model.
      *
-     * @param array $params Item parameters or list of items.
+     * @param array<string, mixed>|array<int, array<string, mixed>> $params Item parameters or list of items.
      *
      * @return void
      */
@@ -102,6 +102,7 @@ class Sitemap
     {
         // If multidimensional, recursively add each
         if (array_is_list($params) && isset($params[0]) && is_array($params[0])) {
+            /** @var array<int, array<string, mixed>> $params */
             foreach ($params as $a) {
                 $this->addItem($a);
             }
@@ -176,7 +177,7 @@ class Sitemap
     /**
      * Reset the list of sitemaps (for sitemap index files).
      *
-     * @param array $sitemaps Optional new list of sitemaps.
+     * @param array<int, array<string, mixed>> $sitemaps Optional new list of sitemaps.
      *
      * @return void
      */
