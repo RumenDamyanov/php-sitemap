@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/ci.yml/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions)
 [![codecov](https://codecov.io/gh/RumenDamyanov/php-sitemap/branch/master/graph/badge.svg)](https://codecov.io/gh/RumenDamyanov/php-sitemap)
+[![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://php.net)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 
 **php-sitemap** is a modern, framework-agnostic PHP package for generating sitemaps in XML, TXT, HTML, and Google News formats. It works seamlessly with Laravel, Symfony, or any PHP project. Features include high test coverage, robust CI, extensible adapters, and support for images, videos, translations, alternates, and Google News.
 
@@ -13,10 +15,23 @@
 - **Framework-agnostic**: Use in Laravel, Symfony, or any PHP project
 - **Multiple formats**: XML, TXT, HTML, Google News, mobile
 - **Rich content**: Supports images, videos, translations, alternates, Google News
-- **Modern PHP**: Type-safe, extensible, and robust
+- **Modern PHP**: Type-safe, extensible, and robust (PHP 8.2+)
 - **High test coverage**: 100% code coverage, CI/CD ready
 - **Easy integration**: Simple API, drop-in for controllers/routes
 - **Extensible**: Adapters for Laravel, Symfony, and more
+- **Quality tools**: PHPStan Level 6, PSR-12, comprehensive testing
+
+---
+
+## Quick Links
+
+- 📖 [Installation](#installation)
+- 🚀 [Usage Examples](#usage)
+- 🧪 [Testing & Development](#testing--development)
+- 🤝 [Contributing](CONTRIBUTING.md)
+- 🔒 [Security Policy](SECURITY.md)
+- 💝 [Support & Funding](FUNDING.md)
+- 📄 [License](#license)
 
 ---
 
@@ -44,7 +59,10 @@ public function sitemap(Sitemap $sitemap)
         ['url' => 'https://example.com/img/about.jpg', 'title' => 'About Us']
     ]);
     // Add more items as needed...
-    return response($sitemap->render('xml'), 200, ['Content-Type' => 'application/xml']);
+    
+    // Render XML using a view template
+    $items = $sitemap->getModel()->getItems();
+    return response()->view('sitemap.xml', compact('items'), 200, ['Content-Type' => 'application/xml']);
 }
 ```
 
@@ -94,7 +112,10 @@ class SitemapController
         $sitemap->add('https://example.com/', (new \DateTime())->format(DATE_ATOM), '1.0', 'daily');
         $sitemap->add('https://example.com/contact', (new \DateTime())->format(DATE_ATOM), '0.5', 'monthly');
         // Add more items as needed...
-        return new Response($sitemap->render('xml'), 200, ['Content-Type' => 'application/xml']);
+        
+        // Render XML
+        $xml = $sitemap->renderXml();
+        return new Response($xml, 200, ['Content-Type' => 'application/xml']);
     }
 }
 ```
@@ -122,8 +143,10 @@ $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
 $sitemap->add('https://example.com/products', date('c'), '0.9', 'weekly', [
     ['url' => 'https://example.com/img/product.jpg', 'title' => 'Product Image']
 ]);
+
+// Output XML
 header('Content-Type: application/xml');
-echo $sitemap->render('xml');
+echo $sitemap->renderXml();
 ```
 
 ---
@@ -149,11 +172,13 @@ $sitemap->add(
     alternates: [['media' => 'print', 'url' => 'https://example.com/news-print']]
 );
 
-// Render as TXT
-file_put_contents('sitemap.txt', $sitemap->render('txt'));
+// Generate XML using renderXml() method
+$xml = $sitemap->renderXml();
+file_put_contents('sitemap.xml', $xml);
 
-// Render as HTML
-file_put_contents('sitemap.html', $sitemap->render('html'));
+// Or use view templates for more control (create your own views based on src/views/)
+$items = $sitemap->getModel()->getItems();
+// Pass $items to your view template
 ```
 
 ---
@@ -207,11 +232,115 @@ $sitemap->addItem([
 
 ---
 
-## Testing
+## Rendering Options
+
+The package provides multiple ways to generate sitemap output:
+
+### 1. Built-in XML Renderer (Simple)
+
+```php
+$sitemap = new Sitemap();
+$sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+$xml = $sitemap->renderXml(); // Returns XML string
+```
+
+### 2. View Templates (Flexible)
+
+For more control, use the included view templates or create your own:
+
+```php
+$sitemap = new Sitemap();
+$sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+// Get the data for your view
+$items = $sitemap->getModel()->getItems();
+
+// Laravel: Use response()->view() or view()->render()
+return response()->view('sitemap.xml', compact('items'), 200, ['Content-Type' => 'application/xml']);
+
+// Symfony: Use Twig templates
+return $this->render('sitemap.xml.twig', ['items' => $items], new Response('', 200, ['Content-Type' => 'application/xml']));
+
+// Generic PHP: Include view templates
+ob_start();
+include 'vendor/rumenx/php-sitemap/src/views/xml.php';
+$xml = ob_get_clean();
+```
+
+**Available view templates** in `src/views/`:
+
+- `xml.php` - Standard XML sitemap
+- `xml-mobile.php` - Mobile-specific sitemap
+- `google-news.php` - Google News sitemap
+- `sitemapindex.php` - Sitemap index
+- `txt.php` - Plain text format
+- `html.php` - HTML format
+
+## Testing & Development
+
+### Running Tests
 
 ```bash
-./vendor/bin/pest
+# Run all tests
+composer test
+
+# Run tests with text coverage report
+composer coverage
+
+# Generate full HTML coverage report
+composer coverage-html
 ```
+
+### Code Quality
+
+```bash
+# Run static analysis (PHPStan Level 6)
+composer analyze
+
+# Check coding standards (PSR-12)
+composer style
+
+# Auto-fix coding standards
+composer style-fix
+```
+
+### Manual Testing
+
+```bash
+# Run specific test file
+./vendor/bin/pest tests/Unit/SitemapTest.php
+
+# Run tests in watch mode
+./vendor/bin/pest --watch
+```
+
+---
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Development setup
+- Coding standards
+- Testing requirements
+- Pull request process
+
+---
+
+## Security
+
+If you discover a security vulnerability, please review our [Security Policy](SECURITY.md) for responsible disclosure guidelines.
+
+---
+
+## Support
+
+If you find this package helpful, consider:
+
+- ⭐ Starring the repository
+- 💝 [Supporting development](FUNDING.md)
+- 🐛 [Reporting issues](https://github.com/RumenDamyanov/php-sitemap/issues)
+- 🤝 [Contributing improvements](CONTRIBUTING.md)
 
 ---
 
