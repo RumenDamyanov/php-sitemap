@@ -17,6 +17,12 @@
         "source": "https://github.com/RumenDamyanov/php-sitemap",
         "wiki": "https://github.com/RumenDamyanov/php-sitemap/wiki"
     },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/RumenDamyanov"
+        }
+    ],
     "require": {
         "php": ">=8.2"
     },
