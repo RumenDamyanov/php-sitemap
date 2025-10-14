@@ -4,3 +4,38 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "tuesday"
+      time: "07:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "RumenDamyanov"
+    assignees:
+      - "RumenDamyanov"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+
+# Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "07:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "RumenDamyanov"
+    assignees:
+      - "RumenDamyanov"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    # Group GitHub Actions updates
+    groups:
+      github-actions:
+        patterns:
+          - "actions/*"
+          - "github/*"
