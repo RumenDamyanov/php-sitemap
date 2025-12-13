@@ -38,6 +38,17 @@ class Model
     }
 
     /**
+     * Set the escaping mode.
+     *
+     * @param bool $escaping Whether to escape XML entities.
+     * @return void
+     */
+    public function setEscaping(bool $escaping): void
+    {
+        $this->escaping = $escaping;
+    }
+
+    /**
      * Add a sitemap item to the internal items array.
      *
      * @param array<string, mixed> $item The sitemap item to add.
