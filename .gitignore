@@ -9,12 +9,25 @@ coverage.xml
 /vendor
 /build
 
+# Internal documentation
+/docs/
+/wiki/
+
+# AI tools
+/.ai/
+/.vscode/
+/.cursor/
+/.idea/
+
 # cs
 .php_cs
 /.php_cs.cache
+/.phpcs.cache
+.phpcs-cache
 
 # phpunit
 /.phpunit.result.cache
+/.phpunit.cache
 
 # test runtime files
 /tests/tmp
