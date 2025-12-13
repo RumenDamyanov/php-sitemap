@@ -39,19 +39,32 @@
             "Rumenx\\Sitemap\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Rumenx\\Sitemap\\Tests\\": "tests/"
+        }
+    },
     "scripts": {
         "test": "pest",
         "coverage": "pest --coverage",
         "coverage-html": "pest --coverage-html=build/coverage-html --coverage-clover=coverage.xml",
         "analyze": "phpstan analyse --configuration=phpstan.neon",
-        "style": "phpcs --standard=PSR12 src tests",
-        "style-fix": "phpcbf --standard=PSR12 src tests"
+        "style": "phpcs --standard=phpcs.xml src tests",
+        "style-fix": "phpcbf --standard=phpcs.xml src tests",
+        "quality": [
+            "@test",
+            "@analyze",
+            "@style"
+        ],
+        "fix": "@style-fix"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
-        }
+        },
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }

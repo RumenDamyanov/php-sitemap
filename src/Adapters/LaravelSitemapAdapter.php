@@ -25,6 +25,7 @@ class LaravelSitemapAdapter
     /**
      * Laravel cache repository instance.
      * @var CacheRepository
+     * @phpstan-var CacheRepository&\Illuminate\Cache\Repository
      */
     protected $cache;
 
@@ -43,12 +44,14 @@ class LaravelSitemapAdapter
     /**
      * Laravel response factory instance.
      * @var ResponseFactory
+     * @phpstan-var ResponseFactory&\Illuminate\Routing\ResponseFactory
      */
     protected $response;
 
     /**
      * Laravel view factory instance.
      * @var ViewFactory
+     * @phpstan-var ViewFactory&\Illuminate\View\Factory
      */
     protected $view;
 
@@ -82,5 +85,113 @@ class LaravelSitemapAdapter
         return $this->sitemap;
     }
 
-    // Add Laravel-specific methods for rendering, storing, etc.
+    /**
+     * Render sitemap as HTTP response with proper headers.
+     *
+     * @param string $format Output format (default: 'xml').
+     * @return mixed Laravel HTTP Response
+     */
+    public function renderResponse(string $format = 'xml')
+    {
+        $content = $this->sitemap->render($format);
+
+        $contentType = match ($format) {
+            'xml' => 'application/xml',
+            'html' => 'text/html',
+            'txt' => 'text/plain',
+            default => 'application/xml',
+        };
+
+        return $this->response->make($content, 200, [
+            'Content-Type' => $contentType . '; charset=utf-8',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    /**
+     * Render sitemap using Laravel view.
+     *
+     * @param string $viewName The view template name.
+     * @param array<string, mixed> $additionalData Additional data to pass to view.
+     * @return mixed Laravel View instance
+     */
+    public function renderView(string $viewName = 'sitemap.xml', array $additionalData = [])
+    {
+        $data = array_merge([
+            'items' => $this->sitemap->getModel()->getItems(),
+            'sitemaps' => $this->sitemap->getModel()->getSitemaps(),
+        ], $additionalData);
+
+        return $this->view->make($viewName, $data);
+    }
+
+    /**
+     * Store sitemap to file using Laravel filesystem.
+     *
+     * @param string $path Path relative to storage directory (e.g., 'public/sitemap.xml').
+     * @param string $format Output format (default: 'xml').
+     * @return bool True on success, false on failure.
+     */
+    public function store(string $path = 'public/sitemap.xml', string $format = 'xml'): bool
+    {
+        $content = $this->sitemap->render($format);
+
+        // Use Laravel's storage_path helper if available
+        $fullPath = function_exists('storage_path') ? storage_path($path) : $path;
+
+        return $this->file->put($fullPath, $content) !== false;
+    }
+
+    /**
+     * Get cached sitemap or generate new one.
+     *
+     * @param string $cacheKey Cache key to use.
+     * @param int $minutes Cache duration in minutes.
+     * @param string $format Output format (default: 'xml').
+     * @return string Sitemap content.
+     */
+    public function cached(string $cacheKey = 'sitemap', int $minutes = 60, string $format = 'xml'): string
+    {
+        $ttl = $minutes * 60; // Convert to seconds
+
+        return $this->cache->remember($cacheKey, $ttl, function () use ($format) {
+            return $this->sitemap->render($format);
+        });
+    }
+
+    /**
+     * Clear sitemap cache.
+     *
+     * @param string $cacheKey Cache key to clear.
+     * @return bool True if cache was cleared.
+     */
+    public function clearCache(string $cacheKey = 'sitemap'): bool
+    {
+        return $this->cache->forget($cacheKey);
+    }
+
+    /**
+     * Render cached sitemap as HTTP response.
+     *
+     * @param string $cacheKey Cache key to use.
+     * @param int $minutes Cache duration in minutes.
+     * @param string $format Output format (default: 'xml').
+     * @return mixed Laravel HTTP Response
+     */
+    public function cachedResponse(string $cacheKey = 'sitemap', int $minutes = 60, string $format = 'xml')
+    {
+        $content = $this->cached($cacheKey, $minutes, $format);
+
+        $contentType = match ($format) {
+            'xml' => 'application/xml',
+            'html' => 'text/html',
+            'txt' => 'text/plain',
+            default => 'application/xml',
+        };
+
+        return $this->response->make($content, 200, [
+            'Content-Type' => $contentType . '; charset=utf-8',
+            'Cache-Control' => 'public, max-age=' . ($minutes * 60),
+        ]);
+    }
 }

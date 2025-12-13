@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Feature tests for rendering and validating all view templates and their edge cases.
  */
@@ -261,7 +262,7 @@ test('xml-mobile view covers empty items', function () {
     expect($output)->not()->toContain('<url>');
 });
 
-test('xml view covers edge cases: only images, only videos, only translations, only alternates, only googlenews, missing subfields, special chars', function () {
+test('xml view covers edge cases with various content types', function () {
     $style = null;
     $items = [
         // Only images

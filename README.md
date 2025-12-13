@@ -1,16 +1,38 @@
 # **[php-sitemap](https://github.com/RumenDamyanov/php-sitemap) package**
 
-[![CI](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/ci.yml/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions)
+[![CI](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/ci.yml/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/ci.yml)
+[![Analyze](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/analyze.yml/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/analyze.yml)
+[![Style](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/style.yml/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/style.yml)
+[![CodeQL](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/github-code-scanning/codeql)
+[![Dependabot](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/RumenDamyanov/php-sitemap/actions/workflows/dependabot/dependabot-updates)
 [![codecov](https://codecov.io/gh/RumenDamyanov/php-sitemap/branch/master/graph/badge.svg)](https://codecov.io/gh/RumenDamyanov/php-sitemap)
-[![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://php.net)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 
 **php-sitemap** is a modern, framework-agnostic PHP package for generating sitemaps in XML, TXT, HTML, and Google News formats. It works seamlessly with Laravel, Symfony, or any PHP project. Features include high test coverage, robust CI, extensible adapters, and support for images, videos, translations, alternates, and Google News.
 
+---
+
+## 📦 Part of the Sitemap Family
+
+This is the PHP implementation of our multi-language sitemap library:
+
+- 🐘 **[php-sitemap](https://github.com/RumenDamyanov/php-sitemap)** - PHP 8.2+ implementation with Laravel & Symfony support (this package)
+- 📘 **[npm-sitemap](https://github.com/RumenDamyanov/npm-sitemap)** - TypeScript/JavaScript implementation for Node.js and frontend frameworks
+- 🔷 **[go-sitemap](https://github.com/RumenDamyanov/go-sitemap)** - Go implementation for high-performance applications
+
+All implementations share the same API design and features, making it easy to switch between languages or maintain consistency across polyglot projects.
+
+## 🔗 Recommended Projects
+
+If you find **php-sitemap** useful, you might also be interested in these related projects:
+
+- 🔍 **[php-seo](https://github.com/RumenDamyanov/php-seo)** - Comprehensive SEO toolkit for meta tags, structured data, and search optimization
+- 🤖 **[php-chatbot](https://github.com/RumenDamyanov/php-chatbot)** - Conversational AI and chatbot framework for PHP applications
+- 📰 **[php-feed](https://github.com/RumenDamyanov/php-feed)** - RSS, Atom, and JSON feed generator for content syndication
+- 🌍 **[php-geolocation](https://github.com/RumenDamyanov/php-geolocation)** - IP geolocation, geocoding, and geographic data utilities
 
 ---
 
-## Features
+## ✨ Features
 
 - **Framework-agnostic**: Use in Laravel, Symfony, or any PHP project
 - **Multiple formats**: XML, TXT, HTML, Google News, mobile
@@ -19,11 +41,14 @@
 - **High test coverage**: 100% code coverage, CI/CD ready
 - **Easy integration**: Simple API, drop-in for controllers/routes
 - **Extensible**: Adapters for Laravel, Symfony, and more
-- **Quality tools**: PHPStan Level 6, PSR-12, comprehensive testing
+- **Quality tools**: PHPStan Level max, PSR-12, comprehensive testing
+- **Input validation**: Built-in URL, priority, and frequency validation
+- **Type-safe configuration**: Fluent configuration with `SitemapConfig` class
+- **Fluent interface**: Method chaining for elegant, readable code
 
 ---
 
-## Quick Links
+## 🔗 Quick Links
 
 - 📖 [Installation](#installation)
 - 🚀 [Usage Examples](#usage)
@@ -35,15 +60,24 @@
 
 ---
 
-## Installation
+## 📦 Installation
+
+### Requirements
+
+- **PHP 8.2+**
+- **Composer**
+
+### Install via Composer
 
 ```bash
 composer require rumenx/php-sitemap
 ```
 
+No additional configuration required! The package works out of the box.
+
 ---
 
-## Usage
+## 🚀 Usage
 
 ### Laravel Example
 
@@ -140,9 +174,13 @@ use Rumenx\Sitemap\Sitemap;
 
 $sitemap = new Sitemap();
 $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
-$sitemap->add('https://example.com/products', date('c'), '0.9', 'weekly', [
-    ['url' => 'https://example.com/img/product.jpg', 'title' => 'Product Image']
-]);
+$sitemap->add(
+    'https://example.com/products',
+    date('c'),
+    '0.9',
+    'weekly',
+    images: [['url' => 'https://example.com/img/product.jpg', 'title' => 'Product Image']]
+);
 
 // Output XML
 header('Content-Type: application/xml');
@@ -232,7 +270,79 @@ $sitemap->addItem([
 
 ---
 
-## Rendering Options
+## 🔧 New Features
+
+### Fluent Interface (Method Chaining)
+
+Chain methods for more elegant and readable code:
+
+```php
+$sitemap = (new Sitemap())
+    ->add('https://example.com/', date('c'), '1.0', 'daily')
+    ->add('https://example.com/about', date('c'), '0.8', 'monthly')
+    ->add('https://example.com/contact', date('c'), '0.6', 'yearly')
+    ->store('xml', 'sitemap', './public');
+```
+
+### Type-Safe Configuration
+
+Configure sitemaps with a fluent, type-safe configuration class:
+
+```php
+use Rumenx\Sitemap\Config\SitemapConfig;
+
+$config = (new SitemapConfig())
+    ->setEscaping(true)
+    ->setStrictMode(true)
+    ->setUseGzip(true)
+    ->setDefaultFormat('xml');
+
+$sitemap = new Sitemap($config);
+```
+
+### Input Validation
+
+Enable strict mode to automatically validate all input:
+
+```php
+$config = new SitemapConfig(strictMode: true);
+$sitemap = new Sitemap($config);
+
+// Valid data works fine
+$sitemap->add('https://example.com', '2023-12-01', '0.8', 'daily');
+
+// Invalid data throws InvalidArgumentException
+try {
+    $sitemap->add('not-a-url', '2023-12-01', '2.0', 'sometimes');
+} catch (\InvalidArgumentException $e) {
+    echo "Validation error: " . $e->getMessage();
+}
+```
+
+### Multiple Format Support
+
+Render sitemaps in different formats:
+
+```php
+$sitemap = new Sitemap();
+$sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+// Render as XML
+$xml = $sitemap->render('xml');
+
+// Render as HTML
+$html = $sitemap->render('html');
+
+// Render as plain text
+$txt = $sitemap->render('txt');
+
+// Save to file
+$sitemap->store('xml', 'sitemap', './public');
+```
+
+---
+
+## 🎨 Rendering Options
 
 The package provides multiple ways to generate sitemap output:
 
@@ -276,7 +386,9 @@ $xml = ob_get_clean();
 - `txt.php` - Plain text format
 - `html.php` - HTML format
 
-## Testing & Development
+---
+
+## 🧪 Testing & Development
 
 ### Running Tests
 
@@ -316,7 +428,7 @@ composer style-fix
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
 
@@ -327,13 +439,13 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ---
 
-## Security
+## 🔒 Security
 
 If you discover a security vulnerability, please review our [Security Policy](SECURITY.md) for responsible disclosure guidelines.
 
 ---
 
-## Support
+## 💝 Support
 
 If you find this package helpful, consider:
 
@@ -344,6 +456,6 @@ If you find this package helpful, consider:
 
 ---
 
-## License
+## 📄 License
 
 [MIT License](LICENSE.md)
