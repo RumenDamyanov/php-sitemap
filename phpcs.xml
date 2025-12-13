@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<ruleset name="PHP Sitemap Coding Standards">
+    <description>Coding standards for php-sitemap package</description>
+
+    <!-- Display progress -->
+    <arg value="p"/>
+    
+    <!-- Use colors in output -->
+    <arg name="colors"/>
+    
+    <!-- Show sniff codes in all reports -->
+    <arg value="s"/>
+
+    <!-- Files to check -->
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- Exclude patterns -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
+    <exclude-pattern>*/cache/*</exclude-pattern>
+
+    <!-- PSR-12 Coding Standard -->
+    <rule ref="PSR12">
+        <!-- Allow long lines in some cases -->
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <!-- Additional rules -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+    
+    <!-- Allow view templates to have mixed content and relaxed rules -->
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/views/*</exclude-pattern>
+    </rule>
+    
+    <!-- Relax whitespace rules for view templates -->
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent">
+        <exclude-pattern>*/views/*</exclude-pattern>
+    </rule>
+    
+    <rule ref="PSR12.Operators.OperatorSpacing">
+        <exclude-pattern>*/views/*</exclude-pattern>
+    </rule>
+    
+    <rule ref="Generic.Files.LineEndings">
+        <exclude-pattern>*/views/*</exclude-pattern>
+    </rule>
+
+    <rule ref="Internal.LineEndings.Mixed">
+        <exclude-pattern>*/views/*</exclude-pattern>
+    </rule>
+    
+    <!-- Allow multiple classes/interfaces in stub files -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>*/Stubs/*</exclude-pattern>
+    </rule>
+
+    <!-- Allow underscores in test method names for readability -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Allow unused parameters in interface implementations (reserved for future use) -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.FoundInImplementedInterfaceAfterLastUsed">
+        <exclude-pattern>*/src/Sitemap.php</exclude-pattern>
+    </rule>
+
+    <!-- Allow unused parameters in test stubs -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>*/tests/Stubs/*</exclude-pattern>
+    </rule>
+
+    <!-- Allow side effects in Pest test bootstrap files -->
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>*/tests/Feature/ViewTemplatesIncludeTest.php</exclude-pattern>
+    </rule>
+
+    <!-- Exclude warnings from Pest bootstrap and Laravel test stubs (pre-existing) -->
+    <rule ref="Internal.NoCodeFound">
+        <exclude-pattern>*/tests/pest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed">
+        <exclude-pattern>*/tests/Unit/LaravelSitemapAdapterTest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed">
+        <exclude-pattern>*/tests/Unit/LaravelSitemapAdapterTest.php</exclude-pattern>
+    </rule>
+</ruleset>

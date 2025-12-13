@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Unit tests for the Model class, covering item and sitemap management.
  */
