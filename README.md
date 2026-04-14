@@ -28,6 +28,7 @@ If you find **php-sitemap** useful, you might also be interested in these relate
 - 🔍 **[php-seo](https://github.com/RumenDamyanov/php-seo)** - Comprehensive SEO toolkit for meta tags, structured data, and search optimization
 - 🤖 **[php-chatbot](https://github.com/RumenDamyanov/php-chatbot)** - Conversational AI and chatbot framework for PHP applications
 - 📰 **[php-feed](https://github.com/RumenDamyanov/php-feed)** - RSS, Atom, and JSON feed generator for content syndication
+- 📋 **[llms-txt-php](https://github.com/raphaelstolt/llms-txt-php)** - A library for writing, reading, and validating llms.txt Markdown files
 - 🌍 **[php-geolocation](https://github.com/RumenDamyanov/php-geolocation)** - IP geolocation, geocoding, and geographic data utilities
 
 ---
