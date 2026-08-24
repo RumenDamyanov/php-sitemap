@@ -112,6 +112,67 @@ test('Sitemap escapes googlenews sitename when escaping is enabled', function ()
     expect($item['googlenews']['sitename'])->toBe(htmlentities('Site<>&', ENT_XML1));
 });
 
+test('Sitemap escapes all googlenews fields consumed by the google-news view', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap(['escaping' => true]);
+    $sitemap->addItem([
+        'googlenews' => [
+            'sitename' => 'Site<>&',
+            'language' => 'en</news:language><evil lang="1"/>',
+            'access' => 'Subscription</news:access><evil access="1"/>',
+            'genres' => 'PressRelease</news:genres><evil g="1"/>',
+            'keywords' => ['kw</news:keywords><evil k="1"/>'],
+            'stock_tickers' => ['ST</news:stock_tickers><evil st="1"/>'],
+        ],
+    ]);
+    $item = $sitemap->getModel()->getItems()[0];
+    expect($item['googlenews']['language'])->toBe(htmlentities('en</news:language><evil lang="1"/>', ENT_XML1));
+    expect($item['googlenews']['access'])->toBe(htmlentities('Subscription</news:access><evil access="1"/>', ENT_XML1));
+    expect($item['googlenews']['genres'][0])->toBe(htmlentities('PressRelease</news:genres><evil g="1"/>', ENT_XML1));
+    expect($item['googlenews']['keywords'][0])->toBe(htmlentities('kw</news:keywords><evil k="1"/>', ENT_XML1));
+    expect($item['googlenews']['stock_tickers'][0])->toBe(htmlentities('ST</news:stock_tickers><evil st="1"/>', ENT_XML1));
+});
+
+test('Sitemap coerces googlenews list fields to arrays and leaves values unescaped when escaping is disabled', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap(['escaping' => false]);
+    $sitemap->addItem([
+        'googlenews' => [
+            'sitename' => 'Site<>&',
+            'language' => 'en',
+            'access' => 'Subscription',
+            'genres' => 'PressRelease',
+            'keywords' => 'economy, policy',
+            'stock_tickers' => 'EXMPL:US',
+        ],
+    ]);
+    $item = $sitemap->getModel()->getItems()[0];
+    expect($item['googlenews']['sitename'])->toBe('Site<>&');
+    expect($item['googlenews']['language'])->toBe('en');
+    expect($item['googlenews']['access'])->toBe('Subscription');
+    expect($item['googlenews']['genres'])->toBe(['PressRelease']);
+    expect($item['googlenews']['keywords'])->toBe(['economy, policy']);
+    expect($item['googlenews']['stock_tickers'])->toBe(['EXMPL:US']);
+});
+
+test('Sitemap skips non-scalar googlenews values and ignores invalid googlenews payloads', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap(['escaping' => true]);
+    $sitemap->addItem([
+        'googlenews' => [
+            'sitename' => ['not-a-string'],
+            'language' => ['not-a-string'],
+            'access' => ['not-a-string'],
+            'genres' => [['nested']],
+            'keywords' => ['ok<>'],
+        ],
+    ]);
+    $item = $sitemap->getModel()->getItems()[0];
+    expect($item['googlenews']['sitename'])->toBe(['not-a-string']);
+    expect($item['googlenews']['genres'][0])->toBe(['nested']);
+    expect($item['googlenews']['keywords'][0])->toBe(htmlentities('ok<>', ENT_XML1));
+
+    $sitemap->addItem(['googlenews' => 'not-an-array']);
+    expect($sitemap->getModel()->getItems()[1]['googlenews']['sitename'])->toBe('');
+});
+
 test('Sitemap renderXml includes title when present', function () {
     $sitemap = new \Rumenx\Sitemap\Sitemap();
     $sitemap->addItem([
