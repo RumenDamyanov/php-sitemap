@@ -178,6 +178,17 @@ class Sitemap implements SitemapInterface
                 $params['images']
             );
         }
+        // Normalize Google News list fields so render() never TypeErrors on implode().
+        if (!is_array($params['googlenews'])) {
+            $params['googlenews'] = [];
+        }
+        if (!empty($params['googlenews'])) {
+            $params['googlenews'] = $this->prepareGoogleNews(
+                $params['googlenews'],
+                $this->model->getEscaping()
+            );
+        }
+
         // Escaping
         if ($this->model->getEscaping()) {
             $params['loc'] = htmlentities($params['loc'], ENT_XML1);
@@ -202,9 +213,6 @@ class Sitemap implements SitemapInterface
                         $params['videos'][$k]['description'] = htmlentities($video['description'], ENT_XML1);
                     }
                 }
-            }
-            if (!empty($params['googlenews']) && isset($params['googlenews']['sitename'])) {
-                $params['googlenews']['sitename'] = htmlentities($params['googlenews']['sitename'], ENT_XML1);
             }
         }
         $params['googlenews']['sitename'] = $params['googlenews']['sitename'] ?? '';
@@ -365,5 +373,42 @@ class Sitemap implements SitemapInterface
         $result = file_put_contents($fullPath, $content);
 
         return $result !== false;
+    }
+
+    /**
+     * Normalize Google News list fields and escape values consumed by the google-news view.
+     *
+     * genres, keywords, and stock_tickers are coerced to arrays so implode() cannot TypeError.
+     * When escaping is enabled, every field echoed by the view is XML-escaped (GHSA-3j73-g385-2pc5).
+     *
+     * @param array<string, mixed> $googlenews
+     * @return array<string, mixed>
+     */
+    private function prepareGoogleNews(array $googlenews, bool $escape): array
+    {
+        foreach (['sitename', 'language', 'access'] as $key) {
+            if (!isset($googlenews[$key]) || !is_scalar($googlenews[$key])) {
+                continue;
+            }
+            $value = (string) $googlenews[$key];
+            $googlenews[$key] = $escape ? htmlentities($value, ENT_XML1) : $value;
+        }
+
+        foreach (['genres', 'keywords', 'stock_tickers'] as $key) {
+            if (!isset($googlenews[$key])) {
+                continue;
+            }
+            $values = is_array($googlenews[$key]) ? $googlenews[$key] : [$googlenews[$key]];
+            foreach ($values as $i => $value) {
+                if (!is_scalar($value)) {
+                    continue;
+                }
+                $stringValue = (string) $value;
+                $values[$i] = $escape ? htmlentities($stringValue, ENT_XML1) : $stringValue;
+            }
+            $googlenews[$key] = $values;
+        }
+
+        return $googlenews;
     }
 }

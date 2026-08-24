@@ -59,6 +59,36 @@ test('google-news view renders expected XML with full data', function () {
     expect($output)->toContain('<news:stock_tickers>EXMPL:US</news:stock_tickers>');
 });
 
+test('google-news view coerces string list fields and escapes XML special characters', function () {
+    $style = null;
+    $items = [[
+        'loc' => 'https://example.com/news1?a=1&b=2',
+        'lastmod' => '2024-06-08T12:00:00+00:00',
+        'title' => 'Title & More',
+        'googlenews' => [
+            'sitename' => 'Example & News',
+            'language' => 'en</news:language><evil lang="1"/>',
+            'publication_date' => '2024-06-08T12:00:00+00:00',
+            'access' => 'Subscription</news:access><evil access="1"/>',
+            'keywords' => 'kw</news:keywords><evil k="1"/>',
+            'genres' => 'PressRelease</news:genres><evil g="1"/>',
+            'stock_tickers' => 'ST</news:stock_tickers><evil st="1"/>',
+        ],
+    ]];
+    ob_start();
+    include __DIR__ . '/../../src/views/google-news.php';
+    $output = ob_get_clean();
+    expect($output)->toContain('<loc>https://example.com/news1?a=1&amp;b=2</loc>');
+    expect($output)->toContain('<news:name>Example &amp; News</news:name>');
+    expect($output)->toContain('<news:title>Title &amp; More</news:title>');
+    expect($output)->toContain('<news:language>en&lt;/news:language&gt;&lt;evil lang=&quot;1&quot;/&gt;</news:language>');
+    expect($output)->toContain('<news:access>Subscription&lt;/news:access&gt;&lt;evil access=&quot;1&quot;/&gt;</news:access>');
+    expect($output)->toContain('<news:keywords>kw&lt;/news:keywords&gt;&lt;evil k=&quot;1&quot;/&gt;</news:keywords>');
+    expect($output)->toContain('<news:genres>PressRelease&lt;/news:genres&gt;&lt;evil g=&quot;1&quot;/&gt;</news:genres>');
+    expect($output)->toContain('<news:stock_tickers>ST&lt;/news:stock_tickers&gt;&lt;evil st=&quot;1&quot;/&gt;</news:stock_tickers>');
+    expect($output)->not()->toContain('<evil');
+});
+
 test('xml view renders expected XML with images, videos, translations', function () {
     $style = null;
     $items = [[
