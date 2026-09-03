@@ -248,6 +248,55 @@ test('Sitemap store() creates nested directories if needed', function () {
     rmdir(dirname(dirname($tempDir)));
 });
 
+test('Sitemap store() does not duplicate extension when already present', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap();
+    $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+    $tempDir = sys_get_temp_dir() . '/php-sitemap-test-' . uniqid();
+    mkdir($tempDir, 0755, true);
+
+    expect($sitemap->store('xml', 'already.xml', $tempDir))->toBeTrue();
+    expect(file_exists($tempDir . '/already.xml'))->toBeTrue();
+    expect(file_exists($tempDir . '/already.xml.xml'))->toBeFalse();
+
+    unlink($tempDir . '/already.xml');
+    rmdir($tempDir);
+});
+
+test('Sitemap store() uses getcwd when path is null', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap();
+    $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+    $tempDir = sys_get_temp_dir() . '/php-sitemap-cwd-' . uniqid();
+    mkdir($tempDir, 0755, true);
+    $originalCwd = getcwd();
+    chdir($tempDir);
+
+    try {
+        expect($sitemap->store('xml', 'cwd-sitemap'))->toBeTrue();
+        expect(file_exists($tempDir . '/cwd-sitemap.xml'))->toBeTrue();
+    } finally {
+        chdir($originalCwd);
+        if (file_exists($tempDir . '/cwd-sitemap.xml')) {
+            unlink($tempDir . '/cwd-sitemap.xml');
+        }
+        rmdir($tempDir);
+    }
+});
+
+test('Sitemap store() rejects directory separators in filename', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap();
+    $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+    $tempDir = sys_get_temp_dir() . '/php-sitemap-test-' . uniqid();
+    mkdir($tempDir, 0755, true);
+
+    expect(fn () => $sitemap->store('xml', 'nested/file', $tempDir))
+        ->toThrow(\InvalidArgumentException::class);
+
+    rmdir($tempDir);
+});
+
 test('Model setEscaping() changes escaping mode', function () {
     $model = new \Rumenx\Sitemap\Model(['escaping' => true]);
     expect($model->getEscaping())->toBeTrue();
