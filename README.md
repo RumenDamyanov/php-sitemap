@@ -54,6 +54,7 @@ If you find **php-sitemap** useful, you might also be interested in these relate
 - 🚀 [Usage Examples](#usage)
 - 🧪 [Testing & Development](#testing--development)
 - 🤝 [Contributing](CONTRIBUTING.md)
+- 📝 [Changelog](CHANGELOG.md)
 - 🔒 [Security Policy](SECURITY.md)
 - 💝 [Support & Funding](FUNDING.md)
 - 📄 [License](#license)
@@ -336,7 +337,7 @@ $html = $sitemap->render('html');
 // Render as plain text
 $txt = $sitemap->render('txt');
 
-// Save to file
+// Save to file ($filename is a basename; use $path for directories)
 $sitemap->store('xml', 'sitemap', './public');
 ```
 

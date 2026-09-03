@@ -342,19 +342,25 @@ class Sitemap implements SitemapInterface
     /**
      * Store the sitemap to a file in the specified format.
      *
+     * $filename must be a basename (no directories or `..`). Nested output
+     * directories belong in $path. This prevents path traversal (GHSA-r934-gc26-cjrx).
+     *
      * @param string $format Output format (e.g., 'xml', 'html').
-     * @param string $filename Name of the file to store.
-     * @param string|null $path Optional path to store the file.
+     * @param string $filename Name of the file to store (basename only).
+     * @param string|null $path Optional directory to store the file in.
      * @param string|null $style Optional style or template.
      * @return bool True on success, false on failure.
+     * @throws \InvalidArgumentException If $filename contains path separators or traversal.
      */
     public function store(string $format = 'xml', string $filename = 'sitemap', ?string $path = null, ?string $style = null): bool
     {
         $content = $this->render($format, $style);
 
+        $filename = $this->sanitizeStoreFilename($filename);
+
         // Determine full path
         $directory = $path ?? getcwd();
-        $fullPath = rtrim($directory, '/') . '/' . $filename;
+        $fullPath = rtrim($directory, '/\\') . '/' . $filename;
 
         // Add extension if not present
         if (!str_ends_with($fullPath, '.' . $format)) {
@@ -373,6 +379,29 @@ class Sitemap implements SitemapInterface
         $result = file_put_contents($fullPath, $content);
 
         return $result !== false;
+    }
+
+    /**
+     * Reject filenames that could escape the target directory (GHSA-r934-gc26-cjrx).
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function sanitizeStoreFilename(string $filename): string
+    {
+        if ($filename === '' || str_contains($filename, "\0")) {
+            throw new \InvalidArgumentException('Invalid sitemap filename.');
+        }
+
+        if (str_contains($filename, '/') || str_contains($filename, '\\')) {
+            throw new \InvalidArgumentException('Sitemap filename must not contain directory separators.');
+        }
+
+        $base = basename($filename);
+        if ($base === '' || $base === '.' || $base === '..') {
+            throw new \InvalidArgumentException('Sitemap filename must not contain path traversal sequences.');
+        }
+
+        return $base;
     }
 
     /**
