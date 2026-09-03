@@ -54,6 +54,7 @@ If you find **php-sitemap** useful, you might also be interested in these relate
 - 🚀 [Usage Examples](#usage)
 - 🧪 [Testing & Development](#testing--development)
 - 🤝 [Contributing](CONTRIBUTING.md)
+- 📝 [Changelog](CHANGELOG.md)
 - 🔒 [Security Policy](SECURITY.md)
 - 💝 [Support & Funding](FUNDING.md)
 - 📄 [License](#license)
