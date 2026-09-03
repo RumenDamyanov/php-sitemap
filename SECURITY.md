@@ -36,7 +36,7 @@ When using php-sitemap in production:
 1. **Keep Updated**: Always use the latest stable version
 2. **Input Validation**: Validate and sanitize all user inputs before adding to sitemaps
 3. **Output Escaping**: The package automatically escapes XML output when enabled (default)
-4. **File Permissions**: Ensure proper file permissions when storing sitemap files
+4. **File Permissions**: Ensure proper file permissions when storing sitemap files. `store()` accepts a basename only for `$filename`; nested directories belong in `$path`. Do not pass request or CLI user input as `$filename`.
 5. **HTTPS**: Use HTTPS for all sitemap URLs in production
 
 ### Scope

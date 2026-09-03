@@ -336,7 +336,7 @@ $html = $sitemap->render('html');
 // Render as plain text
 $txt = $sitemap->render('txt');
 
-// Save to file
+// Save to file ($filename is a basename; use $path for directories)
 $sitemap->store('xml', 'sitemap', './public');
 ```
 
