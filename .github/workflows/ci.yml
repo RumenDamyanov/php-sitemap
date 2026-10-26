@@ -34,7 +34,7 @@ jobs:
         run: composer update --prefer-dist --no-interaction --no-progress
       - name: Run Pest
         if: matrix.php != '8.4'
-        run: vendor/bin/pest
+        run: vendor/bin/pest --no-coverage
       - name: Run Pest with coverage
         if: matrix.php == '8.4'
         run: vendor/bin/pest --coverage --coverage-clover=coverage.xml
