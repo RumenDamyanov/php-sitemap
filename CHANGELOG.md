@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Require PHP **8.3+**. PHP 8.2 reaches upstream end of life on 31 December 2026; stay on 1.0.x if you must remain on 8.2 (and use **8.2.35+** until then).
 - CI tests PHP 8.3, 8.4, and 8.5. Coverage is collected on 8.4 only.
+- Upgrade dev tooling to Pest 4 and PHPUnit 12 so `composer update` can resolve on PHP 8.5.
 
 ## [1.0.4] - 2026-09-03
 
