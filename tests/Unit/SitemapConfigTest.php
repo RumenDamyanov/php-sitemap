@@ -205,6 +205,14 @@ class SitemapConfigTest extends TestCase
         $this->assertEquals('html', $config->getDefaultFormat());
     }
 
+    public function test_can_set_packaged_view_formats(): void
+    {
+        $config = new SitemapConfig();
+        $config->setDefaultFormat('xml-mobile');
+
+        $this->assertEquals('xml-mobile', $config->getDefaultFormat());
+    }
+
     public function test_throws_exception_for_invalid_default_format(): void
     {
         $config = new SitemapConfig();

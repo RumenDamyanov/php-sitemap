@@ -24,14 +24,14 @@
         }
     ],
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.3"
     },
     "require-dev": {
-        "pestphp/pest": "^2.0",
-        "phpunit/phpunit": "^10.0",
         "orchestra/testbench-core": "^10.4",
+        "pestphp/pest": "^4.0",
         "php-coveralls/php-coveralls": "^2.2",
         "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.0",
         "squizlabs/php_codesniffer": "^4.0"
     },
     "autoload": {

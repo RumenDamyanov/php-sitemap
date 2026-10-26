@@ -299,6 +299,10 @@ class Sitemap implements SitemapInterface
     /**
      * Render the sitemap in the specified format.
      *
+     * $format must be a packaged format name (see SitemapFormat::ALL). Path
+     * separators and `..` are rejected so this cannot include files outside
+     * src/views/.
+     *
      * @param string $format Output format (e.g., 'xml', 'html', 'txt').
      * @param string|null $style Optional style or template.
      * @return string
@@ -306,14 +310,19 @@ class Sitemap implements SitemapInterface
      */
     public function render(string $format = 'xml', ?string $style = null): string
     {
-        if ($format === 'xml') {
+        if (!SitemapFormat::isRenderable($format)) {
+            throw new \InvalidArgumentException("Unsupported format: {$format}");
+        }
+
+        if ($format === SitemapFormat::XML) {
             return $this->renderXml();
         }
 
-        // Use view files for other formats
         $viewFile = __DIR__ . '/views/' . $format . '.php';
-        if (!file_exists($viewFile)) {
+        if (!is_file($viewFile)) {
+            // @codeCoverageIgnoreStart
             throw new \InvalidArgumentException("Unsupported format: {$format}");
+            // @codeCoverageIgnoreEnd
         }
 
         $items = $this->model->getItems();
@@ -322,7 +331,8 @@ class Sitemap implements SitemapInterface
 
         ob_start();
         include $viewFile;
-        return ob_get_clean();
+
+        return (string) ob_get_clean();
     }
 
     /**

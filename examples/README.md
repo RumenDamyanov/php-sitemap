@@ -52,7 +52,7 @@ All examples assume you have:
 # Installed the package
 composer require rumenx/php-sitemap
 
-# PHP 8.2+
+# PHP 8.3+
 php --version
 ```
 

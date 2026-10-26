@@ -65,9 +65,10 @@ interface SitemapInterface
     /**
      * Render the sitemap in the specified format.
      *
-     * @param string $format Output format (e.g., 'xml', 'html').
+     * @param string $format Packaged format name only (xml, html, txt, google-news, …).
      * @param string|null $style Optional style or template.
      * @return string
+     * @throws \InvalidArgumentException If format is not supported.
      */
     public function render(string $format = 'xml', ?string $style = null): string;
 

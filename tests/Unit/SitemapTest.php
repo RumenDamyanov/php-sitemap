@@ -202,6 +202,26 @@ test('Sitemap render() throws exception for unsupported format', function () {
     $sitemap->render('json');
 })->throws(\InvalidArgumentException::class, 'Unsupported format');
 
+test('Sitemap render() rejects path traversal in format', function (string $format) {
+    $sitemap = new \Rumenx\Sitemap\Sitemap();
+    $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+    $sitemap->render($format);
+})->with([
+    '../Config/config',
+    '..\\Config\\config',
+    '/tmp/evil',
+    'xml/../html',
+    "xml\0html",
+])->throws(\InvalidArgumentException::class, 'Unsupported format');
+
+test('Sitemap render() supports packaged view formats', function () {
+    $sitemap = new \Rumenx\Sitemap\Sitemap();
+    $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
+
+    expect($sitemap->render('html'))->toContain('https://example.com/');
+    expect($sitemap->render('txt'))->toContain('https://example.com/');
+});
+
 test('Sitemap generate() is alias for render()', function () {
     $sitemap = new \Rumenx\Sitemap\Sitemap();
     $sitemap->add('https://example.com/', date('c'), '1.0', 'daily');
