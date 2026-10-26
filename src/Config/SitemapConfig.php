@@ -2,6 +2,8 @@
 
 namespace Rumenx\Sitemap\Config;
 
+use Rumenx\Sitemap\SitemapFormat;
+
 /**
  * Type-safe configuration class for Sitemap.
  *
@@ -50,7 +52,7 @@ class SitemapConfig
             throw new \InvalidArgumentException('maxSize must be greater than 0');
         }
 
-        if (!in_array($this->defaultFormat, ['xml', 'txt', 'html', 'rss', 'rdf', 'google-news'], true)) {
+        if (!SitemapFormat::isConfigurable($this->defaultFormat)) {
             throw new \InvalidArgumentException("Invalid default format: {$this->defaultFormat}");
         }
 
@@ -274,7 +276,7 @@ class SitemapConfig
      */
     public function setDefaultFormat(string $defaultFormat): self
     {
-        if (!in_array($defaultFormat, ['xml', 'txt', 'html', 'rss', 'rdf', 'google-news'], true)) {
+        if (!SitemapFormat::isConfigurable($defaultFormat)) {
             throw new \InvalidArgumentException("Invalid default format: {$defaultFormat}");
         }
         $this->defaultFormat = $defaultFormat;

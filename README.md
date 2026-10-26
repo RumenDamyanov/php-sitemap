@@ -15,7 +15,7 @@
 
 This is the PHP implementation of our multi-language sitemap library:
 
-- 🐘 **[php-sitemap](https://github.com/RumenDamyanov/php-sitemap)** - PHP 8.2+ implementation with Laravel & Symfony support (this package)
+- 🐘 **[php-sitemap](https://github.com/RumenDamyanov/php-sitemap)** - PHP 8.3+ implementation with Laravel & Symfony support (this package)
 - 📘 **[npm-sitemap](https://github.com/RumenDamyanov/npm-sitemap)** - TypeScript/JavaScript implementation for Node.js and frontend frameworks
 - 🔷 **[go-sitemap](https://github.com/RumenDamyanov/go-sitemap)** - Go implementation for high-performance applications
 
@@ -37,7 +37,7 @@ If you find **php-sitemap** useful, you might also be interested in these relate
 - **Framework-agnostic**: Use in Laravel, Symfony, or any PHP project
 - **Multiple formats**: XML, TXT, HTML, Google News, mobile
 - **Rich content**: Supports images, videos, translations, alternates, Google News
-- **Modern PHP**: Type-safe, extensible, and robust (PHP 8.2+)
+- **Modern PHP**: Type-safe, extensible, and robust (PHP 8.3+)
 - **High test coverage**: 100% code coverage, CI/CD ready
 - **Easy integration**: Simple API, drop-in for controllers/routes
 - **Extensible**: Adapters for Laravel, Symfony, and more
@@ -65,7 +65,7 @@ If you find **php-sitemap** useful, you might also be interested in these relate
 
 ### Requirements
 
-- **PHP 8.2+**
+- **PHP 8.3+** (8.3 remains in security support until 31 Dec 2027; also tested on 8.4 and 8.5)
 - **Composer**
 
 ### Install via Composer

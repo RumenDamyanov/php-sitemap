@@ -28,7 +28,7 @@ By participating in this project, you agree to abide by our code of conduct:
 
 ### Prerequisites
 
-- PHP 8.2 or higher
+- PHP 8.3 or higher
 - Composer
 - Git
 

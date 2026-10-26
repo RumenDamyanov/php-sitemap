@@ -4,9 +4,14 @@
 
 We actively support the following versions of php-sitemap with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x     | :white_check_mark: |
+| Version | PHP        | Supported          |
+| ------- | ---------- | ------------------ |
+| 1.1.x   | 8.3+       | :white_check_mark: |
+| 1.0.x   | 8.2+       | :white_check_mark: until PHP 8.2 EOL (31 Dec 2026) |
+
+Runtime PHP must be a patched build. PHP2Shell ([CVE-2026-109618](https://www.cve.org/CVERecord?id=CVE-2026-109618), [CVE-2026-109619](https://www.cve.org/CVERecord?id=CVE-2026-109619)) is in the PHP engine, not in this library. Upgrade the interpreter to **8.5.12+**, **8.4.27+**, **8.3.36+**, or **8.2.35+**. There is no application-level workaround; see the [PHP Foundation advisory](https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/) and [CISA alert](https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching).
+
+PHP 8.3 remains in upstream security support until **31 December 2027**. PHP 8.2 ends on **31 December 2026**.
 
 ## Reporting a Vulnerability
 
@@ -36,8 +41,9 @@ When using php-sitemap in production:
 1. **Keep Updated**: Always use the latest stable version
 2. **Input Validation**: Validate and sanitize all user inputs before adding to sitemaps
 3. **Output Escaping**: The package automatically escapes XML output when enabled (default)
-4. **File Permissions**: Ensure proper file permissions when storing sitemap files. `store()` accepts a basename only for `$filename`; nested directories belong in `$path`. Do not pass request or CLI user input as `$filename`.
-5. **HTTPS**: Use HTTPS for all sitemap URLs in production
+4. **File Permissions**: Ensure proper file permissions when storing sitemap files. `store()` accepts a basename only for `$filename`; nested directories belong in `$path`. Do not pass request or CLI user input as `$filename` or `$format`.
+5. **PHP runtime**: Keep PHP itself updated. Engine issues such as PHP2Shell are not fixable from Composer packages.
+6. **HTTPS**: Use HTTPS for all sitemap URLs in production
 
 ### Scope
 
