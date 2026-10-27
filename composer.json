@@ -27,7 +27,7 @@
         "php": ">=8.3"
     },
     "require-dev": {
-        "orchestra/testbench-core": "^10.4",
+        "orchestra/testbench-core": "^11.6",
         "pestphp/pest": "^4.0",
         "php-coveralls/php-coveralls": "^2.2",
         "phpstan/phpstan": "^2.1",
