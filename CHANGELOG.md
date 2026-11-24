@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-24
+
+### Security
+
+- Escape the HTML sitemap at the view, including quotes, and only put `http` and `https` URLs in `href`. `htmlentities()` with `ENT_XML1` leaves `"` unchanged, so a `loc` value could break out of the attribute. A `javascript:` URL is no longer used as a link.
+
 ## [1.1.0] - 2026-10-26
 
 ### Security
